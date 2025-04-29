@@ -1,0 +1,7 @@
+Language: Cpp
+BasedOnStyle: Microsoft
+UseTab: Always
+TabWidth: 4
+PointerAlignment: Left
+AccessModifierOffset: -4
+SortIncludes: false
