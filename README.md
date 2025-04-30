@@ -1,5 +1,5 @@
 # My test C++ Unreal Engine 5 Project 
-Main things of this project that will be added step by step:
+Main things of this project that will be added over time:
 - Main Menu
    - [ ] New Game
    - [ ] Exit
