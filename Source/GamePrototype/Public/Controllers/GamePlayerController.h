@@ -13,10 +13,9 @@ class GAMEPROTOTYPE_API AGamePlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
-public:
-	virtual void BeginPlay() override;
-
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	UInputMappingContext* DefaultMappingContext;
+
+	virtual void BeginPlay() override;
 };
