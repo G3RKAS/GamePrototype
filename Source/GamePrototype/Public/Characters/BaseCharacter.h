@@ -15,6 +15,7 @@ class GAMEPROTOTYPE_API ABaseCharacter : public ACharacter, public IAnimInteract
 public:
 	ABaseCharacter();
 
+	// IAnimInteraction
 	virtual bool IsFalling() override;
 
 protected:
