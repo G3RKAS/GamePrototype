@@ -15,8 +15,4 @@ class GAMEPROTOTYPE_API AAnimalCharacter : public ABaseCharacter
 
 public:
 	AAnimalCharacter();
-
-protected:
-	UPROPERTY(VisibleAnywhere, Category = "Componets")
-	UBoxComponent* BoxColision;
 };
