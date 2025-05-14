@@ -3,6 +3,7 @@
 
 #include "Characters/StatsComponent.h"
 
+
 uint32 UStatsComponent::GetTotalXP()
 {
 	return XPTotalCount;
@@ -15,7 +16,7 @@ uint8 UStatsComponent::GetLevel()
 
 void UStatsComponent::AddXPToTotal(int AddingCount)
 {
-	XPTotalCount += AddingCount;
+	SetTotalXP(XPTotalCount + AddingCount);
 	UpdateLevel();
 }
 
@@ -60,4 +61,9 @@ void UStatsComponent::UpdateLevel()
 		Level = NewLevel;
 		OnLevelUp.Broadcast(Level);
 	}
+}
+
+void UStatsComponent::SetTotalXP(uint32 NewTotalXP)
+{
+	XPTotalCount = FMath::Max(0, (int)NewTotalXP);
 }

@@ -24,6 +24,7 @@ private:
 	uint32 GetXPForLevel(uint8);
 	uint8 GetLevelFromXP(uint32);
 	void UpdateLevel();
+	void SetTotalXP(uint32);
 
 	uint32 XPTotalCount = 0;
 	uint8 Level = 1;
