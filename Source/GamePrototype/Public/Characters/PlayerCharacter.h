@@ -10,6 +10,7 @@ class UCameraComponent;
 class USpringArmComponent;
 class UInputAction;
 struct FInputActionValue;
+class UStatsComponent;
 
 UCLASS(Abstract)
 class GAMEPROTOTYPE_API APlayerCharacter : public ABaseCharacter
@@ -36,6 +37,8 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
 	USpringArmComponent* SpringArmComponent;
+
+	UStatsComponent* StatsComponent;
 
 private:
 	void Look(const FInputActionValue& Value);
