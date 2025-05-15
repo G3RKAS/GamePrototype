@@ -31,9 +31,11 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Health Settings", meta = (AllowPrivateAccess = "true"))
 	bool bIsRegeneratingHealth = false;
-	UPROPERTY(EditAnywhere, Category = "Health Settings|Regenerating", meta = (ClampMin = "0", UIMin = "0"))
+	UPROPERTY(EditAnywhere, Category = "Health Settings|Regenerating",
+			  meta = (ClampMin = "0", UIMin = "0", EditCondition = "bIsRegeneratingHealth", EditConditionHides))
 	float RegeneratingRate = 2.f;
-	UPROPERTY(EditAnywhere, Category = "Health Settings|Regenerating", meta = (ClampMin = "0", UIMin = "0"))
+	UPROPERTY(EditAnywhere, Category = "Health Settings|Regenerating",
+			  meta = (ClampMin = "0", UIMin = "0", EditCondition = "bIsRegeneratingHealth", EditConditionHides))
 	float RegeneratingCount = 10.f;
 
 	FTimerHandle RegenerationHandle;
