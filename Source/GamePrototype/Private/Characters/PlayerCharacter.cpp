@@ -9,8 +9,6 @@
 #include "InputAction.h"
 #include <Kismet/KismetMathLibrary.h>
 
-#include "Characters/StatsComponent.h"
-
 APlayerCharacter::APlayerCharacter() : Super()
 {
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm Component"));
@@ -25,8 +23,6 @@ APlayerCharacter::APlayerCharacter() : Super()
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->RotationRate = FRotator(0, 0, 480);
 	bUseControllerRotationYaw = false;
-
-	StatsComponent = CreateDefaultSubobject<UStatsComponent>(TEXT("Stats Component"));
 }
 
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

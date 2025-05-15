@@ -7,6 +7,9 @@
 #include "Interfaces/Characters/AnimInteraction.h"
 #include "BaseCharacter.generated.h"
 
+class UXPComponent;
+class UHealthComponent;
+
 UCLASS(Abstract)
 class GAMEPROTOTYPE_API ABaseCharacter : public ACharacter, public IAnimInteraction
 {
@@ -21,4 +24,9 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UXPComponent* XPComponent;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UHealthComponent* HealthComponent;
 };

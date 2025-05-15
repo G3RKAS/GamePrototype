@@ -4,12 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "StatsComponent.generated.h"
+#include "XPComponent.generated.h"
 
 DECLARE_MULTICAST_DELEGATE_OneParam(OnLevelUpSignature, uint8)
 
-UCLASS()
-class GAMEPROTOTYPE_API UStatsComponent : public UActorComponent
+UCLASS() 
+class GAMEPROTOTYPE_API UXPComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
