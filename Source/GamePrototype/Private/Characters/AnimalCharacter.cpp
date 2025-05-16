@@ -3,6 +3,22 @@
 
 #include "Characters/AnimalCharacter.h"
 
-AAnimalCharacter::AAnimalCharacter() : Super()
+float AAnimalCharacter::GetAttackDamage()
 {
+	return AttackDamage;
+}
+
+float AAnimalCharacter::GetAttackSpeed()
+{
+	return AttackSpeed;
+}
+
+void AAnimalCharacter::SetAttackDamage(float InAttackDamage)
+{
+	AttackDamage = InAttackDamage;
+}
+
+void AAnimalCharacter::SetAttackSpeed(float InAttackSpeed)
+{
+	AttackSpeed = InAttackSpeed;
 }

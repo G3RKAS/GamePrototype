@@ -4,9 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Interfaces/Characters/LevelInteraction.h"
 #include "XPComponent.generated.h"
-
-DECLARE_MULTICAST_DELEGATE_OneParam(OnLevelUpSignature, uint8)
 
 UCLASS() 
 class GAMEPROTOTYPE_API UXPComponent : public UActorComponent
@@ -17,8 +16,8 @@ public:
 	uint32 GetTotalXP();
 	uint8 GetLevel();
 
-	void virtual BeginPlay() override;
 	void AddXPToTotal(int EXP);
+	OnLevelUpSignature& OnLevelUp();
 
 private:
 	uint32 GetXPForLevel(uint8);
@@ -30,5 +29,5 @@ private:
 	uint8 Level = 1;
 	int XPOnLevelUP = 1000;
 
-	OnLevelUpSignature OnLevelUp;
+	OnLevelUpSignature OnLevelUpEvent;
 };

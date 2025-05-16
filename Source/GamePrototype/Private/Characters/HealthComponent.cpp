@@ -18,6 +18,11 @@ float UHealthComponent::GetMaxHealth()
 	return MaxHealth;
 }
 
+void UHealthComponent::SetMaxHealth(float InMaxHealth)
+{
+	MaxHealth = InMaxHealth;
+}
+
 void UHealthComponent::AddHealth(float InHealth)
 {
 	SetCurrentHealth(CurrentHealth + InHealth);
@@ -25,7 +30,7 @@ void UHealthComponent::AddHealth(float InHealth)
 
 void UHealthComponent::SetCurrentHealth(float InCurrentHealth)
 {
-	CurrentHealth = FMath::Clamp(InCurrentHealth, 0, MaxHealth);
+	CurrentHealth = FMath::Clamp(InCurrentHealth, 0, GetMaxHealth());
 	OnHealthChanged.Broadcast(CurrentHealth);
 	if (FMath::IsNearlyZero(CurrentHealth))
 	{
@@ -37,11 +42,11 @@ void UHealthComponent::SetCurrentHealth(float InCurrentHealth)
 		{
 			return;
 		}
-		if (FMath::IsNearlyEqual(CurrentHealth, MaxHealth))
+		if (FMath::IsNearlyEqual(CurrentHealth, GetMaxHealth()))
 		{
 			GetWorld()->GetTimerManager().ClearTimer(RegenerationHandle);
 		}
-		else if (CurrentHealth < MaxHealth)
+		else if (CurrentHealth < GetMaxHealth())
 		{
 			if (not(GetWorld()->GetTimerManager().IsTimerActive(RegenerationHandle)))
 			{

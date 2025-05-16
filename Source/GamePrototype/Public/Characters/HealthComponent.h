@@ -16,9 +16,12 @@ class GAMEPROTOTYPE_API UHealthComponent : public UActorComponent
 
 public:
 	float GetCurrentHealth();
-	float GetMaxHealth();
 
 	void AddHealth(float);
+
+	float GetMaxHealth();
+
+	void SetMaxHealth(float);
 
 protected:
 	virtual void BeginPlay() override;
@@ -26,6 +29,7 @@ protected:
 private:
 	UPROPERTY(EditAnywhere, Category = "Health Settings", meta = (ClampMin = "0", UIMin = "0"))
 	float MaxHealth = 100.f;
+
 	UPROPERTY(EditAnywhere, Category = "Health Settings", meta = (ClampMin = "0", UIMin = "0"))
 	float CurrentHealth = MaxHealth;
 

@@ -6,23 +6,60 @@
 
 #include "Characters/XPComponent.h"
 #include "Characters/HealthComponent.h"
+#include "Characters/StatsLevelingComponent.h"
 
 ABaseCharacter::ABaseCharacter() : Super()
 {
 	XPComponent = CreateDefaultSubobject<UXPComponent>(TEXT("XPComponent"));
 
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
+
+	StatsComponent = CreateDefaultSubobject<UStatsLevelingComponent>(TEXT("StatsLevelingComponent"));
 }
 
-
-
+// IAnimInteraction
 bool ABaseCharacter::IsFalling()
 {
 	return GetCharacterMovement()->IsFalling();
 }
 
-void ABaseCharacter::BeginPlay()
+// ILevelInteraction
+int ABaseCharacter::GetLevel()
 {
-	Super::BeginPlay();
+	return XPComponent->GetLevel();
 }
 
+float ABaseCharacter::GetMaxHealth()
+{
+	return HealthComponent->GetMaxHealth();
+}
+
+float ABaseCharacter::GetAttackDamage()
+{
+	return 0.0f;
+}
+
+float ABaseCharacter::GetAttackSpeed()
+{
+	return 0.0f;
+}
+
+void ABaseCharacter::SetMaxHealth(float InMaxHealth)
+{
+	HealthComponent->SetMaxHealth(InMaxHealth);
+}
+
+void ABaseCharacter::SetAttackDamage(float)
+{
+	return;
+}
+
+void ABaseCharacter::SetAttackSpeed(float)
+{
+	return;
+}
+
+OnLevelUpSignature& ABaseCharacter::OnLevelUp()
+{
+	return XPComponent->OnLevelUp();
+}

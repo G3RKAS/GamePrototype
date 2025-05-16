@@ -20,9 +20,9 @@ void UXPComponent::AddXPToTotal(int AddingCount)
 	UpdateLevel();
 }
 
-void UXPComponent::BeginPlay()
+OnLevelUpSignature& UXPComponent::OnLevelUp()
 {
-	Super::BeginPlay();
+	return OnLevelUpEvent;
 }
 
 uint32 UXPComponent::GetXPForLevel(uint8 LevelToReach)
@@ -59,7 +59,7 @@ void UXPComponent::UpdateLevel()
 	if (Level < NewLevel)
 	{
 		Level = NewLevel;
-		OnLevelUp.Broadcast(Level);
+		OnLevelUpEvent.Broadcast(Level);
 	}
 }
 
