@@ -9,20 +9,20 @@ uint32 UXPComponent::GetTotalXP()
 	return XPTotalCount;
 }
 
-uint8 UXPComponent::GetLevel()
+int UXPComponent::GetLevel()
 {
 	return Level;
+}
+
+OnLevelUpSignature& UXPComponent::OnLevelUp()
+{
+	return OnLevelUpEvent;
 }
 
 void UXPComponent::AddXPToTotal(int AddingCount)
 {
 	SetTotalXP(XPTotalCount + AddingCount);
 	UpdateLevel();
-}
-
-OnLevelUpSignature& UXPComponent::OnLevelUp()
-{
-	return OnLevelUpEvent;
 }
 
 uint32 UXPComponent::GetXPForLevel(uint8 LevelToReach)

@@ -8,16 +8,18 @@
 #include "XPComponent.generated.h"
 
 UCLASS() 
-class GAMEPROTOTYPE_API UXPComponent : public UActorComponent
+class GAMEPROTOTYPE_API UXPComponent : public UActorComponent, public ILevelInteraction
 {
 	GENERATED_BODY()
 
 public:
 	uint32 GetTotalXP();
-	uint8 GetLevel();
 
 	void AddXPToTotal(int EXP);
-	OnLevelUpSignature& OnLevelUp();
+
+	// ILevelInteraction
+	virtual int GetLevel() override;
+	virtual OnLevelUpSignature& OnLevelUp() override;
 
 private:
 	uint32 GetXPForLevel(uint8);

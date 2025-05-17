@@ -14,7 +14,7 @@ class GAMEPROTOTYPE_API UStatsLevelingComponent : public UActorComponent
 	GENERATED_BODY()
 public:
 	virtual void BeginPlay() override;
-	void EquipWeapon();
+	void SetupWeaponStats();
 
 private:
 	float GetLevelStat(float);

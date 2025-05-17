@@ -1,6 +1,5 @@
 // (c) G3RKA. Game Prototype
 
-
 #include "Characters/BaseCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -21,12 +20,6 @@ ABaseCharacter::ABaseCharacter() : Super()
 bool ABaseCharacter::IsFalling()
 {
 	return GetCharacterMovement()->IsFalling();
-}
-
-// ILevelInteraction
-int ABaseCharacter::GetLevel()
-{
-	return XPComponent->GetLevel();
 }
 
 float ABaseCharacter::GetMaxHealth()
@@ -57,9 +50,4 @@ void ABaseCharacter::SetAttackDamage(float)
 void ABaseCharacter::SetAttackSpeed(float)
 {
 	return;
-}
-
-OnLevelUpSignature& ABaseCharacter::OnLevelUp()
-{
-	return XPComponent->OnLevelUp();
 }

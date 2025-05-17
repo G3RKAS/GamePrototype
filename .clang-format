@@ -5,3 +5,4 @@ TabWidth: 4
 PointerAlignment: Left
 AccessModifierOffset: -4
 SortIncludes: false
+BreakTemplateDeclarations: Yes

@@ -6,18 +6,16 @@
 #include "GameFramework/Character.h"
 #include "Interfaces/Characters/AnimInteraction.h"
 #include "Interfaces/Characters/StatsInteraction.h"
-#include "Interfaces/Characters/LevelInteraction.h"
 #include "BaseCharacter.generated.h"
 
 class UXPComponent;
 class UHealthComponent;
 class UStatsLevelingComponent;
-
+// Remove stats?&level interfaces
 UCLASS(Abstract)
 class GAMEPROTOTYPE_API ABaseCharacter : public ACharacter,
 										 public IAnimInteraction,
-										 public IStatsInteraction,
-										 public ILevelInteraction
+										 public IStatsInteraction
 {
 	GENERATED_BODY()
 
@@ -33,9 +31,6 @@ public:
 	virtual void SetMaxHealth(float) override;
 	virtual void SetAttackDamage(float) override;
 	virtual void SetAttackSpeed(float) override;
-	// ILevelInteraction
-	virtual int GetLevel() override;
-	virtual OnLevelUpSignature& OnLevelUp() override;
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "Components")

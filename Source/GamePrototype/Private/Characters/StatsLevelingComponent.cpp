@@ -7,7 +7,7 @@ void UStatsLevelingComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	StatsInteraction = Cast<IStatsInteraction>(GetOwner());
-	LevelInteraction = Cast<ILevelInteraction>(GetOwner());
+	LevelInteraction = GetOwner()->FindComponentByInterface<ILevelInteraction>();
 
 	SetupStats();
 	if (LevelInteraction)
@@ -33,11 +33,11 @@ void UStatsLevelingComponent::SetupStats()
 
 		StatsInteraction->SetMaxHealth(GetLevelStat(BaseMaxHealth));
 
-		EquipWeapon();
+		SetupWeaponStats();
 	}
 }
 
-void UStatsLevelingComponent::EquipWeapon()
+void UStatsLevelingComponent::SetupWeaponStats()
 {
 	if (StatsInteraction)
 	{
