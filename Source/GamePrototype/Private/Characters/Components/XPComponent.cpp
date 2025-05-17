@@ -1,7 +1,7 @@
 // (c) G3RKA. Game Prototype
 
 
-#include "Characters/XPComponent.h"
+#include "Characters/Components/XPComponent.h"
 
 
 uint32 UXPComponent::GetTotalXP()

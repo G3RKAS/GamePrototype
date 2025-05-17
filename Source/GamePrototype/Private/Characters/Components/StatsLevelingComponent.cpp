@@ -1,7 +1,7 @@
 // (c) G3RKA. Game Prototype
 
 
-#include "Characters/StatsLevelingComponent.h"
+#include "Characters/Components/StatsLevelingComponent.h"
 
 void UStatsLevelingComponent::BeginPlay()
 {

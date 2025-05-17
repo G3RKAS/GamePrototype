@@ -3,9 +3,9 @@
 #include "Characters/BaseCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
-#include "Characters/XPComponent.h"
-#include "Characters/HealthComponent.h"
-#include "Characters/StatsLevelingComponent.h"
+#include "Characters/Components/XPComponent.h"
+#include "Characters/Components/HealthComponent.h"
+#include "Characters/Components/StatsLevelingComponent.h"
 
 ABaseCharacter::ABaseCharacter() : Super()
 {

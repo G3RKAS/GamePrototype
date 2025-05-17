@@ -1,6 +1,6 @@
 // (c) G3RKA. Game Prototype
 
-#include "Characters/HealthComponent.h"
+#include "Characters/Components/HealthComponent.h"
 
 void UHealthComponent::BeginPlay()
 {
