@@ -11,7 +11,7 @@
 class UXPComponent;
 class UHealthComponent;
 class UStatsLevelingComponent;
-// Remove stats?&level interfaces
+
 UCLASS(Abstract)
 class GAMEPROTOTYPE_API ABaseCharacter : public ACharacter,
 										 public IAnimInteraction,

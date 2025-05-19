@@ -9,6 +9,8 @@
 #include "InputAction.h"
 #include <Kismet/KismetMathLibrary.h>
 
+#include "Characters/Components/Player/ReviveComponent.h"
+
 APlayerCharacter::APlayerCharacter() : Super()
 {
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm Component"));
@@ -23,6 +25,8 @@ APlayerCharacter::APlayerCharacter() : Super()
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->RotationRate = FRotator(0, 0, 480);
 	bUseControllerRotationYaw = false;
+
+	ReviveComponent = CreateDefaultSubobject<UReviveComponent>(TEXT("Revive Component"));
 }
 
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

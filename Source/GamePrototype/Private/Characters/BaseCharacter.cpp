@@ -22,6 +22,7 @@ bool ABaseCharacter::IsFalling()
 	return GetCharacterMovement()->IsFalling();
 }
 
+// IStatsInteraction
 float ABaseCharacter::GetMaxHealth()
 {
 	return HealthComponent->GetMaxHealth();
