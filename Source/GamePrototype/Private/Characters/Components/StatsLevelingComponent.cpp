@@ -20,7 +20,7 @@ float UStatsLevelingComponent::GetLevelStat(float Stat)
 {
 	if (StatsInteraction)
 	{
-		return Stat * pow(1.1, LevelInteraction->GetLevel());
+		return Stat * pow(1.1, LevelInteraction->GetLevel() - 1);
 	}
 	return -1;
 }
