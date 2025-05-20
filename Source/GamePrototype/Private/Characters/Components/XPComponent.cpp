@@ -1,8 +1,6 @@
 // (c) G3RKA. Game Prototype
 
-
 #include "Characters/Components/XPComponent.h"
-
 
 uint32 UXPComponent::GetTotalXP()
 {
@@ -19,16 +17,21 @@ OnLevelUpSignature& UXPComponent::OnLevelUp()
 	return OnLevelUpEvent;
 }
 
+void UXPComponent::BeginPlay()
+{
+	Super::BeginPlay();
+	SetTotalXP(GetXPForLevel(Level));
+}
+
 void UXPComponent::AddXPToTotal(int AddingCount)
 {
 	SetTotalXP(XPTotalCount + AddingCount);
-	UpdateLevel();
 }
 
 uint32 UXPComponent::GetXPForLevel(uint8 LevelToReach)
 {
 	uint32 TotalXP = 0;
-	for (uint8 i{ 1 }; i < LevelToReach; i++)
+	for (uint8 i{1}; i < LevelToReach; i++)
 	{
 		TotalXP += XPOnLevelUP * i;
 	}
@@ -66,4 +69,5 @@ void UXPComponent::UpdateLevel()
 void UXPComponent::SetTotalXP(uint32 NewTotalXP)
 {
 	XPTotalCount = FMath::Max(0, (int)NewTotalXP);
+	UpdateLevel();
 }

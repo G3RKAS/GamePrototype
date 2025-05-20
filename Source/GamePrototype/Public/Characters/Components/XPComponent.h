@@ -21,14 +21,21 @@ public:
 	virtual int GetLevel() override;
 	virtual OnLevelUpSignature& OnLevelUp() override;
 
+protected:
+	virtual void BeginPlay() override;
+
+
 private:
+	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "1", UIMin = "1"))
+	uint8 Level = 1;
+
 	uint32 GetXPForLevel(uint8);
 	uint8 GetLevelFromXP(uint32);
 	void UpdateLevel();
 	void SetTotalXP(uint32);
 
 	uint32 XPTotalCount = 0;
-	uint8 Level = 1;
+	
 	int XPOnLevelUP = 1000;
 
 	OnLevelUpSignature OnLevelUpEvent;
