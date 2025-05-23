@@ -2,13 +2,15 @@
 
 #include "Characters/Components/Player/ReviveComponent.h"
 #include "Characters/Components/HealthComponent.h"
+#include "Interfaces/Characters/LevelInteraction.h"
 
 void UReviveComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	HealthComponent = GetOwner()->GetComponentByClass<UHealthComponent>();
-	HealthComponent->OnDeath().AddUObject(this, &ThisClass::ExecuteRevive);
+	check(GetOwner());
+	IHealthInteraction* HealthInteraction = GetOwner()->FindComponentByInterface<IHealthInteraction>();
+	HealthInteraction->OnDeath().AddUObject(this, &ThisClass::ExecuteRevive);
 }
 
 void UReviveComponent::ExecuteRevive()
@@ -17,9 +19,9 @@ void UReviveComponent::ExecuteRevive()
 	{
 		if (not(RevivePoints.IsEmpty()))
 		{
-			APawn* PlayerPawn = Cast<APawn>(GetOwner());
-
-			if (PlayerPawn)
+			check(GetOwner());
+			IControllerInteraction* ControllerInteraction = GetOwner()->FindComponentByInterface<IControllerInteraction>();
+			if (ControllerInteraction)
 			{
 				TArray<TSoftObjectPtr<ATargetPoint>> TempArray = RevivePoints.Array();
 
@@ -33,7 +35,18 @@ void UReviveComponent::ExecuteRevive()
 					[=, this]() {
 						APlayerCharacter* NewPlayer =
 							GetWorld()->SpawnActor<APlayerCharacter>(PlayerClass, LocationToSpawn, FRotator());
-						PlayerPawn->GetController()->Possess(NewPlayer);
+						ILevelInteraction* LevelInteraction_OldPlayer =
+							GetOwner()->FindComponentByInterface<ILevelInteraction>();
+						ILevelInteraction* LevelInteraction_NewPlayer =
+							NewPlayer->FindComponentByInterface<ILevelInteraction>();
+						
+						ControllerInteraction->Possess(NewPlayer);
+
+						// Restore Level
+						LevelInteraction_NewPlayer->SetLevel(LevelInteraction_OldPlayer->GetLevel());
+						// TODO
+						// WeaponEquip
+
 						GetOwner()->SetLifeSpan(0.1f);
 					},
 					TimeToRespawn, false);

@@ -4,13 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Interfaces/Characters/HealthInteraction.h"
 #include "HealthComponent.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_OneParam(OnHealthChangedSignature, float);
-DECLARE_MULTICAST_DELEGATE(OnDeathSignature);
-
 UCLASS()
-class GAMEPROTOTYPE_API UHealthComponent : public UActorComponent
+class GAMEPROTOTYPE_API UHealthComponent : public UActorComponent, public IHealthInteraction
 {
 	GENERATED_BODY()
 

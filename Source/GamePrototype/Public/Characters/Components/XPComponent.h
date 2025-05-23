@@ -19,6 +19,7 @@ public:
 
 	// ILevelInteraction
 	virtual int GetLevel() override;
+	virtual void SetLevel(float) override;
 	virtual OnLevelUpSignature& OnLevelUp() override;
 
 protected:

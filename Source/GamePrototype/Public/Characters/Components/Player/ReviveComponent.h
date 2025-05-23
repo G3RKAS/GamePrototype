@@ -30,7 +30,7 @@ private:
 
 	FTimerHandle TimerToRespawn;
 
-	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "0", UIMin = "0"))
+	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "0", UIMin = "0", Units = "s"))
 	float TimeToRespawn = 0.0f;
 
 	void ExecuteRevive();

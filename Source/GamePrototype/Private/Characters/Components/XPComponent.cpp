@@ -12,6 +12,11 @@ int UXPComponent::GetLevel()
 	return Level;
 }
 
+void UXPComponent::SetLevel(float InLevel)
+{
+	SetTotalXP(GetXPForLevel(Level));
+}
+
 OnLevelUpSignature& UXPComponent::OnLevelUp()
 {
 	return OnLevelUpEvent;
@@ -20,7 +25,7 @@ OnLevelUpSignature& UXPComponent::OnLevelUp()
 void UXPComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	SetTotalXP(GetXPForLevel(Level));
+	SetLevel(Level);
 }
 
 void UXPComponent::AddXPToTotal(int AddingCount)
