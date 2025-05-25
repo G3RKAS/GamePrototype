@@ -14,6 +14,10 @@ void UStatsLevelingComponent::BeginPlay()
 	{
 		LevelInteraction->OnLevelUp().AddUObject(this, &ThisClass::CalculateNewStats);
 	}
+
+	UE_LOG(LogTemp, Warning, TEXT("Name = %s Level = %d MaxHealth = %f AttackDamage = %f AttackSpeed = %f"),
+		   *GetOwner()->GetName(), LevelInteraction->GetLevel(), StatsInteraction->GetMaxHealth(),
+		   StatsInteraction->GetAttackDamage(), StatsInteraction->GetAttackSpeed())
 }
 
 float UStatsLevelingComponent::GetLevelStat(float Stat)

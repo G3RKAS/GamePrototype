@@ -17,6 +17,7 @@ APlayerCharacter::APlayerCharacter() : Super()
 	check(SpringArmComponent);
 	SpringArmComponent->bUsePawnControlRotation = true;
 	SpringArmComponent->SetupAttachment(GetMesh());
+	MaxTargetArmLength = SpringArmComponent->TargetArmLength;
 
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera Component"));
 	check(CameraComponent);
@@ -49,6 +50,10 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 		Input->BindAction(JumpAction, ETriggerEvent::Started, this, &ThisClass::Jump);
 		Input->BindAction(JumpAction, ETriggerEvent::Completed, this, &ThisClass::StopJumping);
 	}
+	if (CameraMoveAction)
+	{
+		Input->BindAction(CameraMoveAction, ETriggerEvent::Triggered, this, &ThisClass::CameraMove);
+	}
 }
 
 void APlayerCharacter::Look(const FInputActionValue& Value)
@@ -73,4 +78,13 @@ void APlayerCharacter::Move(const FInputActionValue& Value)
 		AddMovementInput(UKismetMathLibrary::GetForwardVector(Rotation), MovementVector.Y);
 		AddMovementInput(UKismetMathLibrary::GetRightVector(Rotation), MovementVector.X);
 	}
+}
+
+void APlayerCharacter::CameraMove(const FInputActionValue& Value)
+{
+	float MovementVector1D = Value.Get<float>();
+	UE_LOG(LogTemp, Warning, TEXT("Hello World"));
+	check(SpringArmComponent);
+	SpringArmComponent->TargetArmLength = FMath::Clamp(SpringArmComponent->TargetArmLength + MovementVector1D * ArmLengthMultiplier, MinTargetArmLength,
+					 MaxTargetArmLength);
 }
