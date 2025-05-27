@@ -21,7 +21,7 @@ public:
 
 	void SetMaxHealth(float);
 
-	OnDeathSignature& OnDeath();
+	virtual OnDeathSignature& OnDeath() override;
 
 protected:
 	virtual void BeginPlay() override;

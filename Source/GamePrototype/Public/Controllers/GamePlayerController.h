@@ -16,8 +16,8 @@ class GAMEPROTOTYPE_API AGamePlayerController : public APlayerController, public
 
 public:
 	// IShakeInteraction
-	virtual void StartCameraShake(TSubclassOf<UCameraShakeBase>, float);
-	virtual void StopAllInstancesOfCameraShake(TSubclassOf<UCameraShakeBase>, bool);
+	virtual void StartCameraShake(TSubclassOf<UCameraShakeBase>, float) override;
+	virtual void StopAllInstancesOfCameraShake(TSubclassOf<UCameraShakeBase>, bool) override;
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
