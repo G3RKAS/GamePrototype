@@ -16,3 +16,16 @@ void AGamePlayerController::BeginPlay()
 	}
 
 }
+
+// IShakeInteraction
+void AGamePlayerController::StartCameraShake(TSubclassOf<UCameraShakeBase> ShakeClass, float Scale)
+{
+	check(PlayerCameraManager)
+	PlayerCameraManager->StartCameraShake(ShakeClass, Scale);
+}
+
+void AGamePlayerController::StopAllInstancesOfCameraShake(TSubclassOf<UCameraShakeBase> ShakeClass, bool bImmediately)
+{
+	check(PlayerCameraManager)
+	PlayerCameraManager->StopAllInstancesOfCameraShake(ShakeClass, bImmediately);
+}

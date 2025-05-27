@@ -10,7 +10,10 @@ void UReviveComponent::BeginPlay()
 
 	check(GetOwner());
 	IHealthInteraction* HealthInteraction = GetOwner()->FindComponentByInterface<IHealthInteraction>();
-	HealthInteraction->OnDeath().AddUObject(this, &ThisClass::ExecuteRevive);
+	if (HealthInteraction)
+	{
+		HealthInteraction->OnDeath().AddUObject(this, &ThisClass::ExecuteRevive);
+	}
 }
 
 void UReviveComponent::ExecuteRevive()

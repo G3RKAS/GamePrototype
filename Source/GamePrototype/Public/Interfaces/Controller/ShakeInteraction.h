@@ -4,20 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
-#include "ControllerInteraction.generated.h"
+#include "ShakeInteraction.generated.h"
 
 UINTERFACE(MinimalAPI)
-class UControllerInteraction : public UInterface
+class UShakeInteraction : public UInterface
 {
 	GENERATED_BODY()
 };
 
-class GAMEPROTOTYPE_API IControllerInteraction
+class GAMEPROTOTYPE_API IShakeInteraction
 {
 	GENERATED_BODY()
-
 public:
-	virtual void Possess(APawn*) = 0;
 	virtual void StartCameraShake(TSubclassOf<UCameraShakeBase>, float) = 0;
 	virtual void StopAllInstancesOfCameraShake(TSubclassOf<UCameraShakeBase>, bool) = 0;
 };

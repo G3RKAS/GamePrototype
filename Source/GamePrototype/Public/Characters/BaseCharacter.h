@@ -6,7 +6,6 @@
 #include "GameFramework/Character.h"
 #include "Interfaces/Characters/AnimInteraction.h"
 #include "Interfaces/Characters/StatsInteraction.h"
-#include "Interfaces/Pawn/ControllerInteraction.h"
 #include "BaseCharacter.generated.h"
 
 class UXPComponent;
@@ -16,8 +15,7 @@ class UStatsLevelingComponent;
 UCLASS(Abstract)
 class GAMEPROTOTYPE_API ABaseCharacter : public ACharacter,
 										 public IAnimInteraction,
-										 public IStatsInteraction,
-										 public IControllerInteraction
+										 public IStatsInteraction
 {
 	GENERATED_BODY()
 
@@ -33,8 +31,6 @@ public:
 	virtual void SetMaxHealth(float) override;
 	virtual void SetAttackDamage(float) override;
 	virtual void SetAttackSpeed(float) override;
-	// IControllerInteraction
-	virtual void Possess(APawn*) override;
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "Components")

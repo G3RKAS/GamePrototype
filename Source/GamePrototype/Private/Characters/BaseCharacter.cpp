@@ -52,9 +52,3 @@ void ABaseCharacter::SetAttackSpeed(float)
 {
 	return;
 }
-
-// IControllerInteraction
-void ABaseCharacter::Possess(APawn* InPawn)
-{
-	GetController()->Possess(InPawn);
-}

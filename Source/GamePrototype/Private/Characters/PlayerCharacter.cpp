@@ -10,6 +10,9 @@
 #include <Kismet/KismetMathLibrary.h>
 
 #include "Characters/Components/Player/ReviveComponent.h"
+#include "Characters/Components/Player/CameraShakeComponent.h"
+#include "Interfaces/Controller/ShakeInteraction.h"
+
 
 APlayerCharacter::APlayerCharacter() : Super()
 {
@@ -22,6 +25,8 @@ APlayerCharacter::APlayerCharacter() : Super()
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera Component"));
 	check(CameraComponent);
 	CameraComponent->SetupAttachment(SpringArmComponent);
+
+	CameraShakeComponent = CreateDefaultSubobject<UCameraShakeComponent>(TEXT("Camera Shake Component"));
 
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->RotationRate = FRotator(0, 0, 480);
@@ -56,6 +61,34 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	}
 }
 
+// IControllerInteraction
+void APlayerCharacter::Possess(APawn* InPawn)
+{
+	check(GetController())
+	GetController()->Possess(InPawn);
+}
+
+void APlayerCharacter::StartCameraShake(TSubclassOf<UCameraShakeBase> ShakeClass, float Scale)
+{
+	check(GetController())
+	IShakeInteraction* ShakeInteraction = Cast<IShakeInteraction>(GetController());
+	if (ShakeInteraction)
+	{
+		ShakeInteraction->StartCameraShake(ShakeClass, Scale);
+	}
+
+}
+
+void APlayerCharacter::StopAllInstancesOfCameraShake(TSubclassOf<UCameraShakeBase> ShakeClass, bool bImmediately)
+{
+	check(GetController())
+	IShakeInteraction* ShakeInteraction = Cast<IShakeInteraction>(GetController());
+	if (ShakeInteraction)
+	{
+		ShakeInteraction->StopAllInstancesOfCameraShake(ShakeClass, bImmediately);
+	}
+}
+
 void APlayerCharacter::Look(const FInputActionValue& Value)
 {
 	FVector2D LookAxisVector = Value.Get<FVector2D>();
@@ -87,4 +120,9 @@ void APlayerCharacter::CameraMove(const FInputActionValue& Value)
 	check(SpringArmComponent);
 	SpringArmComponent->TargetArmLength = FMath::Clamp(SpringArmComponent->TargetArmLength + MovementVector1D * ArmLengthMultiplier, MinTargetArmLength,
 					 MaxTargetArmLength);
+}
+
+void APlayerCharacter::Shaking()
+{
+	CameraShakeComponent->MakeCameraShake();
 }
