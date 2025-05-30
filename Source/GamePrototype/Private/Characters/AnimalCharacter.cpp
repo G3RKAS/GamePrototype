@@ -3,6 +3,11 @@
 
 #include "Characters/AnimalCharacter.h"
 
+AAnimalCharacter::AAnimalCharacter() : Super()
+{
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
+}
+
 float AAnimalCharacter::GetAttackDamage()
 {
 	return AttackDamage;

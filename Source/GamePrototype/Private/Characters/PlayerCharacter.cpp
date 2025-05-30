@@ -33,6 +33,8 @@ APlayerCharacter::APlayerCharacter() : Super()
 	bUseControllerRotationYaw = false;
 
 	ReviveComponent = CreateDefaultSubobject<UReviveComponent>(TEXT("Revive Component"));
+
+	Tags.Add(FName("Player"));
 }
 
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

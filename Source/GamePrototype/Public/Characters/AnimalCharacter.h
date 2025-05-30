@@ -14,6 +14,8 @@ class GAMEPROTOTYPE_API AAnimalCharacter : public ABaseCharacter
 	GENERATED_BODY()
 
 public:
+	AAnimalCharacter();
+
 	virtual float GetAttackDamage() override;
 	virtual float GetAttackSpeed() override;
 	virtual void SetAttackDamage(float) override;
