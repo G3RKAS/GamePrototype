@@ -3,13 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
+#include "Characters/Components/BaseActorComponent.h"
 #include "AIComponent.generated.h"
 
 class AAIController;
 
 UCLASS(Abstract)
-class GAMEPROTOTYPE_API UAIComponent : public UActorComponent
+class GAMEPROTOTYPE_API UAIComponent : public UBaseActorComponent
 {
 	GENERATED_BODY()
 

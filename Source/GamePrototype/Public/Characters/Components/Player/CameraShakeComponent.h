@@ -3,13 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Camera/CameraShakeSourceComponent.h"
+#include "Characters/Components/BaseActorComponent.h"
 #include "CameraShakeComponent.generated.h"
 
 class IControllerInteraction;
 
 UCLASS()
-class GAMEPROTOTYPE_API UCameraShakeComponent : public UActorComponent
+class GAMEPROTOTYPE_API UCameraShakeComponent : public UBaseActorComponent
 {
 	GENERATED_BODY()
 	

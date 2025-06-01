@@ -3,12 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
+#include "Characters/Components/BaseActorComponent.h"
 #include "Interfaces/Characters/LevelInteraction.h"
 #include "XPComponent.generated.h"
 
 UCLASS() 
-class GAMEPROTOTYPE_API UXPComponent : public UActorComponent, public ILevelInteraction
+class GAMEPROTOTYPE_API UXPComponent : public UBaseActorComponent, public ILevelInteraction
 {
 	GENERATED_BODY()
 

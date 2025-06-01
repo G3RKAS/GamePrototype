@@ -3,13 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
+#include "Characters/Components/BaseActorComponent.h"
 #include "Interfaces/Characters/StatsInteraction.h"
 #include "Interfaces/Characters/LevelInteraction.h"
 #include "StatsLevelingComponent.generated.h"
 
 UCLASS()
-class GAMEPROTOTYPE_API UStatsLevelingComponent : public UActorComponent
+class GAMEPROTOTYPE_API UStatsLevelingComponent : public UBaseActorComponent
 {
 	GENERATED_BODY()
 public:

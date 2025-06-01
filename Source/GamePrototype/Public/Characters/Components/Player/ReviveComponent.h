@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
+#include "Characters/Components/BaseActorComponent.h"
 #include "Engine/TargetPoint.h"
 #include "Characters/PlayerCharacter.h"
 #include "ReviveComponent.generated.h"
@@ -12,7 +12,7 @@ class UHealthComponent;
 
 
 UCLASS()
-class GAMEPROTOTYPE_API UReviveComponent : public UActorComponent
+class GAMEPROTOTYPE_API UReviveComponent : public UBaseActorComponent
 {
 	GENERATED_BODY()
 

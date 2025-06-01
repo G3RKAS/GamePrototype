@@ -5,7 +5,7 @@
 
 void UCameraShakeComponent::MakeCameraShake()
 {
-	if ((not(GetWorld()->GetTimerManager().IsTimerActive(TimerToRemoveShake))))
+	if ((not(GetWorldTimerManager().IsTimerActive(TimerToRemoveShake))))
 	{
 		if (CameraShake)
 		{
@@ -15,7 +15,7 @@ void UCameraShakeComponent::MakeCameraShake()
 			{
 				ControllerInteraction->StartCameraShake(CameraShake, ShakeScale);
 
-				GetWorld()->GetTimerManager().SetTimer(TimerToRemoveShake, this, &ThisClass::StopCameraShake,
+				GetWorldTimerManager().SetTimer(TimerToRemoveShake, this, &ThisClass::StopCameraShake,
 													   TimeToStopShaking, false);
 			}
 		}

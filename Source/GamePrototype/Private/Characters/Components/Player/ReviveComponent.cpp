@@ -33,7 +33,7 @@ void UReviveComponent::ExecuteRevive()
 
 				check(GetWorld());
 
-				GetWorld()->GetTimerManager().SetTimer(
+				GetWorldTimerManager().SetTimer(
 					TimerToRespawn,
 					[=, this]() {
 						APlayerCharacter* NewPlayer =

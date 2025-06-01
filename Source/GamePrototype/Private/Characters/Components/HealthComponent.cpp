@@ -50,13 +50,13 @@ void UHealthComponent::SetCurrentHealth(float InCurrentHealth)
 		}
 		if (FMath::IsNearlyEqual(CurrentHealth, GetMaxHealth()))
 		{
-			GetWorld()->GetTimerManager().ClearTimer(RegenerationHandle);
+			GetWorldTimerManager().ClearTimer(RegenerationHandle);
 		}
 		else if (CurrentHealth < GetMaxHealth())
 		{
-			if (not(GetWorld()->GetTimerManager().IsTimerActive(RegenerationHandle)))
+			if (not(GetWorldTimerManager().IsTimerActive(RegenerationHandle)))
 			{
-				GetWorld()->GetTimerManager().SetTimer(RegenerationHandle, this, &ThisClass::RegenerateHealth,
+				GetWorldTimerManager().SetTimer(RegenerationHandle, this, &ThisClass::RegenerateHealth,
 													   RegeneratingRate, true);
 			}
 		}

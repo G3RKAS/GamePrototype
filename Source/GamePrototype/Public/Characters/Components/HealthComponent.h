@@ -3,12 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
+#include "Characters/Components/BaseActorComponent.h"
 #include "Interfaces/Characters/HealthInteraction.h"
 #include "HealthComponent.generated.h"
 
 UCLASS()
-class GAMEPROTOTYPE_API UHealthComponent : public UActorComponent, public IHealthInteraction
+class GAMEPROTOTYPE_API UHealthComponent : public UBaseActorComponent, public IHealthInteraction
 {
 	GENERATED_BODY()
 
