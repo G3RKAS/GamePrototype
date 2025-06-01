@@ -7,7 +7,7 @@
 #include "BaseActorComponent.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS( Abstract )
 class GAMEPROTOTYPE_API UBaseActorComponent : public UActorComponent
 {
 	GENERATED_BODY()
