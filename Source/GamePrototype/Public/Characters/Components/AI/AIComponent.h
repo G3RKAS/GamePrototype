@@ -14,12 +14,12 @@ class GAMEPROTOTYPE_API UAIComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:
-	virtual void StartWork();
+	virtual void StartWork(AAIController*);
 	virtual void StopWork();
 	virtual void MoveFinished();
 
 protected:
-	void MoveToLocation(const FVector);
+	void MoveToLocation(const FVector&);
 	
 	AAIController* AIController;
 };

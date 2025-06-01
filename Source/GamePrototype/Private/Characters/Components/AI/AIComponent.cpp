@@ -4,14 +4,14 @@
 #include "Characters/Components/AI/AIComponent.h"
 #include "AIController.h"
 
-void UAIComponent::StartWork()
+void UAIComponent::StartWork(AAIController* InAIController)
 {
-
+	AIController = InAIController;
 }
 
 void UAIComponent::StopWork()
 {
-
+	AIController = nullptr;
 }
 
 void UAIComponent::MoveFinished()
@@ -19,7 +19,7 @@ void UAIComponent::MoveFinished()
 
 }
 
-void UAIComponent::MoveToLocation(const FVector InLocation)
+void UAIComponent::MoveToLocation(const FVector& InLocation)
 {
 	check(AIController);
 	AIController->MoveToLocation(InLocation);
