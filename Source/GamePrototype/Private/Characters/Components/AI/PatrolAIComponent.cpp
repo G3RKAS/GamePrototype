@@ -7,19 +7,23 @@
 void UPatrolAIComponent::StartWork(AAIController* InAIController)
 {
 	Super::StartWork(InAIController);
-	// TODO Start moving
+
+	GetWorldTimerManager().SetTimer(MovingTimer, this, &ThisClass::MoveToPoint, WaitTimeAfterSuccessMove, false);
 }
 
 void UPatrolAIComponent::StopWork()
 {
 	Super::StopWork();
-	// TODO Delete moving timer
+	GetWorldTimerManager().ClearTimer(MovingTimer);
 }
 
-void UPatrolAIComponent::MoveFinished()
+void UPatrolAIComponent::MoveFinished(bool bIsSuccess)
 {
-	Super::MoveFinished();
-	// TODO Move next
+	Super::MoveFinished(bIsSuccess);
+	
+	float WaitTime = bIsSuccess ? WaitTimeAfterSuccessMove : WaitTimeAfterUnSuccessMove;
+
+	GetWorldTimerManager().SetTimer(MovingTimer, this, &ThisClass::MoveToPoint, WaitTime, false);
 }
 
 void UPatrolAIComponent::MoveToPoint()

@@ -13,13 +13,19 @@ class GAMEPROTOTYPE_API UPatrolAIComponent : public UAIComponent
 public:
 	virtual void StartWork(AAIController*) override;
 	virtual void StopWork() override;
-	virtual void MoveFinished() override;
+	virtual void MoveFinished(bool) override;
 	
 private:
 	void MoveToPoint();
 	FVector GetRandomPointToMove(FVector&);
 	FTimerHandle MovingTimer;
 
-	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "10", UIMin = "10"))
-	float NavRadius = 2000;
+	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "10", UIMin = "10", Units = "cm"))
+	float NavRadius = 2000.f;
+
+	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "0.1", UIMin = "0.1", Units = "s"))
+	float WaitTimeAfterSuccessMove = 1.5f;
+
+	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "0.1", UIMin = "0.1", Units = "s"))
+	float WaitTimeAfterUnSuccessMove = 0.3f;
 };

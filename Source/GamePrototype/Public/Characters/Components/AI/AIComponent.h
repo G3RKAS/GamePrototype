@@ -16,7 +16,7 @@ class GAMEPROTOTYPE_API UAIComponent : public UBaseActorComponent
 public:
 	virtual void StartWork(AAIController*);
 	virtual void StopWork();
-	virtual void MoveFinished();
+	virtual void MoveFinished(bool);
 
 protected:
 	void MoveToLocation(const FVector&);
