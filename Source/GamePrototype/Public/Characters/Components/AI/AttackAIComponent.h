@@ -36,6 +36,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "0", UIMin = "0", Units = "s"))
 	float AttackCoolDown = 0.5f;
 
+	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "0", UIMin = "0"))
+	float AttackAngle = 15.0f;
+
 	UPROPERTY()
 	AActor* Enemy;
 

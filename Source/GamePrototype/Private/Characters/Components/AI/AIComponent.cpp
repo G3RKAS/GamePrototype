@@ -6,11 +6,14 @@
 
 void UAIComponent::StartWork(AAIController* InAIController)
 {
+	check(InAIController)
 	AIController = InAIController;
 }
 
 void UAIComponent::StopWork()
 {
+	check(AIController)
+	AIController->StopMovement();
 	AIController = nullptr;
 }
 

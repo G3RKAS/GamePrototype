@@ -3,6 +3,7 @@
 
 #include "Characters/Components/AI/AttackAIComponent.h"
 #include <Interfaces/Characters/StatsInteraction.h>
+#include <Kismet/KismetMathLibrary.h>
 
 void UAttackAIComponent::StartWork(AAIController* InAIController)
 {
@@ -50,22 +51,42 @@ void UAttackAIComponent::AttackEnemy()
 	}
 
 	check(GetControlledPawn());
+
 	const FVector ThisLocation = GetControlledPawn()->GetActorLocation();
 	const FVector TargetLocation = Enemy->GetActorLocation();
 
-	FRotator LookAtRotation = (TargetLocation - ThisLocation).Rotation();
-	LookAtRotation.Pitch = 0.0f;
-	LookAtRotation.Roll = 0.0f;
+	FRotator LookingRotator =
+		FRotationMatrix::MakeFromX(Enemy->GetActorLocation() - GetControlledPawn()->GetActorLocation()).Rotator();
 
-	GetControlledPawn()->SetActorRotation(LookAtRotation);
+	float YawDiff =
+		FMath::Abs(FMath::FindDeltaAngleDegrees(GetControlledPawn()->GetActorRotation().Yaw, LookingRotator.Yaw));
 
-	IStatsInteraction* StatsInteraction = Cast<IStatsInteraction>(GetControlledPawn());
+	UE_LOG(LogTemp, Warning, TEXT("Yaw = %f"), YawDiff);
 
-	UE_LOG(LogTemp, Warning, TEXT("Attack %s Damage %f"), *Enemy->GetName(), StatsInteraction->GetAttackDamage());
-	PauseAttackTimer();
+	if (YawDiff < AttackAngle)
+	{
 
-	FTimerHandle TimerDelay;
-	GetWorldTimerManager().SetTimer(TimerDelay, this, &ThisClass::UnPauseAttackTimer, AttackCoolDown, false);
+		IStatsInteraction* StatsInteraction = Cast<IStatsInteraction>(GetControlledPawn());
+
+		UE_LOG(LogTemp, Warning, TEXT("Attack %s Damage %f"), *Enemy->GetName(), StatsInteraction->GetAttackDamage());
+		PauseAttackTimer();
+
+		FTimerHandle TimerDelay;
+		GetWorldTimerManager().SetTimer(TimerDelay, this, &ThisClass::UnPauseAttackTimer, AttackCoolDown, false);
+	}
+	else
+	{
+		FRotator NewRotator = (TargetLocation - ThisLocation).Rotation();
+		NewRotator.Pitch = 0.0f;
+		NewRotator.Roll = 0.0f;
+
+		FRotator NewRotation =
+			FMath::RInterpTo(GetControlledPawn()->GetActorRotation(), NewRotator,
+												GetWorld()->GetDeltaSeconds(), 10.f);
+
+		GetControlledPawn()->SetActorRotation(NewRotation);
+	}
+
 }
 
 void UAttackAIComponent::PauseAttackTimer()
