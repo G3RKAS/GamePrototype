@@ -8,6 +8,7 @@
 #include "AnimalController.generated.h"
 
 class UPatrolAIComponent;
+class UAttackAIComponent;
 class UAIComponent;
 
 UCLASS()
@@ -30,6 +31,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UPatrolAIComponent* PatrolComponent;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UAttackAIComponent* AttackComponent;
 
 	UPROPERTY()
 	UAIComponent* CurrentComponentWork;

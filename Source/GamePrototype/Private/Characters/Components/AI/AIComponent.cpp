@@ -21,11 +21,12 @@ void UAIComponent::MoveFinished(bool)
 
 APawn* UAIComponent::GetControlledPawn()
 {
+	check(AIController);
 	return AIController->GetPawn();
 }
 
-void UAIComponent::MoveToLocation(const FVector& InLocation)
+void UAIComponent::MoveToLocation(const FVector& InLocation, float AcceptanceRadius)
 {
 	check(AIController);
-	AIController->MoveToLocation(InLocation);
+	AIController->MoveToLocation(InLocation, AcceptanceRadius);
 }

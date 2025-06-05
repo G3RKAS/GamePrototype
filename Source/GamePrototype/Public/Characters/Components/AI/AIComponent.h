@@ -19,7 +19,8 @@ public:
 	virtual void MoveFinished(bool);
 
 protected:
-	void MoveToLocation(const FVector&);
-	
+	void MoveToLocation(const FVector&, float AcceptanceRadius = -1.0f);
+	APawn* GetControlledPawn();
+
 	AAIController* AIController;
 };

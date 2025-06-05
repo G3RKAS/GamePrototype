@@ -28,6 +28,7 @@ void UPatrolAIComponent::MoveFinished(bool bIsSuccess)
 
 void UPatrolAIComponent::MoveToPoint()
 {
+	check(GetControlledPawn());
 	FVector SourcePoint = GetControlledPawn()->GetActorLocation();
 	FVector NextPoint = GetRandomPointToMove(SourcePoint);
 	MoveToLocation(NextPoint);
@@ -36,7 +37,7 @@ void UPatrolAIComponent::MoveToPoint()
 FVector UPatrolAIComponent::GetRandomPointToMove(FVector& InSourcePoint)
 {
 	UNavigationSystemV1* NavSystem = UNavigationSystemV1::GetNavigationSystem(GetWorld());
-
+	check(NavSystem);
 	FNavLocation NavResult;
 	NavSystem->GetRandomPointInNavigableRadius(InSourcePoint, NavRadius, NavResult);
 
