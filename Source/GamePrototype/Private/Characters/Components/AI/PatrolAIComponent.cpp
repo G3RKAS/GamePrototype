@@ -28,7 +28,7 @@ void UPatrolAIComponent::MoveFinished(bool bIsSuccess)
 
 void UPatrolAIComponent::MoveToPoint()
 {
-	FVector SourcePoint = GetOwner()->GetActorLocation();
+	FVector SourcePoint = GetControlledPawn()->GetActorLocation();
 	FVector NextPoint = GetRandomPointToMove(SourcePoint);
 	MoveToLocation(NextPoint);
 }

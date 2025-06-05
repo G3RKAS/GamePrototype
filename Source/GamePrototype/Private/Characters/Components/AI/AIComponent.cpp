@@ -19,6 +19,11 @@ void UAIComponent::MoveFinished(bool)
 
 }
 
+APawn* UAIComponent::GetControlledPawn()
+{
+	return AIController->GetPawn();
+}
+
 void UAIComponent::MoveToLocation(const FVector& InLocation)
 {
 	check(AIController);
