@@ -12,9 +12,9 @@ int UXPComponent::GetLevel()
 	return Level;
 }
 
-void UXPComponent::SetLevel(float InLevel)
+void UXPComponent::SetLevel(int InLevel)
 {
-	SetTotalXP(GetXPForLevel(Level));
+	SetTotalXP(GetXPForLevel(InLevel));
 }
 
 OnLevelUpSignature& UXPComponent::OnLevelUp()

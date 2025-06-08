@@ -1,6 +1,5 @@
 // (c) G3RKA. Game Prototype
 
-
 #include "Characters/Components/StatsLevelingComponent.h"
 
 void UStatsLevelingComponent::BeginPlay()
@@ -14,10 +13,6 @@ void UStatsLevelingComponent::BeginPlay()
 	{
 		LevelInteraction->OnLevelUp().AddUObject(this, &ThisClass::CalculateNewStats);
 	}
-
-	UE_LOG(LogTemp, Warning, TEXT("Name = %s Level = %d MaxHealth = %f AttackDamage = %f AttackSpeed = %f"),
-		   *GetOwner()->GetName(), LevelInteraction->GetLevel(), StatsInteraction->GetMaxHealth(),
-		   StatsInteraction->GetAttackDamage(), StatsInteraction->GetAttackSpeed())
 }
 
 float UStatsLevelingComponent::GetLevelStat(float Stat)
@@ -60,5 +55,9 @@ void UStatsLevelingComponent::CalculateNewStats(uint8)
 		StatsInteraction->SetMaxHealth(GetLevelStat(BaseMaxHealth));
 		StatsInteraction->SetAttackDamage(GetLevelStat(BaseAttackDamage));
 		StatsInteraction->SetAttackSpeed(GetLevelStat(BaseAttackSpeed));
+
+		UE_LOG(LogTemp, Warning, TEXT("Name = %s Level = %d MaxHealth = %f AttackDamage = %f AttackSpeed = %f"),
+			   *GetOwner()->GetName(), LevelInteraction->GetLevel(), StatsInteraction->GetMaxHealth(),
+			   StatsInteraction->GetAttackDamage(), StatsInteraction->GetAttackSpeed())
 	}
 }

@@ -20,6 +20,6 @@ class GAMEPROTOTYPE_API ILevelInteraction
 
 public:
 	virtual int GetLevel() = 0;
-	virtual void SetLevel(float) = 0;
+	virtual void SetLevel(int) = 0;
 	virtual OnLevelUpSignature& OnLevelUp() = 0;
 };
