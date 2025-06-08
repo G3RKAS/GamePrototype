@@ -3,6 +3,8 @@
 
 #include "Characters/Components/AI/PatrolAIComponent.h"
 #include "NavigationSystem.h"
+#include "AIController.h"
+
 
 void UPatrolAIComponent::StartWork(AAIController* InAIController)
 {
@@ -22,7 +24,7 @@ void UPatrolAIComponent::MoveFinished(bool bIsSuccess)
 	Super::MoveFinished(bIsSuccess);
 	
 	float WaitTime = bIsSuccess ? WaitTimeAfterSuccessMove : WaitTimeAfterUnSuccessMove;
-
+	AIController->StopMovement();
 	GetWorldTimerManager().SetTimer(MovingTimer, this, &ThisClass::MoveToPoint, WaitTime, false);
 }
 
@@ -31,6 +33,7 @@ void UPatrolAIComponent::MoveToPoint()
 	check(GetControlledPawn());
 	FVector SourcePoint = GetControlledPawn()->GetActorLocation();
 	FVector NextPoint = GetRandomPointToMove(SourcePoint);
+	DrawDebugSphere(GetWorld(), NextPoint, 100.f, 10, FColor::Red, false, 5);
 	MoveToLocation(NextPoint);
 }
 
