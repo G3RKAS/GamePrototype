@@ -25,7 +25,7 @@ protected:
 
 private:
 	UPROPERTY()
-	APawn* Pawn;
+	TObjectPtr<APawn> Pawn;
 
 	IAnimInteraction* AnimInterface;
 };

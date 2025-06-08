@@ -33,9 +33,10 @@ void UReviveComponent::ExecuteRevive()
 
 				check(GetWorld());
 
+				// TODO Fix this reference
 				GetWorldTimerManager().SetTimer(
 					TimerToRespawn,
-					[=, this]() {
+					[ControllerInteraction, LocationToSpawn, this]() {
 						APlayerCharacter* NewPlayer =
 							GetWorld()->SpawnActor<APlayerCharacter>(PlayerClass, LocationToSpawn, FRotator());
 						ILevelInteraction* LevelInteraction_OldPlayer =

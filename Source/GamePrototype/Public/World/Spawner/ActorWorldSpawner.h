@@ -20,10 +20,10 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	UBoxComponent* BoxComponent;
+	TObjectPtr<UBoxComponent> BoxComponent;
 
 	UPROPERTY()
-	TArray<AActor*> SpawnedActors;
+	TArray<TObjectPtr<AActor>> SpawnedActors;
 
 	UPROPERTY(EditAnywhere, Category = "Settings")
 	TSubclassOf<AActor> ActorToSpawn;

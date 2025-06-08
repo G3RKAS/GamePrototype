@@ -31,16 +31,16 @@ public:
 
 protected:
 	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* CameraAction;
+	TObjectPtr<UInputAction> CameraAction;
 
 	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* MovementAction;
+	TObjectPtr<UInputAction> MovementAction;
 
 	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* JumpAction;
+	TObjectPtr<UInputAction> JumpAction;
 
 	UPROPERTY(EditAnywhere, Category = Input)
-	UInputAction* CameraMoveAction;
+	TObjectPtr<UInputAction> CameraMoveAction;
 
 	UPROPERTY(EditAnywhere, Category = Input, meta = (ClampMin = "0", UIMin = "0"))
 	float MaxTargetArmLength;
@@ -52,16 +52,16 @@ protected:
 	float ArmLengthMultiplier = 1;
 
 	UPROPERTY(EditAnywhere, Category = "Components")
-	UCameraComponent* CameraComponent;
+	TObjectPtr<UCameraComponent> CameraComponent;
 
 	UPROPERTY(EditAnywhere, Category = "Components")
-	USpringArmComponent* SpringArmComponent;
+	TObjectPtr<USpringArmComponent> SpringArmComponent;
 
 	UPROPERTY(EditAnywhere, Category = "Components")
-	UReviveComponent* ReviveComponent;
+	TObjectPtr<UReviveComponent> ReviveComponent;
 
 	UPROPERTY(EditAnywhere, Category = "Components")
-	UCameraShakeComponent* CameraShakeComponent;
+	TObjectPtr<UCameraShakeComponent> CameraShakeComponent;
 
 private:
 	void Look(const FInputActionValue& Value);

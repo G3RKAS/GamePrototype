@@ -40,7 +40,7 @@ private:
 	float AttackAngle = 15.0f;
 
 	UPROPERTY()
-	AActor* Enemy;
+	TObjectPtr<AActor> Enemy;
 
 	FTimerHandle AttackTimer;
 };

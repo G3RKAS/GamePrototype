@@ -22,5 +22,5 @@ protected:
 	void MoveToLocation(const FVector&, float AcceptanceRadius = -1.0f);
 	APawn* GetControlledPawn();
 
-	AAIController* AIController;
+	TObjectPtr<AAIController> AIController;
 };

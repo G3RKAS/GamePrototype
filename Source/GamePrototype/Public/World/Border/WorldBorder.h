@@ -18,14 +18,14 @@ public:
 
 protected:
 	UPROPERTY(EditInstanceOnly, Category = "Components")
-	UBoxComponent* ExternalBoxCollision;
+	TObjectPtr<UBoxComponent> ExternalBoxCollision;
 
 	UPROPERTY(EditInstanceOnly, Category = "Components") 
-	UBoxComponent* InternalBoxCollision;
+	TObjectPtr<UBoxComponent> InternalBoxCollision;
 
 private:
 	UPROPERTY()
-	AActor* Player;
+	TObjectPtr<AActor> Player;
 	UPROPERTY()
 	FVector Location;
 

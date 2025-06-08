@@ -20,7 +20,7 @@ public:
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UAIPerceptionComponent* AIPerceptionComponent;
+	TObjectPtr<UAIPerceptionComponent> AIPerceptionComponent;
 
 	virtual void OnMoveCompleted(FAIRequestID, const FPathFollowingResult&) override;
 	virtual void OnPossess(APawn*) override;
@@ -30,11 +30,11 @@ private:
 	void UpdateTargetInfo(AActor* Actor, FAIStimulus Stimulus);
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UPatrolAIComponent* PatrolComponent;
+	TObjectPtr<UPatrolAIComponent> PatrolComponent;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UAttackAIComponent* AttackComponent;
+	TObjectPtr<UAttackAIComponent> AttackComponent;
 
 	UPROPERTY()
-	UAIComponent* CurrentComponentWork;
+	TObjectPtr<UAIComponent> CurrentComponentWork;
 };

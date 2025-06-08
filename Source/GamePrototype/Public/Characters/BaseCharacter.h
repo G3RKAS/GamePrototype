@@ -34,11 +34,11 @@ public:
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UXPComponent* XPComponent;
+	TObjectPtr<UXPComponent> XPComponent;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UHealthComponent* HealthComponent;
+	TObjectPtr<UHealthComponent> HealthComponent;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UStatsLevelingComponent* StatsComponent;
+	TObjectPtr<UStatsLevelingComponent> StatsComponent;
 };
