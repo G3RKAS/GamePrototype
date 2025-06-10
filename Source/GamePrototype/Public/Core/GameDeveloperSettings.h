@@ -13,5 +13,5 @@ class GAMEPROTOTYPE_API UGameDeveloperSettings : public UDeveloperSettings
 	GENERATED_BODY()
 public:
 	UPROPERTY(Config, EditDefaultsOnly, Category = "DataTables")
-	TSoftClassPtr<UDataTable> WeaponData;
+	TSoftObjectPtr<UDataTable> WeaponData;
 };
