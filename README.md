@@ -4,15 +4,15 @@ Main things of this project that will be added over time:
    - [ ] New Game
    - [ ] Exit
 - Game
-   - [ ] 3rd person
-   - [ ] Character moving(+ jump)
+   - [X] 3rd person
+   - [X] Character moving(+ jump)
    - [ ] Melee weapons with diff damage&speed
-   - [ ] Agressive animals with stats leveling
+   - [X] Agressive animals with stats leveling
    - [ ] Character stats leveling(Damage, Speed, Health etc.)
-   - [ ] Health system with recovery over time
+   - [X] Health system with recovery over time
    - [ ] Block enemy damage
    - [ ] Dynamic Day/Night system
-   - [ ] Character can rebirth with xp losing
+   - [X] Character can rebirth with xp losing
 - Pause menu
    - [ ] Continue
    - [ ] Exit to Main menu
