@@ -11,6 +11,23 @@ AGameBaseWeapon::AGameBaseWeapon() : Super()
 	SetRootComponent(StaticMeshComponent);
 }
 
+void AGameBaseWeapon::ChangeWeaponBasedOnName(FName InWeaponRowName)
+{
+	WeaponRow.RowName = InWeaponRowName;
+	InitStaticMeshComponent();
+	InitWeaponStats();
+}
+
+float AGameBaseWeapon::GetAttackDamage()
+{
+	return WeaponAttackDamage;
+}
+
+float AGameBaseWeapon::GetAttackSpeed()
+{
+	return WeaponAttackSpeed;
+}
+
 void AGameBaseWeapon::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);

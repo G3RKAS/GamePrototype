@@ -14,6 +14,11 @@ class GAMEPROTOTYPE_API AGameBaseWeapon : public AActor
 public:	
 	AGameBaseWeapon();
 
+	void ChangeWeaponBasedOnName(FName);
+
+	float GetAttackDamage();
+	float GetAttackSpeed();
+
 	virtual void OnConstruction(const FTransform&);
 
 private:

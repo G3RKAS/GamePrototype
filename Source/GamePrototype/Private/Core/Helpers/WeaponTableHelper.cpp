@@ -5,6 +5,11 @@
 #include <Core/Helpers/DataTableHelper.h>
 #include <Core/GameBaseTypes.h>
 
+const bool FWeaponTableHelper::HasWeaponInTable(FName InRowName)
+{
+	return GetWeaponTable()->GetRowNames().Contains(InRowName);
+}
+
 const FText FWeaponTableHelper::GetWeaponName(FName InRowName)
 {
 	const FWeaponInfo* WeaponInfo = GetWeaponInfo(InRowName);

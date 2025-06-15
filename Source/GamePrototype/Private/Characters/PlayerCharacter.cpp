@@ -13,6 +13,8 @@
 #include "Characters/Components/Player/CameraShakeComponent.h"
 #include "Interfaces/Controller/ShakeInteraction.h"
 
+#include "Characters/Components/Player/WeaponComponent.h"
+
 
 APlayerCharacter::APlayerCharacter() : Super()
 {
@@ -33,6 +35,8 @@ APlayerCharacter::APlayerCharacter() : Super()
 	bUseControllerRotationYaw = false;
 
 	ReviveComponent = CreateDefaultSubobject<UReviveComponent>(TEXT("Revive Component"));
+
+	WeaponComponent = CreateDefaultSubobject<UWeaponComponent>(TEXT("Weapon Component"));
 
 	Tags.Add(FName("Player"));
 }

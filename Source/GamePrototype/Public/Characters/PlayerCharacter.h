@@ -13,6 +13,7 @@ class UInputAction;
 struct FInputActionValue;
 class UReviveComponent;
 class UCameraShakeComponent;
+class UWeaponComponent;
 
 UCLASS(Abstract)
 class GAMEPROTOTYPE_API APlayerCharacter : public ABaseCharacter, public IControllerInteraction
@@ -62,6 +63,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Components")
 	TObjectPtr<UCameraShakeComponent> CameraShakeComponent;
+
+	UPROPERTY(EditAnywhere, Category = "Components")
+	TObjectPtr<UWeaponComponent> WeaponComponent;
 
 private:
 	void Look(const FInputActionValue& Value);
