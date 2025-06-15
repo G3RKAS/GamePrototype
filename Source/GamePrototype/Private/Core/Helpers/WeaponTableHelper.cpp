@@ -12,21 +12,21 @@ const FText FWeaponTableHelper::GetWeaponName(FName InRowName)
 	return WeaponInfo->WeaponName;
 }
 
-const UStaticMesh* FWeaponTableHelper::GetWeaponStaticMesh(FName InRowName)
+UStaticMesh* FWeaponTableHelper::GetWeaponStaticMesh(FName InRowName)
 {
 	const FWeaponInfo* WeaponInfo = GetWeaponInfo(InRowName);
 	check(WeaponInfo);
 	return WeaponInfo->WeaponStaticMesh.LoadSynchronous();
 }
 
-const float FWeaponTableHelper::GetWeaponDamage(FName InRowName)
+const float FWeaponTableHelper::GetWeaponAttackDamage(FName InRowName)
 {
 	const FWeaponInfo* WeaponInfo = GetWeaponInfo(InRowName);
 	check(WeaponInfo);
 	return WeaponInfo->WeaponAttackDamage;
 }
 
-const float FWeaponTableHelper::GetWeaponAttackDamage(FName InRowName)
+const float FWeaponTableHelper::GetWeaponAttackSpeed(FName InRowName)
 {
 	const FWeaponInfo* WeaponInfo = GetWeaponInfo(InRowName);
 	check(WeaponInfo);

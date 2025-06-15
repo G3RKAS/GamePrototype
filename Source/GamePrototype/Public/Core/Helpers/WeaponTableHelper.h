@@ -13,8 +13,8 @@ public:
 	static const FWeaponInfo* GetWeaponInfo(FName InRowName);
 
 	static const FText GetWeaponName(FName InRowName);
-	static const UStaticMesh* GetWeaponStaticMesh(FName InRowName);
-	static const float GetWeaponDamage(FName InRowName);
+	static UStaticMesh* GetWeaponStaticMesh(FName InRowName);
 	static const float GetWeaponAttackDamage(FName InRowName);
+	static const float GetWeaponAttackSpeed(FName InRowName);
 
 };
