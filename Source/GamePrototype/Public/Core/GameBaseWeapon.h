@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "GameBaseWeapon.generated.h"
 
+class UBoxComponent;
+
 UCLASS()
 class GAMEPROTOTYPE_API AGameBaseWeapon : public AActor
 {
@@ -22,6 +24,9 @@ public:
 	virtual void OnConstruction(const FTransform&);
 
 private:
+	UPROPERTY(EditAnywhere, Category = "Settings")
+	TObjectPtr<UBoxComponent> BoxComponent;
+
 	UPROPERTY(VisibleInstanceOnly, Category = "Components")
 	TObjectPtr<UStaticMeshComponent> StaticMeshComponent;
 
@@ -34,6 +39,9 @@ private:
 	UPROPERTY(VisibleInstanceOnly, Category = "Settings")
 	float WeaponAttackSpeed = 0;
 
+	UFUNCTION()
+	void PickUpWeapon(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+					  int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	void InitStaticMeshComponent();
 	void InitWeaponStats();
 };

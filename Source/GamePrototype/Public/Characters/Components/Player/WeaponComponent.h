@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Characters/Components/BaseActorComponent.h"
+#include "Interfaces/Characters/Player/WeaponInteraction.h"
 #include "WeaponComponent.generated.h"
 
 DECLARE_MULTICAST_DELEGATE(FOnWeaponChanged)
@@ -11,22 +12,18 @@ DECLARE_MULTICAST_DELEGATE(FOnWeaponChanged)
 class AGameBaseWeapon;
 
 UCLASS()
-class GAMEPROTOTYPE_API UWeaponComponent : public UBaseActorComponent
+class GAMEPROTOTYPE_API UWeaponComponent : public UBaseActorComponent, public IWeaponInteraction
 {
 	GENERATED_BODY()
 public:
-	void AddWeapon(FName);
-	bool RemoveWeapon(FName);
+	virtual void EquipWeapon(FName) override;
+	virtual FName GetCurrentWeaponName() override;
 	bool HasWeapon(FName);
-	void EquipWeapon(FName);
-	const AGameBaseWeapon* GetCurrentWeaponActor();
+	AGameBaseWeapon* GetCurrentWeaponActor();
 
 	FOnWeaponChanged& OnWeaponChanged();
 
 private:
-	UPROPERTY(EditAnywhere, Category = "Settings");
-	TArray<FName> WeaponList;
-
 	TObjectPtr<AGameBaseWeapon> WeaponActor;
 
 	FName CurrentWeapon;

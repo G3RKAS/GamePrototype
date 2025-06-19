@@ -1,14 +1,42 @@
 // (c) G3RKA. Game Prototype
 
-
 #include "Core/GameBaseWeapon.h"
+#include "Components/BoxComponent.h"
 #include "Core/Helpers/WeaponTableHelper.h"
+#include "Interfaces/Characters/Player/WeaponInteraction.h"
 
 AGameBaseWeapon::AGameBaseWeapon() : Super()
 {
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Staticmesh component"));
-	check(StaticMeshComponent)
-	SetRootComponent(StaticMeshComponent);
+	check(StaticMeshComponent) SetRootComponent(StaticMeshComponent);
+
+	BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("Box Component"));
+	check(BoxComponent);
+	BoxComponent->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::PickUpWeapon);
+}
+
+void AGameBaseWeapon::PickUpWeapon(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+								   UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
+								   const FHitResult& SweepResult)
+{
+	UE_LOG(LogTemp, Warning, TEXT("--------------"));
+	UE_LOG(LogTemp, Warning, TEXT("Overlap %s"), *WeaponRow.RowName.ToString());
+	IWeaponInteraction* WeaponInteraction = OtherActor->FindComponentByInterface<IWeaponInteraction>();
+	if (WeaponInteraction)
+	{
+		FName OldName = WeaponRow.RowName;
+		if (not(WeaponInteraction->GetCurrentWeaponName().IsNone()))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Changed"));
+			ChangeWeaponBasedOnName(WeaponInteraction->GetCurrentWeaponName());
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Deleted"));
+			SetLifeSpan(0.1f);
+		}
+		WeaponInteraction->EquipWeapon(OldName);
+	}
 }
 
 void AGameBaseWeapon::ChangeWeaponBasedOnName(FName InWeaponRowName)
