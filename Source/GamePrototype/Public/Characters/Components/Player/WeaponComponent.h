@@ -23,7 +23,14 @@ public:
 
 	FOnWeaponChanged& OnWeaponChanged();
 
+protected:
+	virtual void BeginPlay() override;
+
 private:
+	UPROPERTY(EditAnywhere, Category = "Settings")
+	FDataTableRowHandle StartWeapon;
+
+	UPROPERTY()
 	TObjectPtr<AGameBaseWeapon> WeaponActor;
 
 	FName CurrentWeapon;

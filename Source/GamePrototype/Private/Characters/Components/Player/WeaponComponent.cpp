@@ -40,3 +40,12 @@ FOnWeaponChanged& UWeaponComponent::OnWeaponChanged()
 {
 	return OnWeaponChangedEvent;
 }
+
+void UWeaponComponent::BeginPlay()
+{
+	Super::BeginPlay();
+	if (not(StartWeapon.RowName.IsNone()))
+	{
+		EquipWeapon(StartWeapon.RowName);
+	}
+}

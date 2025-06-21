@@ -8,11 +8,8 @@
 AGameBaseWeapon::AGameBaseWeapon() : Super()
 {
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Staticmesh component"));
-	check(StaticMeshComponent) SetRootComponent(StaticMeshComponent);
-
-	BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("Box Component"));
-	check(BoxComponent);
-	BoxComponent->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::PickUpWeapon);
+	check(StaticMeshComponent);
+	SetRootComponent(StaticMeshComponent);
 }
 
 void AGameBaseWeapon::PickUpWeapon(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -35,7 +32,10 @@ void AGameBaseWeapon::PickUpWeapon(UPrimitiveComponent* OverlappedComponent, AAc
 			UE_LOG(LogTemp, Warning, TEXT("Deleted"));
 			SetLifeSpan(0.1f);
 		}
+		check(StaticMeshComponent);
+		StaticMeshComponent->SetGenerateOverlapEvents(false);
 		WeaponInteraction->EquipWeapon(OldName);
+		GetWorldTimerManager().SetTimer(TimerHandle, this, &ThisClass::EnableCollisions, PickUpTimeOut, false);
 	}
 }
 
@@ -77,4 +77,10 @@ void AGameBaseWeapon::InitWeaponStats()
 {
 	WeaponAttackDamage = FWeaponTableHelper::GetWeaponAttackDamage(WeaponRow.RowName);
 	WeaponAttackSpeed = FWeaponTableHelper::GetWeaponAttackSpeed(WeaponRow.RowName);
+}
+
+void AGameBaseWeapon::EnableCollisions()
+{
+	check(StaticMeshComponent);
+	StaticMeshComponent->SetGenerateOverlapEvents(true);
 }

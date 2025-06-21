@@ -24,9 +24,6 @@ public:
 	virtual void OnConstruction(const FTransform&);
 
 private:
-	UPROPERTY(EditAnywhere, Category = "Settings")
-	TObjectPtr<UBoxComponent> BoxComponent;
-
 	UPROPERTY(VisibleInstanceOnly, Category = "Components")
 	TObjectPtr<UStaticMeshComponent> StaticMeshComponent;
 
@@ -34,14 +31,21 @@ private:
 	FDataTableRowHandle WeaponRow;
 
 	UPROPERTY(VisibleInstanceOnly, Category = "Settings")
-	float WeaponAttackDamage = 0;
+	float WeaponAttackDamage = 0.f;
 
 	UPROPERTY(VisibleInstanceOnly, Category = "Settings")
-	float WeaponAttackSpeed = 0;
+	float WeaponAttackSpeed = 0.f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Settings")
+	float PickUpTimeOut = 1.f;
 
 	UFUNCTION()
 	void PickUpWeapon(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 					  int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	FTimerHandle TimerHandle;
+
 	void InitStaticMeshComponent();
 	void InitWeaponStats();
+	void EnableCollisions();
 };
