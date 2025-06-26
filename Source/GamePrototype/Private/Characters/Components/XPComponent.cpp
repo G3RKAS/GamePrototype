@@ -17,7 +17,7 @@ void UXPComponent::SetLevel(int InLevel)
 	SetTotalXP(GetXPForLevel(InLevel));
 }
 
-OnLevelUpSignature& UXPComponent::OnLevelUp()
+FOnLevelUpSignature& UXPComponent::OnLevelUp()
 {
 	return OnLevelUpEvent;
 }

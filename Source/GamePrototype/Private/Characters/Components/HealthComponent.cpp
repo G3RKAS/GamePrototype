@@ -23,7 +23,7 @@ void UHealthComponent::SetMaxHealth(float InMaxHealth)
 	MaxHealth = InMaxHealth;
 }
 
-OnDeathSignature& UHealthComponent::OnDeath()
+FOnDeathSignature& UHealthComponent::OnDeath()
 {
 	return OnDeathEvent;
 }

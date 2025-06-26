@@ -20,7 +20,7 @@ public:
 	// ILevelInteraction
 	virtual int GetLevel() override;
 	virtual void SetLevel(int) override;
-	virtual OnLevelUpSignature& OnLevelUp() override;
+	virtual FOnLevelUpSignature& OnLevelUp() override;
 
 protected:
 	virtual void BeginPlay() override;
@@ -39,5 +39,5 @@ private:
 	
 	int XPOnLevelUP = 1000;
 
-	OnLevelUpSignature OnLevelUpEvent;
+	FOnLevelUpSignature OnLevelUpEvent;
 };

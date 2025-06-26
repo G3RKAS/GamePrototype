@@ -21,7 +21,7 @@ public:
 
 	void SetMaxHealth(float);
 
-	virtual OnDeathSignature& OnDeath() override;
+	virtual FOnDeathSignature& OnDeath() override;
 
 protected:
 	virtual void BeginPlay() override;
@@ -44,9 +44,9 @@ private:
 
 	FTimerHandle RegenerationHandle;
 
-	OnHealthChangedSignature OnHealthChangedEvent;
+	FOnHealthChangedSignature OnHealthChangedEvent;
 
-	OnDeathSignature OnDeathEvent;
+	FOnDeathSignature OnDeathEvent;
 
 	void SetCurrentHealth(float);
 	void RegenerateHealth();

@@ -6,7 +6,7 @@
 #include "UObject/Interface.h"
 #include "LevelInteraction.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_OneParam(OnLevelUpSignature, uint8)
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnLevelUpSignature, uint8)
 
 UINTERFACE(MinimalAPI)
 class ULevelInteraction : public UInterface
@@ -21,5 +21,5 @@ class GAMEPROTOTYPE_API ILevelInteraction
 public:
 	virtual int GetLevel() = 0;
 	virtual void SetLevel(int) = 0;
-	virtual OnLevelUpSignature& OnLevelUp() = 0;
+	virtual FOnLevelUpSignature& OnLevelUp() = 0;
 };

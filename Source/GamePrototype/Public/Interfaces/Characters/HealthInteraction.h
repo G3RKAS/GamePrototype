@@ -6,8 +6,8 @@
 #include "UObject/Interface.h"
 #include "HealthInteraction.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_OneParam(OnHealthChangedSignature, float);
-DECLARE_MULTICAST_DELEGATE(OnDeathSignature);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnHealthChangedSignature, float);
+DECLARE_MULTICAST_DELEGATE(FOnDeathSignature);
 
 UINTERFACE(MinimalAPI)
 class UHealthInteraction : public UInterface
@@ -20,5 +20,5 @@ class GAMEPROTOTYPE_API IHealthInteraction
 	GENERATED_BODY()
 
 public:
-	virtual OnDeathSignature& OnDeath() = 0;
+	virtual FOnDeathSignature& OnDeath() = 0;
 };
