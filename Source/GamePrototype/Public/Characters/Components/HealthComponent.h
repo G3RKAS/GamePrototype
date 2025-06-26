@@ -23,6 +23,10 @@ public:
 
 	virtual FOnDeathSignature& OnDeath() override;
 
+	virtual FOnHealthChangedSignature& OnHealthChanged() override;
+
+	virtual float GetHealthPercent() override;
+
 protected:
 	virtual void BeginPlay() override;
 

@@ -28,6 +28,16 @@ FOnDeathSignature& UHealthComponent::OnDeath()
 	return OnDeathEvent;
 }
 
+FOnHealthChangedSignature& UHealthComponent::OnHealthChanged()
+{
+	return OnHealthChangedEvent;
+}
+
+float UHealthComponent::GetHealthPercent()
+{
+	return GetCurrentHealth()/GetMaxHealth();
+}
+
 void UHealthComponent::AddHealth(float InHealth)
 {
 	SetCurrentHealth(CurrentHealth + InHealth);

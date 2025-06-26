@@ -1,7 +1,7 @@
 // (c) G3RKA. Game Prototype
 
 
-#include "UI/GameButton.h"
+#include "UI/BaseObjects/GameButton.h"
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
 
