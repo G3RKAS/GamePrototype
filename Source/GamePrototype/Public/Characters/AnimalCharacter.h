@@ -6,7 +6,7 @@
 #include "Characters/BaseCharacter.h"
 #include "AnimalCharacter.generated.h"
 
-class UBoxComponent;
+class UHealthWidgetComponent;
 
 UCLASS(Abstract)
 class GAMEPROTOTYPE_API AAnimalCharacter : public ABaseCharacter
@@ -27,4 +27,7 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Attack Settings", meta = (ClampMin = "0", UIMin = "0"))
 	float AttackSpeed = 1.f;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	TObjectPtr<UHealthWidgetComponent> HealthWidgetComponent;
 };

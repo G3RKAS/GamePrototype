@@ -1,6 +1,5 @@
 // (c) G3RKA. Game Prototype
 
-
 #include "Characters/PlayerCharacter.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
@@ -14,7 +13,6 @@
 #include "Interfaces/Controller/ShakeInteraction.h"
 
 #include "Characters/Components/Player/WeaponComponent.h"
-
 
 APlayerCharacter::APlayerCharacter() : Super()
 {
@@ -70,25 +68,21 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 // IControllerInteraction
 void APlayerCharacter::Possess(APawn* InPawn)
 {
-	check(GetController())
-	GetController()->Possess(InPawn);
+	check(GetController()) GetController()->Possess(InPawn);
 }
 
 void APlayerCharacter::StartCameraShake(TSubclassOf<UCameraShakeBase> ShakeClass, float Scale)
 {
-	check(GetController())
-	IShakeInteraction* ShakeInteraction = Cast<IShakeInteraction>(GetController());
+	check(GetController()) IShakeInteraction* ShakeInteraction = Cast<IShakeInteraction>(GetController());
 	if (ShakeInteraction)
 	{
 		ShakeInteraction->StartCameraShake(ShakeClass, Scale);
 	}
-
 }
 
 void APlayerCharacter::StopAllInstancesOfCameraShake(TSubclassOf<UCameraShakeBase> ShakeClass, bool bImmediately)
 {
-	check(GetController())
-	IShakeInteraction* ShakeInteraction = Cast<IShakeInteraction>(GetController());
+	check(GetController()) IShakeInteraction* ShakeInteraction = Cast<IShakeInteraction>(GetController());
 	if (ShakeInteraction)
 	{
 		ShakeInteraction->StopAllInstancesOfCameraShake(ShakeClass, bImmediately);
@@ -124,7 +118,8 @@ void APlayerCharacter::CameraMove(const FInputActionValue& Value)
 	float MovementVector1D = Value.Get<float>();
 	UE_LOG(LogTemp, Warning, TEXT("Hello World"));
 	check(SpringArmComponent);
-	SpringArmComponent->TargetArmLength = FMath::Clamp(SpringArmComponent->TargetArmLength + MovementVector1D * ArmLengthMultiplier, MinTargetArmLength,
+	SpringArmComponent->TargetArmLength =
+		FMath::Clamp(SpringArmComponent->TargetArmLength + MovementVector1D * ArmLengthMultiplier, MinTargetArmLength,
 					 MaxTargetArmLength);
 }
 

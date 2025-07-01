@@ -2,10 +2,13 @@
 
 
 #include "Characters/AnimalCharacter.h"
+#include "Characters/Components/HealthWidgetComponent.h"
 
 AAnimalCharacter::AAnimalCharacter() : Super()
 {
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
+	HealthWidgetComponent = CreateDefaultSubobject<UHealthWidgetComponent>(TEXT("Health Widget"));
+	HealthWidgetComponent->SetupAttachment(GetMesh());
 }
 
 float AAnimalCharacter::GetAttackDamage()
