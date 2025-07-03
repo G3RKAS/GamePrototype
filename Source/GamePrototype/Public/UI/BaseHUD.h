@@ -13,4 +13,8 @@ class GAMEPROTOTYPE_API ABaseHUD : public AHUD
 
 protected:
 	virtual void BeginPlay() override;
+
+private:
+	UPROPERTY(EditDefaultsOnly, Category = "Settings")
+	TSubclassOf<UUserWidget> HUDShowWidget;
 };

@@ -2,8 +2,12 @@
 
 
 #include "UI/BaseHUD.h"
+#include "Blueprint/UserWidget.h"
 
 void ABaseHUD::BeginPlay()
 {
 	Super::BeginPlay();
+	UUserWidget* UserWidget = CreateWidget<UUserWidget>(GetOwningPlayerController(), HUDShowWidget);
+	check(UserWidget);
+	UserWidget->AddToViewport();
 }
