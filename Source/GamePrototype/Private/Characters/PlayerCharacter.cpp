@@ -13,6 +13,9 @@
 #include "Interfaces/Controller/ShakeInteraction.h"
 
 #include "Characters/Components/Player/WeaponComponent.h"
+#include "Characters/Components/Player/PlayerVisionComponent.h"
+
+#include "Interfaces/Characters/HealthWidgetInteraction.h"
 
 APlayerCharacter::APlayerCharacter() : Super()
 {
@@ -35,6 +38,8 @@ APlayerCharacter::APlayerCharacter() : Super()
 	ReviveComponent = CreateDefaultSubobject<UReviveComponent>(TEXT("Revive Component"));
 
 	WeaponComponent = CreateDefaultSubobject<UWeaponComponent>(TEXT("Weapon Component"));
+
+	VisionComponent = CreateDefaultSubobject<UPlayerVisionComponent>(TEXT("Vision Component"));
 
 	Tags.Add(FName("Player"));
 }
@@ -86,6 +91,33 @@ void APlayerCharacter::StopAllInstancesOfCameraShake(TSubclassOf<UCameraShakeBas
 	if (ShakeInteraction)
 	{
 		ShakeInteraction->StopAllInstancesOfCameraShake(ShakeClass, bImmediately);
+	}
+}
+
+void APlayerCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	VisionComponent->OnVisionFind().AddUObject(this, &ThisClass::OnVisionFind);
+	VisionComponent->OnVisionLost().AddUObject(this, &ThisClass::OnVisionLost);
+	VisionComponent->StartWork(CameraComponent);
+}
+
+void APlayerCharacter::OnVisionFind(APawn* InFoundPawn)
+{
+	SwitchWidgetVision(true, InFoundPawn);
+}
+
+void APlayerCharacter::OnVisionLost(APawn* InLostPawn)
+{
+	SwitchWidgetVision(false, InLostPawn);
+}
+
+void APlayerCharacter::SwitchWidgetVision(bool InSwitch, APawn* InPawn)
+{
+	IHealthWidgetInteraction* WidgetInteraction = InPawn->FindComponentByInterface<IHealthWidgetInteraction>();
+	if (WidgetInteraction)
+	{
+		WidgetInteraction->SetHealthVisibility(InSwitch);
 	}
 }
 

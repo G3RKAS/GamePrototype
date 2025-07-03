@@ -11,6 +11,11 @@ UHealthWidgetComponent::UHealthWidgetComponent() : Super()
 	SetVisibility(false);
 }
 
+void UHealthWidgetComponent::SetHealthVisibility(bool InVisibility)
+{
+	SetVisibility(InVisibility);
+}
+
 void UHealthWidgetComponent::BeginPlay()
 {
 	Super::BeginPlay();

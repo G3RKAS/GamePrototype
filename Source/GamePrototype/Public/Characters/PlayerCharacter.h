@@ -14,6 +14,7 @@ struct FInputActionValue;
 class UReviveComponent;
 class UCameraShakeComponent;
 class UWeaponComponent;
+class UPlayerVisionComponent;
 
 UCLASS(Abstract)
 class GAMEPROTOTYPE_API APlayerCharacter : public ABaseCharacter, public IControllerInteraction
@@ -51,7 +52,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = Input, meta = (ClampMin = "0", UIMin = "0"))
 	float ArmLengthMultiplier = 1;
-
+	 
 	UPROPERTY(EditAnywhere, Category = "Components")
 	TObjectPtr<UCameraComponent> CameraComponent;
 
@@ -67,7 +68,15 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Components")
 	TObjectPtr<UWeaponComponent> WeaponComponent;
 
+	UPROPERTY(EditAnywhere, Category = "Components")
+	TObjectPtr<UPlayerVisionComponent> VisionComponent;
+
+	virtual void BeginPlay() override;
+
 private:
+	void OnVisionFind(APawn*);
+	void OnVisionLost(APawn*);
+	void SwitchWidgetVision(bool, APawn*);
 	void Look(const FInputActionValue& Value);
 	void Move(const FInputActionValue& Value);
 	void CameraMove(const FInputActionValue& Value);
