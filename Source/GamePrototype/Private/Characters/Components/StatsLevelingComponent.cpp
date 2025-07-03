@@ -30,7 +30,10 @@ void UStatsLevelingComponent::SetupStats()
 	{
 		BaseMaxHealth = StatsInteraction->GetMaxHealth();
 
-		StatsInteraction->SetMaxHealth(GetLevelStat(BaseMaxHealth));
+		float CurrentMaxHealth = GetLevelStat(BaseMaxHealth);
+		
+		StatsInteraction->SetMaxHealth(CurrentMaxHealth);
+		StatsInteraction->SetCurrentHealth(CurrentMaxHealth);
 
 		SetupWeaponStats();
 	}

@@ -35,6 +35,7 @@ FOnHealthChangedSignature& UHealthComponent::OnHealthChanged()
 
 float UHealthComponent::GetHealthPercent()
 {
+	UE_LOG(LogTemp, Warning, TEXT("%f /  %f"), GetCurrentHealth(), GetMaxHealth());
 	return GetCurrentHealth()/GetMaxHealth();
 }
 

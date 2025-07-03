@@ -38,6 +38,11 @@ float ABaseCharacter::GetAttackSpeed()
 	return 0.0f;
 }
 
+void ABaseCharacter::SetCurrentHealth(float InCurrentHealth)
+{
+	HealthComponent->SetCurrentHealth(InCurrentHealth);
+}
+
 void ABaseCharacter::SetMaxHealth(float InMaxHealth)
 {
 	HealthComponent->SetMaxHealth(InMaxHealth);

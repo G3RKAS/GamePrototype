@@ -20,6 +20,7 @@ public:
 	virtual float GetMaxHealth() = 0;
 	virtual float GetAttackDamage() = 0;
 	virtual float GetAttackSpeed() = 0;
+	virtual void SetCurrentHealth(float) = 0;
 	virtual void SetMaxHealth(float) = 0;
 	virtual void SetAttackDamage(float) = 0;
 	virtual void SetAttackSpeed(float) = 0;

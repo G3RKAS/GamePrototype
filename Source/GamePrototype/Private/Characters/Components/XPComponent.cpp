@@ -25,7 +25,7 @@ FOnLevelUpSignature& UXPComponent::OnLevelUp()
 void UXPComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	SetLevel(Level);
+	XPTotalCount = GetXPForLevel(Level);
 }
 
 void UXPComponent::AddXPToTotal(int AddingCount)
@@ -64,10 +64,11 @@ uint8 UXPComponent::GetLevelFromXP(uint32 XpToCount)
 void UXPComponent::UpdateLevel()
 {
 	uint8 NewLevel = GetLevelFromXP(XPTotalCount);
+
 	if (Level < NewLevel)
 	{
 		Level = NewLevel;
-		OnLevelUpEvent.Broadcast(Level);
+		OnLevelUpEvent.Broadcast(Level);	
 	}
 }
 

@@ -15,6 +15,8 @@ class GAMEPROTOTYPE_API UHealthComponent : public UBaseActorComponent, public IH
 public:
 	float GetCurrentHealth();
 
+	void SetCurrentHealth(float);
+
 	void AddHealth(float);
 
 	float GetMaxHealth();
@@ -52,6 +54,5 @@ private:
 
 	FOnDeathSignature OnDeathEvent;
 
-	void SetCurrentHealth(float);
 	void RegenerateHealth();
 };
