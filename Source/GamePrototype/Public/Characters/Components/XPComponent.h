@@ -18,6 +18,7 @@ public:
 	void AddXPToTotal(int EXP);
 
 	// ILevelInteraction
+	virtual float GetPercentLevel() override;
 	virtual int GetLevel() override;
 	virtual void SetLevel(int) override;
 	virtual FOnLevelUpSignature& OnLevelUp() override;

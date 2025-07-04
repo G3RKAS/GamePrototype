@@ -7,6 +7,12 @@ uint32 UXPComponent::GetTotalXP()
 	return XPTotalCount;
 }
 
+float UXPComponent::GetPercentLevel()
+{
+	uint32 XPPresentLevel = GetXPForLevel(Level);
+	return (XPTotalCount - XPPresentLevel) / (GetXPForLevel(Level + 1) - XPPresentLevel);
+}
+
 int UXPComponent::GetLevel()
 {
 	return Level;

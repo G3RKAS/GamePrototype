@@ -7,7 +7,10 @@
 void ABaseHUD::BeginPlay()
 {
 	Super::BeginPlay();
-	UUserWidget* UserWidget = CreateWidget<UUserWidget>(GetOwningPlayerController(), HUDShowWidget);
-	check(UserWidget);
-	UserWidget->AddToViewport();
+	if (GetOwningPawn())
+	{
+		UUserWidget* UserWidget = CreateWidget<UUserWidget>(GetOwningPlayerController(), HUDShowWidget);
+		check(UserWidget);
+		UserWidget->AddToViewport();
+	}
 }
