@@ -22,6 +22,8 @@ private:
 	UProgressBar* LevelBar;
 
 	ILevelInteraction* LevelInteraction;
+	
+	void TimerHandle();
 
 	void UpdateLevel(uint8 InLevel = 0);
 };
