@@ -31,6 +31,11 @@ public:
 	virtual void StartCameraShake(TSubclassOf<UCameraShakeBase>, float) override;
 	virtual void StopAllInstancesOfCameraShake(TSubclassOf<UCameraShakeBase>, bool) override; 
 
+	virtual float GetAttackDamage() override;
+	virtual float GetAttackSpeed() override;
+	virtual void SetAttackDamage(float) override;
+	virtual void SetAttackSpeed(float) override;
+
 protected:
 	UPROPERTY(EditAnywhere, Category = Input)
 	TObjectPtr<UInputAction> CameraAction;

@@ -6,6 +6,8 @@
 #include "UObject/Interface.h"
 #include "WeaponInteraction.generated.h"
 
+DECLARE_MULTICAST_DELEGATE(FOnWeaponChangedSignature)
+
 class AGameBaseWeapon;
 
 UINTERFACE(MinimalAPI)
@@ -20,4 +22,5 @@ class GAMEPROTOTYPE_API IWeaponInteraction
 public:
 	virtual void EquipWeapon(FName) = 0;
 	virtual FName GetCurrentWeaponName() = 0;
+	virtual FOnWeaponChangedSignature& OnWeaponChanged() = 0;
 };

@@ -11,6 +11,11 @@ class GAMEPROTOTYPE_API UGameBaseUserWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
+public:
+	virtual void NativeConstruct() override;
+
 protected:
 	FTimerManager& GetWorldTimerManager();
+
+	virtual void UpdateWidgetOnPosses();
 };

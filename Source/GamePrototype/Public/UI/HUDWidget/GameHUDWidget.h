@@ -7,6 +7,7 @@
 #include "GameHUDWidget.generated.h"
 
 class UGamePlayerHealthBar;
+class UWeaponInfoWidget;
 
 UCLASS(Abstract)
 class GAMEPROTOTYPE_API UGameHUDWidget : public UGameBaseUserWidget
@@ -19,4 +20,7 @@ public:
 private:
 	UPROPERTY(EditAnywhere, meta=(BindWidgetOptional));
 	TObjectPtr<UGamePlayerHealthBar> HealthBar;
+
+	UPROPERTY(EditAnywhere, meta = (BindWidgetOptional));
+	TObjectPtr<UWeaponInfoWidget> WeaponInfo;
 };

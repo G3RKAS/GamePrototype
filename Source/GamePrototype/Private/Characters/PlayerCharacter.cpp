@@ -12,7 +12,9 @@
 #include "Characters/Components/Player/CameraShakeComponent.h"
 #include "Interfaces/Controller/ShakeInteraction.h"
 
+#include "Core/GameBaseWeapon.h"
 #include "Characters/Components/Player/WeaponComponent.h"
+
 #include "Characters/Components/Player/PlayerVisionComponent.h"
 
 #include "Interfaces/Characters/HealthWidgetInteraction.h"
@@ -73,7 +75,8 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 // IControllerInteraction
 void APlayerCharacter::Possess(APawn* InPawn)
 {
-	check(GetController()) GetController()->Possess(InPawn);
+	check(GetController());
+	GetController()->Possess(InPawn);
 }
 
 void APlayerCharacter::StartCameraShake(TSubclassOf<UCameraShakeBase> ShakeClass, float Scale)
@@ -92,6 +95,36 @@ void APlayerCharacter::StopAllInstancesOfCameraShake(TSubclassOf<UCameraShakeBas
 	{
 		ShakeInteraction->StopAllInstancesOfCameraShake(ShakeClass, bImmediately);
 	}
+}
+
+float APlayerCharacter::GetAttackDamage()
+{
+	if (WeaponComponent->GetCurrentWeaponActor())
+	{
+		return WeaponComponent->GetCurrentWeaponActor()->GetAttackDamage();
+	}
+
+	return 0.0f;
+}
+
+float APlayerCharacter::GetAttackSpeed()
+{
+	if (WeaponComponent->GetCurrentWeaponActor())
+	{
+		return WeaponComponent->GetCurrentWeaponActor()->GetAttackSpeed();
+	}
+
+	return 0.0f;
+}
+
+void APlayerCharacter::SetAttackDamage(float)
+{
+	return;
+}
+
+void APlayerCharacter::SetAttackSpeed(float)
+{
+	return;
 }
 
 void APlayerCharacter::BeginPlay()

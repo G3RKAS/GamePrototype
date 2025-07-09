@@ -14,11 +14,11 @@ void UWeaponComponent::EquipWeapon(FName InWeaponName)
 	if (GetCurrentWeaponActor())
 	{
 		GetCurrentWeaponActor()->ChangeWeaponBasedOnName(InWeaponName);
-
-		OnWeaponChangedEvent.Broadcast();
 	}
 
 	UE_LOG(LogTemp, Warning, TEXT("Weapon equiped %s"), *InWeaponName.ToString());
+
+	OnWeaponChangedEvent.Broadcast();
 }
 
 FName UWeaponComponent::GetCurrentWeaponName()
@@ -36,7 +36,7 @@ AGameBaseWeapon* UWeaponComponent::GetCurrentWeaponActor()
 	return WeaponActor;
 }
 
-FOnWeaponChanged& UWeaponComponent::OnWeaponChanged()
+FOnWeaponChangedSignature& UWeaponComponent::OnWeaponChanged()
 {
 	return OnWeaponChangedEvent;
 }

@@ -6,8 +6,6 @@
 #include "GameFramework/Actor.h"
 #include "GameBaseWeapon.generated.h"
 
-class UBoxComponent;
-
 UCLASS()
 class GAMEPROTOTYPE_API AGameBaseWeapon : public AActor
 {
@@ -21,7 +19,8 @@ public:
 	float GetAttackDamage();
 	float GetAttackSpeed();
 
-	virtual void OnConstruction(const FTransform&);
+	virtual void BeginPlay() override;
+	virtual void OnConstruction(const FTransform&) override;
 
 private:
 	UPROPERTY(VisibleInstanceOnly, Category = "Components")

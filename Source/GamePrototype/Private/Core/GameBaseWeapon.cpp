@@ -56,6 +56,13 @@ float AGameBaseWeapon::GetAttackSpeed()
 	return WeaponAttackSpeed;
 }
 
+void AGameBaseWeapon::BeginPlay()
+{
+	Super::BeginPlay();
+	check(StaticMeshComponent);
+	StaticMeshComponent->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::PickUpWeapon);
+}
+
 void AGameBaseWeapon::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);

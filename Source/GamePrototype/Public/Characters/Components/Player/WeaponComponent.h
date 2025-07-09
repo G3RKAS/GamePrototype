@@ -7,8 +7,6 @@
 #include "Interfaces/Characters/Player/WeaponInteraction.h"
 #include "WeaponComponent.generated.h"
 
-DECLARE_MULTICAST_DELEGATE(FOnWeaponChanged)
-
 class AGameBaseWeapon;
 
 UCLASS()
@@ -18,10 +16,9 @@ class GAMEPROTOTYPE_API UWeaponComponent : public UBaseActorComponent, public IW
 public:
 	virtual void EquipWeapon(FName) override;
 	virtual FName GetCurrentWeaponName() override;
+	virtual FOnWeaponChangedSignature& OnWeaponChanged() override;
 	bool HasWeapon(FName);
 	AGameBaseWeapon* GetCurrentWeaponActor();
-
-	FOnWeaponChanged& OnWeaponChanged();
 
 protected:
 	virtual void BeginPlay() override;
@@ -35,5 +32,5 @@ private:
 
 	FName CurrentWeapon;
 
-	FOnWeaponChanged OnWeaponChangedEvent;
+	FOnWeaponChangedSignature OnWeaponChangedEvent;
 };
