@@ -21,10 +21,10 @@ public:
 
 private:
 	UPROPERTY(meta = (BindWidget))
-	UTextBlock* WeaponInfo;
+	TObjectPtr<UTextBlock> WeaponInfo;
 
 	UPROPERTY(meta = (BindWidget))
-	UTextBlock* DamageInfo;
+	TObjectPtr<UTextBlock> DamageInfo;
 
 	IWeaponInteraction* WeaponInteraction;
 	IStatsInteraction* StatsInteraction;

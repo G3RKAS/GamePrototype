@@ -19,11 +19,11 @@ protected:
 
 private:
 	UPROPERTY(meta=(BindWidget))
-	UProgressBar* LevelBar;
+	TObjectPtr<UProgressBar> LevelBar;
 
 	ILevelInteraction* LevelInteraction;
-	
-	void TimerHandle();
+
+	void TickHandler();
 
 	void UpdateLevel(uint8 InLevel = 0);
 };

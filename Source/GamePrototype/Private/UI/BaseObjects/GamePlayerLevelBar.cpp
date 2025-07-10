@@ -11,8 +11,13 @@ void UGamePlayerLevelBar::NativeConstruct()
 	if (LevelInteraction)
 	{
 		LevelInteraction->OnLevelUp().AddUObject(this, &ThisClass::UpdateLevel);
-		UpdateLevel();
+		GetWorldTimerManager().SetTimerForNextTick(FTimerDelegate::CreateUObject(this, &ThisClass::TickHandler));
 	}
+}
+
+void UGamePlayerLevelBar::TickHandler()
+{
+	UpdateLevel();
 }
 
 void UGamePlayerLevelBar::UpdateLevel(uint8)

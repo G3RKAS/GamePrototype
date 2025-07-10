@@ -19,7 +19,7 @@ public:
 
 private:
 	UPROPERTY(meta =(BindWidget))
-	UProgressBar* HealthProgressBar;
+	TObjectPtr<UProgressBar> HealthProgressBar;
 
 	UPROPERTY()
 	TObjectPtr<AActor> BindActor;

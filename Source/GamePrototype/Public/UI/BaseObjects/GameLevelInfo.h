@@ -18,7 +18,7 @@ protected:
 
 private:
 	UPROPERTY(meta=(BindWidget))
-	UTextBlock* LevelNumber;
+	TObjectPtr<UTextBlock> LevelNumber;
 
 	ILevelInteraction* LevelInteraction;
 

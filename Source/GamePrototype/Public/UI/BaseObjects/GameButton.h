@@ -25,8 +25,8 @@ private:
 	FText ButtonText;
 
 	UPROPERTY(meta=(BindWidget))
-	UButton* Button;
+	TObjectPtr<UButton> Button;
 
 	UPROPERTY(meta = (BindWidget))
-	UTextBlock* TextBlock;
+	TObjectPtr<UTextBlock> TextBlock;
 };
