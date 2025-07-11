@@ -15,7 +15,18 @@ public:
 	virtual void NativeConstruct() override;
 
 protected:
-	FTimerManager& GetWorldTimerManager();
+	virtual void HideWidgetWithAnimation();
 
 	virtual void UpdateWidgetOnPosses();
+
+	FTimerManager& GetWorldTimerManager();
+
+private:
+	UPROPERTY(Transient, meta=(BindWidgetAnimOptional))
+	TObjectPtr<UWidgetAnimation> HideAnimation;
+
+	FWidgetAnimationDynamicEvent OnAnimationFinished;
+
+	UFUNCTION()
+	void HideOnAnimationFinidshed();
 };
