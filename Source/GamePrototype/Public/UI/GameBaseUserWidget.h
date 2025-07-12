@@ -15,7 +15,7 @@ public:
 	virtual void NativeConstruct() override;
 
 protected:
-	virtual void HideWidgetWithAnimation();
+	virtual void DestroyWidgetWithAnimation();
 
 	virtual void UpdateWidgetOnPosses();
 
@@ -28,5 +28,5 @@ private:
 	FWidgetAnimationDynamicEvent OnAnimationFinished;
 
 	UFUNCTION()
-	void HideOnAnimationFinidshed();
+	void DestroyOnAnimationFinidshed();
 };

@@ -10,16 +10,17 @@ void UGameBaseUserWidget::NativeConstruct()
 	// TODO make delegate on possess
 }
 
-void UGameBaseUserWidget::HideWidgetWithAnimation()
+void UGameBaseUserWidget::DestroyWidgetWithAnimation()
 {
 	if (HideAnimation)
 	{
-		OnAnimationFinished.BindDynamic(this, &ThisClass::HideOnAnimationFinidshed);
+		OnAnimationFinished.BindDynamic(this, &ThisClass::DestroyOnAnimationFinidshed);
 		BindToAnimationFinished(HideAnimation, OnAnimationFinished);
+		PlayAnimation(HideAnimation);
 	}
 	else
 	{
-		SetVisibility(ESlateVisibility::Hidden);
+		this->RemoveFromParent();
 	}
 }
 
@@ -28,8 +29,9 @@ FTimerManager& UGameBaseUserWidget::GetWorldTimerManager()
 	return GetWorld()->GetTimerManager();
 }
 
-void UGameBaseUserWidget::HideOnAnimationFinidshed()
+void UGameBaseUserWidget::DestroyOnAnimationFinidshed()
 {
+	this->RemoveFromParent();
 }
 
 void UGameBaseUserWidget::UpdateWidgetOnPosses()

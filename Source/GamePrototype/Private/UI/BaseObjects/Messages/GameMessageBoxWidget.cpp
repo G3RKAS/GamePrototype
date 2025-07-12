@@ -2,4 +2,30 @@
 
 
 #include "UI/BaseObjects/Messages/GameMessageBoxWidget.h"
+#include "Interfaces/Characters/Player/WeaponInteraction.h"
+#include "UI/BaseObjects/Messages/GameMessageWidget.h"
+#include "Components/PanelWidget.h"
 
+void UGameMessageBoxWidget::SetWeapon(IWeaponInteraction* InWeapon)
+{
+	check(InWeapon);
+	WeaponInteraction = InWeapon;
+	check(MessageBox);
+	MessageBox->ClearChildren();
+	WeaponInteraction->OnWeaponChanged().AddUObject(this, &ThisClass::MakeMessage);
+}
+
+void UGameMessageBoxWidget::MakeMessage()
+{
+	if (WeaponInteraction)
+	{
+		FName WeaponName = WeaponInteraction->GetCurrentWeaponName();
+
+		UGameMessageWidget* Message = CreateWidget<UGameMessageWidget>(this, MessageWidget);
+		check(Message)
+		Message->SetPickUpWeapon(WeaponName);
+
+		MessageBox->AddChild(Message);
+		UE_LOG(LogTemp, Warning, TEXT("ADDED"));
+	}
+}

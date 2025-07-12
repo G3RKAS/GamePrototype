@@ -8,13 +8,13 @@
 void UGameMessageWidget::NativeConstruct()
 {
 	FTimerHandle TimerHandle;
-	GetWorldTimerManager().SetTimer(TimerHandle, this, &ThisClass::RemoveFromParent, DelayToDelete, false);
+	GetWorldTimerManager().SetTimer(TimerHandle, this, &ThisClass::DestroyWidgetWithAnimation, DelayToDelete, false);
 }
 
 void UGameMessageWidget::SetPickUpWeapon(FName InWeapon)
 {
 	check(MessageText);
 	
-	MessageText->SetText(FText::Format(NSLOCTEXT("UI", "PickUp Message Concat", "{0} {1}"), PickUpText,
+	MessageText->SetText(FText::Format(NSLOCTEXT("UI", "PickUp Message Concat", "{0} {1}!"), PickUpText,
 									   FWeaponTableHelper::GetWeaponName(InWeapon)));
 }

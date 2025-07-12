@@ -8,6 +8,8 @@
 #include "Interfaces/Characters/Player/WeaponInteraction.h"
 #include "Interfaces/Characters/StatsInteraction.h"
 
+#include "UI/BaseObjects/Messages/GameMessageBoxWidget.h"
+
 void UGameHUDWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
@@ -32,5 +34,14 @@ void UGameHUDWidget::NativeConstruct()
 		}
 
 		WeaponInfo->SetVisibility(ESlateVisibility::Hidden);
+	}
+	if (WeaponMessages)
+	{
+		IWeaponInteraction* WeaponInteraction = GetOwningPlayerPawn()->FindComponentByInterface<IWeaponInteraction>();
+
+		if (WeaponInteraction)
+		{
+			WeaponMessages->SetWeapon(WeaponInteraction);
+		}
 	}
 }
