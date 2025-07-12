@@ -17,7 +17,7 @@
 
 #include "Characters/Components/Player/PlayerVisionComponent.h"
 
-#include "Interfaces/Characters/HealthWidgetInteraction.h"
+#include "Interfaces/Characters/PlayerVisionInteraction.h"
 
 APlayerCharacter::APlayerCharacter() : Super()
 {
@@ -137,20 +137,19 @@ void APlayerCharacter::BeginPlay()
 
 void APlayerCharacter::OnVisionFind(APawn* InFoundPawn)
 {
-	SwitchWidgetVision(true, InFoundPawn);
+	IPlayerVisionInteraction* VisionInteraction = Cast<IPlayerVisionInteraction>(InFoundPawn);
+	if (VisionInteraction)
+	{
+		VisionInteraction->CaughtInVision();
+	}
 }
 
 void APlayerCharacter::OnVisionLost(APawn* InLostPawn)
 {
-	SwitchWidgetVision(false, InLostPawn);
-}
-
-void APlayerCharacter::SwitchWidgetVision(bool InSwitch, APawn* InPawn)
-{
-	IHealthWidgetInteraction* WidgetInteraction = InPawn->FindComponentByInterface<IHealthWidgetInteraction>();
-	if (WidgetInteraction)
+	IPlayerVisionInteraction* VisionInteraction = Cast<IPlayerVisionInteraction>(InLostPawn);
+	if (VisionInteraction)
 	{
-		WidgetInteraction->SetHealthVisibility(InSwitch);
+		VisionInteraction->LostInVision();
 	}
 }
 

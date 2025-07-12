@@ -81,7 +81,6 @@ protected:
 private:
 	void OnVisionFind(APawn*);
 	void OnVisionLost(APawn*);
-	void SwitchWidgetVision(bool, APawn*);
 	void Look(const FInputActionValue& Value);
 	void Move(const FInputActionValue& Value);
 	void CameraMove(const FInputActionValue& Value);

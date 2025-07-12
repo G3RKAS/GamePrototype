@@ -30,3 +30,13 @@ void AAnimalCharacter::SetAttackSpeed(float InAttackSpeed)
 {
 	AttackSpeed = InAttackSpeed;
 }
+
+void AAnimalCharacter::CaughtInVision()
+{
+	HealthWidgetComponent->SetVisibility(true);
+}
+
+void AAnimalCharacter::LostInVision()
+{
+	HealthWidgetComponent->SetVisibility(false);
+}

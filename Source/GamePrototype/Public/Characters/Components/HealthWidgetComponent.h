@@ -4,17 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "Components/WidgetComponent.h"
-#include "Interfaces/Characters/HealthWidgetInteraction.h"
 #include "HealthWidgetComponent.generated.h"
 
 UCLASS()
-class GAMEPROTOTYPE_API UHealthWidgetComponent : public UWidgetComponent, public IHealthWidgetInteraction
+class GAMEPROTOTYPE_API UHealthWidgetComponent : public UWidgetComponent
 {
 	GENERATED_BODY()
 public:
 	UHealthWidgetComponent();                                 
 
-	virtual void SetHealthVisibility(bool) override;
+	virtual void SetHealthVisibility(bool);
 
 protected:
 	virtual void BeginPlay() override;
