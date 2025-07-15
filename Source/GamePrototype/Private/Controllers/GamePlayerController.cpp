@@ -7,6 +7,7 @@
 void AGamePlayerController::BeginPlay()
 {
 	Super::BeginPlay();
+	SetInputMode(FInputModeGameOnly());
 
 	UEnhancedInputLocalPlayerSubsystem* Subsystem = GetLocalPlayer()->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>();
 
