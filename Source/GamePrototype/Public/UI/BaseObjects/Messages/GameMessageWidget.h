@@ -12,11 +12,11 @@ UCLASS(Abstract)
 class GAMEPROTOTYPE_API UGameMessageWidget : public UGameBaseUserWidget
 {
 	GENERATED_BODY()
-	
 public:
-	virtual void NativeConstruct() override;
-
 	void SetPickUpWeapon(FName);
+
+protected:
+	virtual void NativeConstruct() override;
 
 private:
 	UPROPERTY(meta=(BindWidget))

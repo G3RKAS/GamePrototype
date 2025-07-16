@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UI/GameBaseUserWidget.h"
+#include "UI/HUDWidget/BaseHUDWidget.h"
 #include "GameHUDWidget.generated.h"
 
 class UGamePlayerHealthBar;
@@ -11,7 +11,7 @@ class UWeaponInfoWidget;
 class UGameMessageBoxWidget;
 
 UCLASS(Abstract)
-class GAMEPROTOTYPE_API UGameHUDWidget : public UGameBaseUserWidget
+class GAMEPROTOTYPE_API UGameHUDWidget : public UBaseHUDWidget
 {
 	GENERATED_BODY()
 

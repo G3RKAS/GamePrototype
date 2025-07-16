@@ -3,13 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UI/GameBaseUserWidget.h"
+#include "UI/HUDWidget/BaseHUDWidget.h"
 #include "MainMenuHUDWidget.generated.h"
 
 class UGameButton;
 
 UCLASS(Abstract)
-class GAMEPROTOTYPE_API UMainMenuHUDWidget : public UGameBaseUserWidget
+class GAMEPROTOTYPE_API UMainMenuHUDWidget : public UBaseHUDWidget
 {
 	GENERATED_BODY()
 

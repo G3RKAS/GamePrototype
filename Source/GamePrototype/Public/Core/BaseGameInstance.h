@@ -14,8 +14,22 @@ class GAMEPROTOTYPE_API UBaseGameInstance : public UGameInstance, public IGameCo
 public:
 	virtual void NewGame() override;
 	virtual void QuitGame(APlayerController*) override;
+	virtual void LevelLoaded() override;
+	virtual FOnLevelStartLoadingSignature& OnLevelStartLoading() override;
+	virtual FOnLevelLoadedSignature& OnLevelLoaded() override;
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Settings")
 	TSoftObjectPtr<UWorld> NewGameLevel;
+
+	float LoadingDelay = 0.5f;
+
+	UPROPERTY()
+	TSoftObjectPtr<UWorld> LoadingLevel;
+
+	FOnLevelStartLoadingSignature OnLevelStartLoadingEvent;
+	FOnLevelLoadedSignature OnLevelLoadedEvent;
+
+	void StartLoadingLevel(const TSoftObjectPtr<UWorld>);
+	void LoadLevel();
 };
