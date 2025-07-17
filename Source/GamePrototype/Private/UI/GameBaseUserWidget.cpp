@@ -10,6 +10,11 @@ void UGameBaseUserWidget::NativeConstruct()
 	// TODO make delegate on possess
 }
 
+void UGameBaseUserWidget::SwitchVisibility()
+{
+	IsVisible() ? SetVisibility(ESlateVisibility::Hidden) : ShowWidget();
+}
+
 void UGameBaseUserWidget::ShowWidget()
 {
 	SetVisibility(ESlateVisibility::Visible);
@@ -17,7 +22,6 @@ void UGameBaseUserWidget::ShowWidget()
 
 void UGameBaseUserWidget::HideWidgetWithAnimation()
 {
-	UE_LOG(LogTemp, Warning, TEXT("AAA"));
 	if (HideAnimation)
 	{
 		OnAnimationFinished.BindDynamic(this, &ThisClass::HideOnAnimationFinidshed);

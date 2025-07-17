@@ -5,12 +5,16 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "Interfaces/Controller/ShakeInteraction.h"
+#include "Interfaces/Controller/PlayerControllerInteraction.h"
 #include "GamePlayerController.generated.h"
 
 class UInputMappingContext;
+class UInputAction;
 
 UCLASS(Abstract)
-class GAMEPROTOTYPE_API AGamePlayerController : public APlayerController, public IShakeInteraction
+class GAMEPROTOTYPE_API AGamePlayerController : public APlayerController,
+												public IShakeInteraction,
+												public IPlayerControllerInteraction
 {
 	GENERATED_BODY()
 
@@ -18,10 +22,29 @@ public:
 	// IShakeInteraction
 	virtual void StartCameraShake(TSubclassOf<UCameraShakeBase>, float) override;
 	virtual void StopAllInstancesOfCameraShake(TSubclassOf<UCameraShakeBase>, bool) override;
+	// IPlayerControllerInteraction
+	virtual FOnSwitchWidgetSignature& OnSwitchPauseWidget() override;
 
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+	virtual void BeginPlay() override;
+
+	virtual void SetupInputComponent() override;
+
+private:
+	UPROPERTY(EditAnywhere, Category = Input)
 	TObjectPtr<UInputMappingContext> DefaultMappingContext;
 
-	virtual void BeginPlay() override;
+	UPROPERTY(EditAnywhere, Category = Input)
+	TObjectPtr<UInputMappingContext> AllTimeMappingContext;
+
+	UPROPERTY(EditAnywhere, Category = Input)
+	TObjectPtr<UInputAction> PauseAction;
+
+	void TogglePause();
+
+	void SwitchInputMode();
+
+	bool bIsGamePaused = false;
+
+	FOnSwitchWidgetSignature OnSwitchPauseWidgetEvent;
 };

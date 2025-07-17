@@ -15,6 +15,8 @@ public:
 	virtual void NativeConstruct() override;
 
 protected:
+	void SwitchVisibility();
+
 	void ShowWidget();
 
 	void HideWidgetWithAnimation();

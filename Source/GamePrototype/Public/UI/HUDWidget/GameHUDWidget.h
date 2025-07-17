@@ -9,6 +9,7 @@
 class UGamePlayerHealthBar;
 class UWeaponInfoWidget;
 class UGameMessageBoxWidget;
+class UPauseWidget;
 
 UCLASS(Abstract)
 class GAMEPROTOTYPE_API UGameHUDWidget : public UBaseHUDWidget
@@ -27,4 +28,7 @@ private:
 
 	UPROPERTY(EditAnywhere, meta = (BindWidgetOptional));
 	TObjectPtr<UGameMessageBoxWidget> WeaponMessages;
+
+	UPROPERTY(EditAnywhere, meta = (BindWidgetOptional));
+	TObjectPtr<UPauseWidget> PauseMenu;
 };

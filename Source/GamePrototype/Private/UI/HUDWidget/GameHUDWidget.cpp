@@ -2,6 +2,8 @@
 
 
 #include "UI/HUDWidget/GameHUDWidget.h"
+#include "Interfaces/Controller/PlayerControllerInteraction.h"
+
 #include "UI/BaseObjects/GamePlayerHealthBar.h"
 
 #include "UI/BaseObjects/WeaponInfoWidget.h"
@@ -9,6 +11,9 @@
 #include "Interfaces/Characters/StatsInteraction.h"
 
 #include "UI/BaseObjects/Messages/GameMessageBoxWidget.h"
+
+#include "UI/BaseObjects/Pause/PauseWidget.h"
+
 
 void UGameHUDWidget::NativeConstruct()
 {
@@ -43,5 +48,14 @@ void UGameHUDWidget::NativeConstruct()
 		{
 			WeaponMessages->SetWeapon(WeaponInteraction);
 		}
+	}
+	if (PauseMenu)
+	{
+		IPlayerControllerInteraction* PlayerControllerInteraction =
+			Cast<IPlayerControllerInteraction>(GetOwningPlayer());
+		check(PlayerControllerInteraction);
+		PlayerControllerInteraction->OnSwitchPauseWidget().AddUObject(PauseMenu, &ThisClass::SwitchVisibility);
+
+		PauseMenu->SetVisibility(ESlateVisibility::Hidden);
 	}
 }
