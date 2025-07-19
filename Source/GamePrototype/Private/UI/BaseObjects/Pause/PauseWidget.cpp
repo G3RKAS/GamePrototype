@@ -5,6 +5,10 @@
 #include "UI/BaseObjects/GameButton.h"
 #include "Components/Button.h"
 
+#include "Interfaces/Controller/PlayerControllerInteraction.h"
+
+#include "Interfaces/Game/GameControl.h"
+
 void UPauseWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
@@ -18,15 +22,21 @@ void UPauseWidget::NativeConstruct()
 
 void UPauseWidget::ContinueAction()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Clicked"));
+	IPlayerControllerInteraction* PlayerControllerInteraction = Cast<IPlayerControllerInteraction>(GetOwningPlayer());
+	check(PlayerControllerInteraction);
+	PlayerControllerInteraction->ContinueGame();
 }
 
 void UPauseWidget::ExitToMainMenuAction()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Clicked"));
+	IGameControl* GameControl = GetGameInstance<IGameControl>();
+	check(GameControl);
+	GameControl->MainMenu();
 }
 
 void UPauseWidget::ExitFromGameAction()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Clicked"));
+	IGameControl* GameControl = GetGameInstance<IGameControl>();
+	check(GameControl);
+	GameControl->QuitGame(GetOwningPlayer());
 }

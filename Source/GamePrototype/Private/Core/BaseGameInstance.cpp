@@ -9,6 +9,11 @@ void UBaseGameInstance::NewGame()
 	StartLoadingLevel(NewGameLevel);
 }
 
+void UBaseGameInstance::MainMenu()
+{
+	StartLoadingLevel(MainMenuLevel);
+}
+
 void UBaseGameInstance::QuitGame(APlayerController* RequestedPlayer)
 {
 	UKismetSystemLibrary::QuitGame(this, RequestedPlayer, EQuitPreference::Quit, true);
@@ -33,6 +38,9 @@ void UBaseGameInstance::StartLoadingLevel(const TSoftObjectPtr<UWorld> InLoading
 {
 	LoadingLevel = InLoadingLevel;
 	OnLevelStartLoadingEvent.Broadcast();
+
+	UGameplayStatics::SetGamePaused(this, false);
+
 
 	FTimerHandle TimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &ThisClass::LoadLevel, LoadingDelay);

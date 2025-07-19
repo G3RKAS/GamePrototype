@@ -13,6 +13,7 @@ class GAMEPROTOTYPE_API UBaseGameInstance : public UGameInstance, public IGameCo
 	GENERATED_BODY()
 public:
 	virtual void NewGame() override;
+	virtual void MainMenu() override;
 	virtual void QuitGame(APlayerController*) override;
 	virtual void LevelLoaded() override;
 	virtual FOnLevelStartLoadingSignature& OnLevelStartLoading() override;
@@ -22,6 +23,10 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Settings")
 	TSoftObjectPtr<UWorld> NewGameLevel;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Settings")
+	TSoftObjectPtr<UWorld> MainMenuLevel;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Settings")
 	float LoadingDelay = 0.5f;
 
 	UPROPERTY()

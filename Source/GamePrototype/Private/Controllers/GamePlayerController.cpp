@@ -69,6 +69,11 @@ void AGamePlayerController::StopAllInstancesOfCameraShake(TSubclassOf<UCameraSha
 }
 
 // IPlayerControllerInteraction
+void AGamePlayerController::ContinueGame()
+{
+	TogglePause();
+}
+
 FOnSwitchWidgetSignature& AGamePlayerController::OnSwitchPauseWidget()
 {
 	return OnSwitchPauseWidgetEvent;

@@ -19,5 +19,6 @@ class GAMEPROTOTYPE_API IPlayerControllerInteraction
 	GENERATED_BODY()
 
 public:
+	virtual void ContinueGame() = 0;
 	virtual FOnSwitchWidgetSignature& OnSwitchPauseWidget() = 0;
 };

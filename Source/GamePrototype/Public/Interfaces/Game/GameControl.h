@@ -21,6 +21,7 @@ class GAMEPROTOTYPE_API IGameControl
 
 public:
 	virtual void NewGame() = 0;
+	virtual void MainMenu() = 0;
 	virtual void QuitGame(APlayerController*) = 0;
 	virtual void LevelLoaded() = 0;
 	virtual FOnLevelStartLoadingSignature& OnLevelStartLoading() = 0;

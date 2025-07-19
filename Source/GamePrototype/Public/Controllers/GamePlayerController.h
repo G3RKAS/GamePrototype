@@ -23,6 +23,7 @@ public:
 	virtual void StartCameraShake(TSubclassOf<UCameraShakeBase>, float) override;
 	virtual void StopAllInstancesOfCameraShake(TSubclassOf<UCameraShakeBase>, bool) override;
 	// IPlayerControllerInteraction
+	virtual void ContinueGame() override;
 	virtual FOnSwitchWidgetSignature& OnSwitchPauseWidget() override;
 
 protected:
