@@ -12,7 +12,7 @@
 #include "Characters/Components/Player/CameraShakeComponent.h"
 #include "Interfaces/Controller/ShakeInteraction.h"
 
-#include "Core/GameBaseWeapon.h"
+#include "World/Weapon/GameAttackWeapon.h"
 #include "Characters/Components/Player/WeaponComponent.h"
 
 #include "Characters/Components/Player/PlayerVisionComponent.h"

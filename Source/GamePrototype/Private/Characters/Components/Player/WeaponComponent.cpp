@@ -1,7 +1,7 @@
 // (c) G3RKA. Game Prototype
 
 #include "Characters/Components/Player/WeaponComponent.h"
-#include "Core/GameBaseWeapon.h"
+#include "World/Weapon/GameAttackWeapon.h"
 
 void UWeaponComponent::EquipWeapon(FName InWeaponName)
 {
@@ -31,7 +31,7 @@ bool UWeaponComponent::HasWeapon(FName InWeaponName)
 	return CurrentWeapon == InWeaponName;
 }
 
-AGameBaseWeapon* UWeaponComponent::GetCurrentWeaponActor()
+AGameAttackWeapon* UWeaponComponent::GetCurrentWeaponActor()
 {
 	return WeaponActor;
 }

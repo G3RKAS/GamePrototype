@@ -7,7 +7,7 @@
 #include "Interfaces/Characters/Player/WeaponInteraction.h"
 #include "WeaponComponent.generated.h"
 
-class AGameBaseWeapon;
+class AGameAttackWeapon;
 
 UCLASS()
 class GAMEPROTOTYPE_API UWeaponComponent : public UBaseActorComponent, public IWeaponInteraction
@@ -18,7 +18,7 @@ public:
 	virtual FName GetCurrentWeaponName() override;
 	virtual FOnWeaponChangedSignature& OnWeaponChanged() override;
 	bool HasWeapon(FName);
-	AGameBaseWeapon* GetCurrentWeaponActor();
+	AGameAttackWeapon* GetCurrentWeaponActor();
 
 protected:
 	virtual void BeginPlay() override;
@@ -28,7 +28,7 @@ private:
 	FDataTableRowHandle StartWeapon;
 
 	UPROPERTY()
-	TObjectPtr<AGameBaseWeapon> WeaponActor;
+	TObjectPtr<AGameAttackWeapon> WeaponActor;
 
 	FName CurrentWeapon;
 
