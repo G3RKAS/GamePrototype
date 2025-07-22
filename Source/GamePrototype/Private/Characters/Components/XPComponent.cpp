@@ -28,6 +28,11 @@ FOnLevelUpSignature& UXPComponent::OnLevelUp()
 	return OnLevelUpEvent;
 }
 
+FOnXPUpSignature& UXPComponent::OnXPUp()
+{
+	return OnXPUpEvent;
+}
+
 void UXPComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -76,6 +81,8 @@ void UXPComponent::UpdateLevel()
 		Level = NewLevel;
 		OnLevelUpEvent.Broadcast(Level);	
 	}
+
+	OnXPUpEvent.Broadcast();
 }
 
 void UXPComponent::SetTotalXP(uint32 NewTotalXP)

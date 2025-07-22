@@ -23,7 +23,7 @@ private:
 
 	ILevelInteraction* LevelInteraction;
 
-	void TickHandler();
+	void LevelHandler();
 
 	void UpdateLevel(uint8 InLevel = 0);
 };

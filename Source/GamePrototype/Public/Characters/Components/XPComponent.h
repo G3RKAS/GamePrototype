@@ -22,6 +22,7 @@ public:
 	virtual int GetLevel() override;
 	virtual void SetLevel(int) override;
 	virtual FOnLevelUpSignature& OnLevelUp() override;
+	virtual FOnXPUpSignature& OnXPUp() override;
 
 protected:
 	virtual void BeginPlay() override;
@@ -41,4 +42,5 @@ private:
 	int XPOnLevelUP = 1000;
 
 	FOnLevelUpSignature OnLevelUpEvent;
+	FOnXPUpSignature OnXPUpEvent;
 };
