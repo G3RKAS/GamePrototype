@@ -73,6 +73,9 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Components")
 	TObjectPtr<UWeaponComponent> WeaponComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
+	TObjectPtr<USceneComponent> WeaponEquipSceneComponent;
+
 	UPROPERTY(EditAnywhere, Category = "Components")
 	TObjectPtr<UPlayerVisionComponent> VisionComponent;
 

@@ -41,6 +41,10 @@ APlayerCharacter::APlayerCharacter() : Super()
 
 	WeaponComponent = CreateDefaultSubobject<UWeaponComponent>(TEXT("Weapon Component"));
 
+	WeaponEquipSceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Weapon Equip Scene Component"));
+	check(WeaponEquipSceneComponent);
+	WeaponEquipSceneComponent->SetupAttachment(GetMesh());
+
 	VisionComponent = CreateDefaultSubobject<UPlayerVisionComponent>(TEXT("Vision Component"));
 
 	Tags.Add(FName("Player"));
@@ -117,22 +121,31 @@ float APlayerCharacter::GetAttackSpeed()
 	return 0.0f;
 }
 
-void APlayerCharacter::SetAttackDamage(float)
+void APlayerCharacter::SetAttackDamage(float InAttackDamage)
 {
-	return;
+	if (WeaponComponent->GetCurrentWeaponActor())
+	{
+		WeaponComponent->GetCurrentWeaponActor()->SetAttackDamage(InAttackDamage);
+	}
 }
 
-void APlayerCharacter::SetAttackSpeed(float)
+void APlayerCharacter::SetAttackSpeed(float InAttackSpeed)
 {
-	return;
+	if (WeaponComponent->GetCurrentWeaponActor())
+	{
+		WeaponComponent->GetCurrentWeaponActor()->SetAttackSpeed(InAttackSpeed);
+	}
 }
 
 void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	check(VisionComponent);
 	VisionComponent->OnVisionFind().AddUObject(this, &ThisClass::OnVisionFind);
 	VisionComponent->OnVisionLost().AddUObject(this, &ThisClass::OnVisionLost);
 	VisionComponent->StartWork(CameraComponent);
+	check(WeaponComponent);
+	WeaponComponent->SetEquipSceneComponent(WeaponEquipSceneComponent);
 }
 
 void APlayerCharacter::OnVisionFind(APawn* InFoundPawn)

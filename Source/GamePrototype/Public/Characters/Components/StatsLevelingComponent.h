@@ -4,9 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Characters/Components/BaseActorComponent.h"
-#include "Interfaces/Characters/StatsInteraction.h"
-#include "Interfaces/Characters/LevelInteraction.h"
 #include "StatsLevelingComponent.generated.h"
+
+class IStatsInteraction;
+class ILevelInteraction;
+class IWeaponInteraction;
 
 UCLASS()
 class GAMEPROTOTYPE_API UStatsLevelingComponent : public UBaseActorComponent
@@ -23,6 +25,7 @@ private:
 
 	IStatsInteraction* StatsInteraction;
 	ILevelInteraction* LevelInteraction;
+	IWeaponInteraction* WeaponInteraction;
 
 	float BaseMaxHealth;
 	float BaseAttackDamage;

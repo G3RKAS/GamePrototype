@@ -26,6 +26,5 @@ void UGameMessageBoxWidget::MakeMessage()
 		Message->SetPickUpWeapon(WeaponName);
 
 		MessageBox->AddChild(Message);
-		UE_LOG(LogTemp, Warning, TEXT("ADDED"));
 	}
 }

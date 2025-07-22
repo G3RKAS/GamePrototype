@@ -29,5 +29,6 @@ private:
 	IWeaponInteraction* WeaponInteraction;
 	IStatsInteraction* StatsInteraction;
 
+	void InitChangeWeaponInformation();
 	void ChangeWeaponInformation();
 };

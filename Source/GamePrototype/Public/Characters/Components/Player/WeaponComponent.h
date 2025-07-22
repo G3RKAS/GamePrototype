@@ -17,6 +17,7 @@ public:
 	virtual void EquipWeapon(FName) override;
 	virtual FName GetCurrentWeaponName() override;
 	virtual FOnWeaponChangedSignature& OnWeaponChanged() override;
+	void SetEquipSceneComponent(USceneComponent*);
 	bool HasWeapon(FName);
 	AGameAttackWeapon* GetCurrentWeaponActor();
 
@@ -30,7 +31,14 @@ private:
 	UPROPERTY()
 	TObjectPtr<AGameAttackWeapon> WeaponActor;
 
+	UPROPERTY()
+	TObjectPtr<USceneComponent> EquipSceneComponent;
+
 	FName CurrentWeapon;
 
 	FOnWeaponChangedSignature OnWeaponChangedEvent;
+
+	void InitStartWeapon();
+	void CreateWeaponActor();
+	void AttachToComponent();
 };

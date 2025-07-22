@@ -1,7 +1,12 @@
 // (c) G3RKA. Game Prototype
 
-
 #include "World/Weapon/GameAttackWeapon.h"
+#include <Core/Helpers/WeaponTableHelper.h>
+
+AGameAttackWeapon::AGameAttackWeapon() : Super()
+{
+	SetActorEnableCollision(false);
+}
 
 float AGameAttackWeapon::GetAttackDamage()
 {
@@ -13,6 +18,16 @@ float AGameAttackWeapon::GetAttackSpeed()
 	return WeaponAttackSpeed;
 }
 
+void AGameAttackWeapon::SetAttackDamage(float InAttackDamage)
+{
+	WeaponAttackDamage = InAttackDamage;
+}
+
+void AGameAttackWeapon::SetAttackSpeed(float InAttackSpeed)
+{
+	WeaponAttackSpeed = InAttackSpeed;
+}
+
 void AGameAttackWeapon::ChangeWeaponBasedOnName(FName InWeaponRowName)
 {
 	Super::ChangeWeaponBasedOnName(InWeaponRowName);
@@ -21,6 +36,6 @@ void AGameAttackWeapon::ChangeWeaponBasedOnName(FName InWeaponRowName)
 
 void AGameAttackWeapon::SetupWeaponStats()
 {
-	WeaponAttackDamage = 0.f;
-	WeaponAttackSpeed = 0.f;
+	WeaponAttackDamage = FWeaponTableHelper::GetWeaponAttackDamage(WeaponRow.RowName);
+	WeaponAttackSpeed = FWeaponTableHelper::GetWeaponAttackSpeed(WeaponRow.RowName);
 }

@@ -1,17 +1,25 @@
 // (c) G3RKA. Game Prototype
 
 #include "Characters/Components/StatsLevelingComponent.h"
+#include "Interfaces/Characters/StatsInteraction.h"
+#include "Interfaces/Characters/LevelInteraction.h"
+#include "Interfaces/Characters/Player/WeaponInteraction.h"
 
 void UStatsLevelingComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	StatsInteraction = Cast<IStatsInteraction>(GetOwner());
 	LevelInteraction = GetOwner()->FindComponentByInterface<ILevelInteraction>();
+	WeaponInteraction = GetOwner()->FindComponentByInterface<IWeaponInteraction>();
 
 	SetupStats();
 	if (LevelInteraction)
 	{
 		LevelInteraction->OnLevelUp().AddUObject(this, &ThisClass::CalculateNewStats);
+	}
+	if (WeaponInteraction)
+	{
+		WeaponInteraction->OnWeaponChanged().AddUObject(this, &ThisClass::SetupWeaponStats);
 	}
 }
 
@@ -46,8 +54,14 @@ void UStatsLevelingComponent::SetupWeaponStats()
 		BaseAttackDamage = StatsInteraction->GetAttackDamage();
 		BaseAttackSpeed = StatsInteraction->GetAttackSpeed();
 
+		UE_LOG(LogTemp, Warning, TEXT("%f / %f"), StatsInteraction->GetAttackDamage(),
+			   StatsInteraction->GetAttackSpeed());
+
 		StatsInteraction->SetAttackDamage(GetLevelStat(BaseAttackDamage));
 		StatsInteraction->SetAttackSpeed(GetLevelStat(BaseAttackSpeed));
+
+		UE_LOG(LogTemp, Warning, TEXT("%f / %f"), StatsInteraction->GetAttackDamage(),
+			   StatsInteraction->GetAttackSpeed());
 	}
 }
 

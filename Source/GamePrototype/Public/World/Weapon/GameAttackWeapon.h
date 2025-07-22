@@ -12,8 +12,12 @@ class GAMEPROTOTYPE_API AGameAttackWeapon : public AGameBaseWeapon
 	GENERATED_BODY()
 
 public:
+	AGameAttackWeapon();
+
 	float GetAttackDamage();
 	float GetAttackSpeed();
+	void SetAttackDamage(float);
+	void SetAttackSpeed(float);
 
 	virtual void ChangeWeaponBasedOnName(FName) override;
 

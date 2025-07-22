@@ -10,13 +10,18 @@ void UWeaponInfoWidget::SetWeapon(IWeaponInteraction* InWeapon)
 {
 	WeaponInteraction = InWeapon;
 	WeaponInteraction->OnWeaponChanged().AddUObject(this, &ThisClass::ChangeWeaponInformation);
-	ChangeWeaponInformation();
+	InitChangeWeaponInformation();
 }
 
 void UWeaponInfoWidget::SetStats(IStatsInteraction* InStats)
 {
 	StatsInteraction = InStats;
-	ChangeWeaponInformation();
+	InitChangeWeaponInformation();
+}
+
+void UWeaponInfoWidget::InitChangeWeaponInformation()
+{
+	GetWorldTimerManager().SetTimerForNextTick(this, &ThisClass::ChangeWeaponInformation);
 }
 
 void UWeaponInfoWidget::ChangeWeaponInformation()
