@@ -28,12 +28,16 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	UPROPERTY()
+	TSet<TObjectPtr<AActor>> HittedActors;
+
 	float WeaponAttackDamage = 0.f;
 	float WeaponAttackSpeed = 0.f;
 
 	void SetupWeaponStats();
 
 	UFUNCTION()
-	void ActorOverlapWeapon(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-					  int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	void ActorOverlapWeapon(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+							UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
+							const FHitResult& SweepResult);
 };

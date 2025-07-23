@@ -44,6 +44,7 @@ void AGameAttackWeapon::StartAttack()
 void AGameAttackWeapon::EndAttack()
 {
 	SetActorEnableCollision(false);
+	HittedActors.Empty();
 	UE_LOG(LogTemp, Warning, TEXT("Collision Enabled: %s"),
 		   GetRootComponent()->IsCollisionEnabled() ? TEXT("Yes") : TEXT("No"));
 }
@@ -55,7 +56,6 @@ void AGameAttackWeapon::BeginPlay()
 	UE_LOG(LogTemp, Warning, TEXT("Binded"))
 }
 
-
 void AGameAttackWeapon::SetupWeaponStats()
 {
 	WeaponAttackDamage = FWeaponTableHelper::GetWeaponAttackDamage(WeaponRow.RowName);
@@ -66,6 +66,11 @@ void AGameAttackWeapon::ActorOverlapWeapon(UPrimitiveComponent* OverlappedCompon
 										   UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
 										   const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Актор %s получает %f со скоростью %f"), *OtherActor->GetName(), WeaponAttackDamage,
-		   WeaponAttackSpeed);
+	if (HittedActors.Contains(OtherActor))
+	{
+		return;
+	}
+	HittedActors.Add(OtherActor);
+	UE_LOG(LogTemp, Warning, TEXT("Actor %s takes %f with %f attack speed "), *OtherActor->GetName(),
+		   WeaponAttackDamage, WeaponAttackSpeed);
 }
