@@ -24,6 +24,7 @@ APlayerCharacter::APlayerCharacter() : Super()
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm Component"));
 	check(SpringArmComponent);
 	SpringArmComponent->bUsePawnControlRotation = true;
+	check(GetMesh());
 	SpringArmComponent->SetupAttachment(GetMesh());
 	MaxTargetArmLength = SpringArmComponent->TargetArmLength;
 
@@ -44,6 +45,8 @@ APlayerCharacter::APlayerCharacter() : Super()
 	WeaponEquipSceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Weapon Equip Scene Component"));
 	check(WeaponEquipSceneComponent);
 	WeaponEquipSceneComponent->SetupAttachment(GetMesh());
+	check(WeaponComponent);
+	WeaponComponent->SetEquipSceneComponent(WeaponEquipSceneComponent);
 
 	VisionComponent = CreateDefaultSubobject<UPlayerVisionComponent>(TEXT("Vision Component"));
 
@@ -103,38 +106,26 @@ void APlayerCharacter::StopAllInstancesOfCameraShake(TSubclassOf<UCameraShakeBas
 
 float APlayerCharacter::GetAttackDamage()
 {
-	if (WeaponComponent->GetCurrentWeaponActor())
-	{
-		return WeaponComponent->GetCurrentWeaponActor()->GetAttackDamage();
-	}
-
-	return 0.0f;
+	check(WeaponComponent);
+	return WeaponComponent->GetAttackDamage();
 }
 
 float APlayerCharacter::GetAttackSpeed()
 {
-	if (WeaponComponent->GetCurrentWeaponActor())
-	{
-		return WeaponComponent->GetCurrentWeaponActor()->GetAttackSpeed();
-	}
-
-	return 0.0f;
+	check(WeaponComponent);
+	return WeaponComponent->GetAttackSpeed();
 }
 
 void APlayerCharacter::SetAttackDamage(float InAttackDamage)
 {
-	if (WeaponComponent->GetCurrentWeaponActor())
-	{
-		WeaponComponent->GetCurrentWeaponActor()->SetAttackDamage(InAttackDamage);
-	}
+	check(WeaponComponent);
+	WeaponComponent->SetAttackDamage(InAttackDamage);
 }
 
 void APlayerCharacter::SetAttackSpeed(float InAttackSpeed)
 {
-	if (WeaponComponent->GetCurrentWeaponActor())
-	{
-		WeaponComponent->GetCurrentWeaponActor()->SetAttackSpeed(InAttackSpeed);
-	}
+	check(WeaponComponent);
+	WeaponComponent->SetAttackSpeed(InAttackSpeed);
 }
 
 void APlayerCharacter::BeginPlay()
@@ -145,7 +136,6 @@ void APlayerCharacter::BeginPlay()
 	VisionComponent->OnVisionLost().AddUObject(this, &ThisClass::OnVisionLost);
 	VisionComponent->StartWork(CameraComponent);
 	check(WeaponComponent);
-	WeaponComponent->SetEquipSceneComponent(WeaponEquipSceneComponent);
 }
 
 void APlayerCharacter::OnVisionFind(APawn* InFoundPawn)

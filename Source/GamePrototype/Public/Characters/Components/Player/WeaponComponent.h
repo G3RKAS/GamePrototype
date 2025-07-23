@@ -19,7 +19,11 @@ public:
 	virtual FOnWeaponChangedSignature& OnWeaponChanged() override;
 	void SetEquipSceneComponent(USceneComponent*);
 	bool HasWeapon(FName);
-	AGameAttackWeapon* GetCurrentWeaponActor();
+
+	float GetAttackDamage();
+	float GetAttackSpeed();
+	void SetAttackDamage(float);
+	void SetAttackSpeed(float);
 
 protected:
 	virtual void BeginPlay() override;
@@ -38,6 +42,7 @@ private:
 
 	FOnWeaponChangedSignature OnWeaponChangedEvent;
 
+	AGameAttackWeapon* GetCurrentWeaponActor();
 	void InitStartWeapon();
 	void CreateWeaponActor();
 	void AttachToComponent();

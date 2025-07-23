@@ -35,9 +35,38 @@ bool UWeaponComponent::HasWeapon(FName InWeaponName)
 	return CurrentWeapon == InWeaponName;
 }
 
-AGameAttackWeapon* UWeaponComponent::GetCurrentWeaponActor()
+float UWeaponComponent::GetAttackDamage()
 {
-	return WeaponActor;
+	if (GetCurrentWeaponActor())
+	{
+		return GetCurrentWeaponActor()->GetAttackDamage();
+	}
+	return 0.0f;
+}
+
+float UWeaponComponent::GetAttackSpeed()
+{
+	if (GetCurrentWeaponActor())
+	{
+		return GetCurrentWeaponActor()->GetAttackSpeed();
+	}
+	return 0.0f;
+}
+
+void UWeaponComponent::SetAttackDamage(float InAttackDamage)
+{
+	if (GetCurrentWeaponActor())
+	{
+		GetCurrentWeaponActor()->SetAttackDamage(InAttackDamage);
+	}
+}
+
+void UWeaponComponent::SetAttackSpeed(float InAttackSpeed)
+{
+	if (GetCurrentWeaponActor())
+	{
+		GetCurrentWeaponActor()->SetAttackSpeed(InAttackSpeed);
+	}
 }
 
 FOnWeaponChangedSignature& UWeaponComponent::OnWeaponChanged()
@@ -54,6 +83,11 @@ void UWeaponComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	GetWorldTimerManager().SetTimerForNextTick(this, &ThisClass::InitStartWeapon);
+}
+
+AGameAttackWeapon* UWeaponComponent::GetCurrentWeaponActor()
+{
+	return WeaponActor;
 }
 
 void UWeaponComponent::InitStartWeapon()
@@ -83,6 +117,7 @@ void UWeaponComponent::AttachToComponent()
 	if (WeaponActor)
 	{
 		const FAttachmentTransformRules AttachmentRules = FAttachmentTransformRules::SnapToTargetNotIncludingScale;
+		UE_LOG(LogTemp, Warning, TEXT("%s"), *EquipSceneComponent->GetName())
 		WeaponActor->AttachToComponent(EquipSceneComponent, AttachmentRules);
 	}
 }
