@@ -74,6 +74,16 @@ FOnWeaponChangedSignature& UWeaponComponent::OnWeaponChanged()
 	return OnWeaponChangedEvent;
 }
 
+FOnAnimNotifySignature& UWeaponComponent::OnWeaponAttackStart()
+{
+	return OnWeaponAttackStartEvent;
+}
+
+FOnAnimNotifySignature& UWeaponComponent::OnWeaponAttackEnd()
+{
+	return OnWeaponAttackEndEvent;
+}
+
 void UWeaponComponent::SetEquipSceneComponent(USceneComponent* InEquipSceneComponent)
 {
 	EquipSceneComponent = InEquipSceneComponent;
@@ -101,14 +111,21 @@ void UWeaponComponent::InitStartWeapon()
 void UWeaponComponent::CreateWeaponActor()
 {
 	check(GetWorld());
-	WeaponActor = GetWorld()->SpawnActorDeferred<AGameAttackWeapon>(AGameAttackWeapon::StaticClass(),
-																	FTransform::Identity, GetOwner(), nullptr,
-																	ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+	check(WeaponClass);
+		
+	WeaponActor = GetWorld()->SpawnActorDeferred<AGameAttackWeapon>(
+		WeaponClass, FTransform::Identity, GetOwner(), nullptr, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+
 	if (WeaponActor)
 	{
 		WeaponActor->FinishSpawning(FTransform::Identity);
 		UE_LOG(LogTemp, Warning, TEXT("Created"))
+
 		AttachToComponent();
+
+		OnWeaponAttackStartEvent.AddUObject(WeaponActor, &AGameAttackWeapon::StartAttack);
+		OnWeaponAttackEndEvent.AddUObject(WeaponActor, &AGameAttackWeapon::EndAttack);
+		UE_LOG(LogTemp, Warning, TEXT("Binded"))
 	}
 }
 
@@ -117,7 +134,7 @@ void UWeaponComponent::AttachToComponent()
 	if (WeaponActor)
 	{
 		const FAttachmentTransformRules AttachmentRules = FAttachmentTransformRules::SnapToTargetNotIncludingScale;
-		UE_LOG(LogTemp, Warning, TEXT("%s"), *EquipSceneComponent->GetName())
+		UE_LOG(LogTemp, Warning, TEXT("Attached"))
 		WeaponActor->AttachToComponent(EquipSceneComponent, AttachmentRules);
 	}
 }

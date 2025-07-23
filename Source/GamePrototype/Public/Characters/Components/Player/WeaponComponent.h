@@ -14,9 +14,13 @@ class GAMEPROTOTYPE_API UWeaponComponent : public UBaseActorComponent, public IW
 {
 	GENERATED_BODY()
 public:
+	// IWeaponInteraction
 	virtual void EquipWeapon(FName) override;
 	virtual FName GetCurrentWeaponName() override;
 	virtual FOnWeaponChangedSignature& OnWeaponChanged() override;
+	virtual FOnAnimNotifySignature& OnWeaponAttackStart() override;
+	virtual FOnAnimNotifySignature& OnWeaponAttackEnd() override;
+
 	void SetEquipSceneComponent(USceneComponent*);
 	bool HasWeapon(FName);
 
@@ -32,6 +36,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Settings")
 	FDataTableRowHandle StartWeapon;
 
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AGameAttackWeapon> WeaponClass;
+
 	UPROPERTY()
 	TObjectPtr<AGameAttackWeapon> WeaponActor;
 
@@ -41,6 +48,8 @@ private:
 	FName CurrentWeapon;
 
 	FOnWeaponChangedSignature OnWeaponChangedEvent;
+	FOnAnimNotifySignature OnWeaponAttackStartEvent;
+	FOnAnimNotifySignature OnWeaponAttackEndEvent;
 
 	AGameAttackWeapon* GetCurrentWeaponActor();
 	void InitStartWeapon();

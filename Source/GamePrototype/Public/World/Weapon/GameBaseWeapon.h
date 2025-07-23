@@ -6,7 +6,7 @@
 #include "World/GameWorldObject.h"
 #include "GameBaseWeapon.generated.h"
 
-UCLASS()
+UCLASS(Abstract)
 class GAMEPROTOTYPE_API AGameBaseWeapon : public AGameWorldObject
 {
 	GENERATED_BODY()

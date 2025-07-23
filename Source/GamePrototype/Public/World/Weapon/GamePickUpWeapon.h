@@ -6,7 +6,7 @@
 #include "World/Weapon/GameBaseWeapon.h"
 #include "GamePickUpWeapon.generated.h"
 
-UCLASS()
+UCLASS(Abstract)
 class GAMEPROTOTYPE_API AGamePickUpWeapon : public AGameBaseWeapon
 {
 	GENERATED_BODY()

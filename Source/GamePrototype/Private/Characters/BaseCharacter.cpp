@@ -22,6 +22,11 @@ bool ABaseCharacter::IsFalling()
 	return GetCharacterMovement()->IsFalling();
 }
 
+bool ABaseCharacter::CanInteractWithWorld()
+{
+	return true;
+}
+
 // IStatsInteraction
 float ABaseCharacter::GetMaxHealth()
 {

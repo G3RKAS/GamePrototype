@@ -26,6 +26,8 @@ public:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	// IAnimInteraction
+	virtual bool CanInteractWithWorld() override;
 	// IControllerInteraction
 	virtual void Possess(APawn*) override;
 	virtual void StartCameraShake(TSubclassOf<UCameraShakeBase>, float) override;
@@ -57,6 +59,12 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = Input, meta = (ClampMin = "0", UIMin = "0"))
 	float ArmLengthMultiplier = 1;
+
+	UPROPERTY(EditAnywhere, Category = Input)
+	TObjectPtr<UInputAction> AttackAction;
+
+	UPROPERTY(EditAnywhere, Category = "Settings|Attack")
+	TObjectPtr<UAnimMontage> AttackAnim;
 	 
 	UPROPERTY(EditAnywhere, Category = "Components")
 	TObjectPtr<UCameraComponent> CameraComponent;
@@ -82,10 +90,16 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	bool bIsAttacking;
+
+	UFUNCTION()
+	void OnAttackEnded(UAnimMontage* InAnimMontage, bool bInterrupted);
+
 	void OnVisionFind(APawn*);
 	void OnVisionLost(APawn*);
 	void Look(const FInputActionValue& Value);
 	void Move(const FInputActionValue& Value);
 	void CameraMove(const FInputActionValue& Value);
+	void Attack();
 	void Shaking();
 };

@@ -34,8 +34,38 @@ void AGameAttackWeapon::ChangeWeaponBasedOnName(FName InWeaponRowName)
 	SetupWeaponStats();
 }
 
+void AGameAttackWeapon::StartAttack()
+{
+	SetActorEnableCollision(true);
+	UE_LOG(LogTemp, Warning, TEXT("Collision Enabled: %s"),
+		   GetRootComponent()->IsCollisionEnabled() ? TEXT("Yes") : TEXT("No"));
+}
+
+void AGameAttackWeapon::EndAttack()
+{
+	SetActorEnableCollision(false);
+	UE_LOG(LogTemp, Warning, TEXT("Collision Enabled: %s"),
+		   GetRootComponent()->IsCollisionEnabled() ? TEXT("Yes") : TEXT("No"));
+}
+
+void AGameAttackWeapon::BeginPlay()
+{
+	Super::BeginPlay();
+	StaticMeshComponent->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::ActorOverlapWeapon);
+	UE_LOG(LogTemp, Warning, TEXT("Binded"))
+}
+
+
 void AGameAttackWeapon::SetupWeaponStats()
 {
 	WeaponAttackDamage = FWeaponTableHelper::GetWeaponAttackDamage(WeaponRow.RowName);
 	WeaponAttackSpeed = FWeaponTableHelper::GetWeaponAttackSpeed(WeaponRow.RowName);
+}
+
+void AGameAttackWeapon::ActorOverlapWeapon(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+										   UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
+										   const FHitResult& SweepResult)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Актор %s получает %f со скоростью %f"), *OtherActor->GetName(), WeaponAttackDamage,
+		   WeaponAttackSpeed);
 }

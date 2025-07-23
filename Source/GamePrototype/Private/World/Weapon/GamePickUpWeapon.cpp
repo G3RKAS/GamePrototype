@@ -2,6 +2,7 @@
 
 
 #include "World/Weapon/GamePickUpWeapon.h"
+#include "Interfaces/Characters/AnimInteraction.h"
 #include "Interfaces/Characters/Player/WeaponInteraction.h"
 
 void AGamePickUpWeapon::BeginPlay()
@@ -18,6 +19,17 @@ void AGamePickUpWeapon::PickUpWeapon(UPrimitiveComponent* OverlappedComponent, A
 	UE_LOG(LogTemp, Warning, TEXT("--------------"));
 	UE_LOG(LogTemp, Warning, TEXT("Overlap %s"), *WeaponRow.RowName.ToString());
 	IWeaponInteraction* WeaponInteraction = OtherActor->FindComponentByInterface<IWeaponInteraction>();
+
+	IAnimInteraction* AnimInteraction = Cast<IAnimInteraction>(OtherActor);
+
+	if (AnimInteraction)
+	{
+		if (not(AnimInteraction->CanInteractWithWorld()))
+		{
+			return;
+		}
+	}
+
 	if (WeaponInteraction)
 	{
 		FName OldName = WeaponRow.RowName;

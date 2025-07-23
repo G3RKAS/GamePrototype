@@ -7,6 +7,7 @@
 #include "WeaponInteraction.generated.h"
 
 DECLARE_MULTICAST_DELEGATE(FOnWeaponChangedSignature)
+DECLARE_MULTICAST_DELEGATE(FOnAnimNotifySignature)
 
 class AGameBaseWeapon;
 
@@ -23,4 +24,6 @@ public:
 	virtual void EquipWeapon(FName) = 0;
 	virtual FName GetCurrentWeaponName() = 0;
 	virtual FOnWeaponChangedSignature& OnWeaponChanged() = 0;
+	virtual FOnAnimNotifySignature& OnWeaponAttackStart() = 0;
+	virtual FOnAnimNotifySignature& OnWeaponAttackEnd() = 0;
 };

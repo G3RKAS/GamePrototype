@@ -77,6 +77,15 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	{
 		Input->BindAction(CameraMoveAction, ETriggerEvent::Triggered, this, &ThisClass::CameraMove);
 	}
+	if (AttackAction)
+	{
+		Input->BindAction(AttackAction, ETriggerEvent::Completed, this, &ThisClass::Attack);
+	}
+}
+
+bool APlayerCharacter::CanInteractWithWorld()
+{
+	return not(IsFalling() || bIsAttacking);
 }
 
 // IControllerInteraction
@@ -188,6 +197,30 @@ void APlayerCharacter::CameraMove(const FInputActionValue& Value)
 	SpringArmComponent->TargetArmLength =
 		FMath::Clamp(SpringArmComponent->TargetArmLength + MovementVector1D * ArmLengthMultiplier, MinTargetArmLength,
 					 MaxTargetArmLength);
+}
+
+void APlayerCharacter::Attack()
+{
+	if (!WeaponComponent->GetCurrentWeaponName().IsNone())
+	{
+		if (!bIsAttacking)
+		{
+			UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+
+			bIsAttacking = true;
+
+			FOnMontageEnded AttackEnded;
+			AttackEnded.BindUObject(this, &ThisClass::OnAttackEnded);
+
+			PlayAnimMontage(AttackAnim);
+			AnimInstance->Montage_SetEndDelegate(AttackEnded, AttackAnim);
+		}
+	}
+}
+
+void APlayerCharacter::OnAttackEnded(UAnimMontage* InAnimMontage, bool bInterrupted)
+{
+	bIsAttacking = false;
 }
 
 void APlayerCharacter::Shaking()
