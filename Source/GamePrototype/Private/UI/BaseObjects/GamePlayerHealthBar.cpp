@@ -8,17 +8,9 @@
 #include "Components/ProgressBar.h"
 
 
-void UGamePlayerHealthBar::SetBindType(EBindType InBindType, AActor* InActorBind)
+void UGamePlayerHealthBar::SetBindType(AActor* InActorBind)
 {
-	switch (InBindType)
-	{
-	case EBindType::Owner:
-		BindActor = GetOwningPlayerPawn();
-		break;
-	case EBindType::Actor:
-		BindActor = InActorBind;
-		break;
-	}
+	BindActor = InActorBind;
 	SetupWidget();
 }
 

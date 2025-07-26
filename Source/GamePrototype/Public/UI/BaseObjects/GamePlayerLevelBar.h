@@ -14,14 +14,19 @@ class GAMEPROTOTYPE_API UGamePlayerLevelBar : public UGameBaseUserWidget
 {
 	GENERATED_BODY()
 	
-protected:
-	virtual void NativeConstruct() override;
+public:
+	void SetBindType(AActor* InActorBind);
 
 private:
 	UPROPERTY(meta=(BindWidget))
 	TObjectPtr<UProgressBar> LevelBar;
 
+	UPROPERTY()
+	TObjectPtr<AActor> BindActor;
+
 	ILevelInteraction* LevelInteraction;
+
+	void SetupWidget();
 
 	void LevelHandler();
 

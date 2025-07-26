@@ -5,9 +5,14 @@
 #include <Interfaces/Characters/LevelInteraction.h>
 #include "Components/TextBlock.h"
 
-void UGameLevelInfo::NativeConstruct()
+void UGameLevelInfo::SetBindType(AActor* InActorBind)
 {
-	Super::NativeConstruct();
+	BindActor = InActorBind;
+	SetupWidget();
+}
+
+void UGameLevelInfo::SetupWidget()
+{
 	LevelInteraction = GetOwningPlayerPawn()->FindComponentByInterface<ILevelInteraction>();
 	if (LevelInteraction)
 	{

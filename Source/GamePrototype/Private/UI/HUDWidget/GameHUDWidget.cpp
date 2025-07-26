@@ -1,8 +1,11 @@
 // (c) G3RKA. Game Prototype
 
-
 #include "UI/HUDWidget/GameHUDWidget.h"
 #include "Interfaces/Controller/PlayerControllerInteraction.h"
+
+#include "UI/BaseObjects/GameLevelInfo.h"
+
+#include "UI/BaseObjects/GamePlayerLevelBar.h"
 
 #include "UI/BaseObjects/GamePlayerHealthBar.h"
 
@@ -14,13 +17,36 @@
 
 #include "UI/BaseObjects/Pause/PauseWidget.h"
 
-
 void UGameHUDWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
+	SetupPawnRelatedWidgets();
+
+	IPlayerControllerInteraction* PlayerControllerInteraction = GetOwningPlayer<IPlayerControllerInteraction>();
+	check(PlayerControllerInteraction);
+	PlayerControllerInteraction->OnPlayerPosses().AddUObject(this, &ThisClass::SetupPawnRelatedWidgets);
+
+	if (PauseMenu)
+	{
+		PlayerControllerInteraction->OnSwitchPauseWidget().AddUObject(PauseMenu, &ThisClass::SwitchVisibility);
+
+		PauseMenu->SetVisibility(ESlateVisibility::Hidden);
+	}
+}
+
+void UGameHUDWidget::SetupPawnRelatedWidgets()
+{
+	if (LevelInfo)
+	{
+		LevelInfo->SetBindType(GetOwningPlayerPawn());
+	}
+	if (LevelBar)
+	{
+		LevelBar->SetBindType(GetOwningPlayerPawn());
+	}
 	if (HealthBar)
 	{
-		HealthBar->SetBindType(EBindType::Owner);
+		HealthBar->SetBindType(GetOwningPlayerPawn());
 	}
 	if (WeaponInfo)
 	{
@@ -48,14 +74,5 @@ void UGameHUDWidget::NativeConstruct()
 		{
 			WeaponMessages->SetWeapon(WeaponInteraction);
 		}
-	}
-	if (PauseMenu)
-	{
-		IPlayerControllerInteraction* PlayerControllerInteraction =
-			Cast<IPlayerControllerInteraction>(GetOwningPlayer());
-		check(PlayerControllerInteraction);
-		PlayerControllerInteraction->OnSwitchPauseWidget().AddUObject(PauseMenu, &ThisClass::SwitchVisibility);
-
-		PauseMenu->SetVisibility(ESlateVisibility::Hidden);
 	}
 }

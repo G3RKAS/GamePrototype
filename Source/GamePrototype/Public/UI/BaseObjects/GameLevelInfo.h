@@ -13,14 +13,20 @@ UCLASS(Abstract)
 class GAMEPROTOTYPE_API UGameLevelInfo : public UGameBaseUserWidget
 {
 	GENERATED_BODY()
-protected:
-	virtual void NativeConstruct() override;
+
+public:
+	void SetBindType(AActor* InActorBind);
 
 private:
 	UPROPERTY(meta=(BindWidget))
 	TObjectPtr<UTextBlock> LevelNumber;
 
+	UPROPERTY()
+	TObjectPtr<AActor> BindActor;
+
 	ILevelInteraction* LevelInteraction;
+
+	void SetupWidget();
 
 	void UpdateLevel(uint8 InLevel = 0);
 };

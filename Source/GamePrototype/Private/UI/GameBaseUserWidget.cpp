@@ -2,13 +2,6 @@
 
 #include "UI/GameBaseUserWidget.h"
 
-void UGameBaseUserWidget::NativeConstruct()
-{
-	Super::NativeConstruct();
-	// TODO make update function on possess pawn;
-	// TODO make delegate on possess
-}
-
 void UGameBaseUserWidget::SwitchVisibility()
 {
 	IsVisible() ? SetVisibility(ESlateVisibility::Hidden) : ShowWidget();
@@ -16,7 +9,6 @@ void UGameBaseUserWidget::SwitchVisibility()
 
 void UGameBaseUserWidget::ShowWidget()
 {
-	UE_LOG(LogTemp, Warning, TEXT("VISIBLE"));
 	SetVisibility(ESlateVisibility::Visible);
 }
 

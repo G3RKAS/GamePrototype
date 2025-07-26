@@ -15,7 +15,7 @@ class GAMEPROTOTYPE_API UGamePlayerHealthBar : public UGameBaseUserWidget, publi
 {
 	GENERATED_BODY()
 public:
-	virtual void SetBindType(EBindType InBindType, AActor* InActorBind = nullptr) override;
+	virtual void SetBindType(AActor* InActorBind) override;
 
 private:
 	UPROPERTY(meta =(BindWidget))

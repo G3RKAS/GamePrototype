@@ -6,6 +6,8 @@
 #include "UI/HUDWidget/BaseHUDWidget.h"
 #include "GameHUDWidget.generated.h"
 
+class UGameLevelInfo;
+class UGamePlayerLevelBar;
 class UGamePlayerHealthBar;
 class UWeaponInfoWidget;
 class UGameMessageBoxWidget;
@@ -20,6 +22,12 @@ public:
 	virtual void NativeConstruct() override;
 
 private:
+	UPROPERTY(EditAnywhere, meta = (BindWidgetOptional));
+	TObjectPtr<UGameLevelInfo> LevelInfo;
+
+	UPROPERTY(EditAnywhere, meta = (BindWidgetOptional));
+	TObjectPtr<UGamePlayerLevelBar> LevelBar;
+
 	UPROPERTY(EditAnywhere, meta=(BindWidgetOptional));
 	TObjectPtr<UGamePlayerHealthBar> HealthBar;
 
@@ -31,4 +39,7 @@ private:
 
 	UPROPERTY(EditAnywhere, meta = (BindWidgetOptional));
 	TObjectPtr<UPauseWidget> PauseMenu;
+
+private:
+	void SetupPawnRelatedWidgets();
 };

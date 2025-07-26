@@ -11,9 +11,6 @@ class GAMEPROTOTYPE_API UGameBaseUserWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
-public:
-	virtual void NativeConstruct() override;
-
 protected:
 	void SwitchVisibility();
 

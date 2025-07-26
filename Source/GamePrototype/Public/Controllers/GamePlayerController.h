@@ -25,11 +25,14 @@ public:
 	// IPlayerControllerInteraction
 	virtual void ContinueGame() override;
 	virtual FOnSwitchWidgetSignature& OnSwitchPauseWidget() override;
+	virtual FOnPossessSignature& OnPlayerPosses() override;
 
 protected:
 	virtual void BeginPlay() override;
 
 	virtual void SetupInputComponent() override;
+
+	virtual void OnPossess(APawn* aPawn) override;
 
 private:
 	UPROPERTY(EditAnywhere, Category = Input)
@@ -48,4 +51,6 @@ private:
 	bool bIsGamePaused = false;
 
 	FOnSwitchWidgetSignature OnSwitchPauseWidgetEvent;
+
+	FOnPossessSignature OnPossessEvent;
 };

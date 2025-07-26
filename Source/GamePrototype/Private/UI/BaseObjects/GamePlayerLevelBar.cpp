@@ -4,9 +4,14 @@
 #include <Interfaces/Characters/LevelInteraction.h>
 #include "Components/ProgressBar.h"
 
-void UGamePlayerLevelBar::NativeConstruct()
+void UGamePlayerLevelBar::SetBindType(AActor* InActorBind)
 {
-	Super::NativeConstruct();
+	BindActor = InActorBind;
+	SetupWidget();
+}
+
+void UGamePlayerLevelBar::SetupWidget()
+{
 	LevelInteraction = GetOwningPlayerPawn()->FindComponentByInterface<ILevelInteraction>();
 	if (LevelInteraction)
 	{
@@ -25,7 +30,6 @@ void UGamePlayerLevelBar::UpdateLevel(uint8)
 {
 	if (LevelInteraction)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("%f"), LevelInteraction->GetPercentLevel());
 		LevelBar->SetPercent(LevelInteraction->GetPercentLevel());
 	}
 }

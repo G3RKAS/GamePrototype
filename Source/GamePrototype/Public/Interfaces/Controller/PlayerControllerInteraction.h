@@ -7,6 +7,7 @@
 #include "PlayerControllerInteraction.generated.h"
 
 DECLARE_MULTICAST_DELEGATE(FOnSwitchWidgetSignature)
+DECLARE_MULTICAST_DELEGATE(FOnPossessSignature)
 
 UINTERFACE(MinimalAPI)
 class UPlayerControllerInteraction : public UInterface
@@ -21,4 +22,5 @@ class GAMEPROTOTYPE_API IPlayerControllerInteraction
 public:
 	virtual void ContinueGame() = 0;
 	virtual FOnSwitchWidgetSignature& OnSwitchPauseWidget() = 0;
+	virtual FOnPossessSignature& OnPlayerPosses() = 0;
 };

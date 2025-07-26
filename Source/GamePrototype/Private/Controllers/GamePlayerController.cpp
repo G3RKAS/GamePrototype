@@ -34,6 +34,12 @@ void AGamePlayerController::SetupInputComponent()
 	}
 }
 
+void AGamePlayerController::OnPossess(APawn* InPawn)
+{
+	Super::OnPossess(InPawn);
+	OnPossessEvent.Broadcast();
+}
+
 void AGamePlayerController::TogglePause()
 {
 	bIsGamePaused = !bIsGamePaused;
@@ -77,4 +83,9 @@ void AGamePlayerController::ContinueGame()
 FOnSwitchWidgetSignature& AGamePlayerController::OnSwitchPauseWidget()
 {
 	return OnSwitchPauseWidgetEvent;
+}
+
+FOnPossessSignature& AGamePlayerController::OnPlayerPosses()
+{
+	return OnPossessEvent;
 }
