@@ -54,14 +54,8 @@ void UStatsLevelingComponent::SetupWeaponStats()
 		BaseAttackDamage = StatsInteraction->GetAttackDamage();
 		BaseAttackSpeed = StatsInteraction->GetAttackSpeed();
 
-		UE_LOG(LogTemp, Warning, TEXT("%f / %f"), StatsInteraction->GetAttackDamage(),
-			   StatsInteraction->GetAttackSpeed());
-
 		StatsInteraction->SetAttackDamage(GetLevelStat(BaseAttackDamage));
 		StatsInteraction->SetAttackSpeed(GetLevelStat(BaseAttackSpeed));
-
-		UE_LOG(LogTemp, Warning, TEXT("%f / %f"), StatsInteraction->GetAttackDamage(),
-			   StatsInteraction->GetAttackSpeed());
 	}
 }
 

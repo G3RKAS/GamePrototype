@@ -11,6 +11,12 @@ AAnimalCharacter::AAnimalCharacter() : Super()
 	HealthWidgetComponent->SetupAttachment(GetMesh());
 }
 
+void AAnimalCharacter::OnCharacterDeath()
+{
+	Super::OnCharacterDeath();
+	GetController()->Destroy();
+}
+
 float AAnimalCharacter::GetAttackDamage()
 {
 	return AttackDamage;

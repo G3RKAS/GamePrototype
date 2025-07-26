@@ -23,6 +23,8 @@ public:
 
 	void SetMaxHealth(float);
 
+	bool IsDead();
+
 	virtual FOnDeathSignature& OnDeath() override;
 
 	virtual FOnHealthChangedSignature& OnHealthChanged() override;

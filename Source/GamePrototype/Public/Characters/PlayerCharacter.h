@@ -15,6 +15,7 @@ class UReviveComponent;
 class UCameraShakeComponent;
 class UWeaponComponent;
 class UPlayerVisionComponent;
+class UAIPerceptionStimuliSourceComponent;
 
 UCLASS(Abstract)
 class GAMEPROTOTYPE_API APlayerCharacter : public ABaseCharacter, public IControllerInteraction
@@ -23,6 +24,8 @@ class GAMEPROTOTYPE_API APlayerCharacter : public ABaseCharacter, public IContro
 
 public:
 	APlayerCharacter();
+
+	virtual void OnCharacterDeath() override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
@@ -86,6 +89,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Components")
 	TObjectPtr<UPlayerVisionComponent> VisionComponent;
+
+	UPROPERTY(EditAnywhere, Category = "Components")
+	TObjectPtr<UAIPerceptionStimuliSourceComponent> StimuliSourceComponent;
 
 	virtual void BeginPlay() override;
 

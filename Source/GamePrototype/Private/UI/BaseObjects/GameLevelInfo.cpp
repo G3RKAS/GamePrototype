@@ -17,8 +17,14 @@ void UGameLevelInfo::SetupWidget()
 	if (LevelInteraction)
 	{
 		LevelInteraction->OnLevelUp().AddUObject(this, &ThisClass::UpdateLevel);
+		LevelInteraction->OnXPUp().AddUObject(this, &ThisClass::LevelHandler);
 		UpdateLevel();
 	}
+}
+
+void UGameLevelInfo::LevelHandler()
+{
+	UpdateLevel();
 }
 
 void UGameLevelInfo::UpdateLevel(uint8)

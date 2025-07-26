@@ -2,15 +2,11 @@
 
 #include "Characters/Components/XPComponent.h"
 
-uint32 UXPComponent::GetTotalXP()
-{
-	return XPTotalCount;
-}
-
 float UXPComponent::GetPercentLevel()
 {
 	uint32 XPPresentLevel = GetXPForLevel(Level);
-	return (XPTotalCount - XPPresentLevel) / (GetXPForLevel(Level + 1) - XPPresentLevel);
+	return static_cast<float>(XPTotalCount - XPPresentLevel) /
+		   static_cast<float>(GetXPForLevel(Level + 1) - XPPresentLevel);
 }
 
 int UXPComponent::GetLevel()
@@ -21,6 +17,17 @@ int UXPComponent::GetLevel()
 void UXPComponent::SetLevel(int InLevel)
 {
 	SetTotalXP(GetXPForLevel(InLevel));
+}
+
+uint32 UXPComponent::GetTotalXP()
+{
+	return XPTotalCount;
+}
+
+void UXPComponent::SetTotalXP(uint32 NewTotalXP)
+{
+	XPTotalCount = FMath::Max(0, (int)NewTotalXP);
+	UpdateLevel();
 }
 
 FOnLevelUpSignature& UXPComponent::OnLevelUp()
@@ -76,17 +83,11 @@ void UXPComponent::UpdateLevel()
 {
 	uint8 NewLevel = GetLevelFromXP(XPTotalCount);
 
-	if (Level < NewLevel)
+	if (Level != NewLevel)
 	{
 		Level = NewLevel;
-		OnLevelUpEvent.Broadcast(Level);	
+		OnLevelUpEvent.Broadcast(Level);
 	}
 
 	OnXPUpEvent.Broadcast();
-}
-
-void UXPComponent::SetTotalXP(uint32 NewTotalXP)
-{
-	XPTotalCount = FMath::Max(0, (int)NewTotalXP);
-	UpdateLevel();
 }

@@ -35,6 +35,13 @@ public:
 	virtual void SetAttackSpeed(float) override;
 
 protected:
+	virtual void BeginPlay() override;
+
+	virtual void OnCharacterDeath();
+	UFUNCTION()
+	virtual void OnTakeDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
+							  class AController* InstigatedBy, AActor* DamageCauser);
+
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	TObjectPtr<UXPComponent> XPComponent;
 

@@ -30,6 +30,7 @@ void UGamePlayerLevelBar::UpdateLevel(uint8)
 {
 	if (LevelInteraction)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("%f"), LevelInteraction->GetPercentLevel());
 		LevelBar->SetPercent(LevelInteraction->GetPercentLevel());
 	}
 }

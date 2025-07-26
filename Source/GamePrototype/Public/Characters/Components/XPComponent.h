@@ -13,7 +13,7 @@ class GAMEPROTOTYPE_API UXPComponent : public UBaseActorComponent, public ILevel
 	GENERATED_BODY()
 
 public:
-	uint32 GetTotalXP();
+
 
 	void AddXPToTotal(int EXP);
 
@@ -21,6 +21,8 @@ public:
 	virtual float GetPercentLevel() override;
 	virtual int GetLevel() override;
 	virtual void SetLevel(int) override;
+	virtual uint32 GetTotalXP() override;
+	virtual void SetTotalXP(uint32) override;
 	virtual FOnLevelUpSignature& OnLevelUp() override;
 	virtual FOnXPUpSignature& OnXPUp() override;
 
@@ -35,7 +37,6 @@ private:
 	uint32 GetXPForLevel(uint8);
 	uint8 GetLevelFromXP(uint32);
 	void UpdateLevel();
-	void SetTotalXP(uint32);
 
 	uint32 XPTotalCount = 0;
 	

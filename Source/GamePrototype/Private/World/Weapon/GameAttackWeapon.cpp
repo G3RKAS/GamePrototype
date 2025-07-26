@@ -1,7 +1,8 @@
 // (c) G3RKA. Game Prototype
 
 #include "World/Weapon/GameAttackWeapon.h"
-#include <Core/Helpers/WeaponTableHelper.h>
+#include "Core/Helpers/WeaponTableHelper.h"
+#include "Engine/DamageEvents.h"
 
 AGameAttackWeapon::AGameAttackWeapon() : Super()
 {
@@ -71,6 +72,9 @@ void AGameAttackWeapon::ActorOverlapWeapon(UPrimitiveComponent* OverlappedCompon
 		return;
 	}
 	HittedActors.Add(OtherActor);
+
+	OtherActor->TakeDamage(WeaponAttackDamage, FDamageEvent(), nullptr, GetOwner());
+
 	UE_LOG(LogTemp, Warning, TEXT("Actor %s takes %f with %f attack speed "), *OtherActor->GetName(),
 		   WeaponAttackDamage, WeaponAttackSpeed);
 }

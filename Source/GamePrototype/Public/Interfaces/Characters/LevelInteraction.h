@@ -23,6 +23,8 @@ public:
 	virtual float GetPercentLevel() = 0;
 	virtual int GetLevel() = 0;
 	virtual void SetLevel(int) = 0;
+	virtual uint32 GetTotalXP() = 0;
+	virtual void SetTotalXP(uint32) = 0;
 	virtual FOnLevelUpSignature& OnLevelUp() = 0;
 	virtual FOnXPUpSignature& OnXPUp() = 0;
 };

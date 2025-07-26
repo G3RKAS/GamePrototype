@@ -95,6 +95,15 @@ void UWeaponComponent::BeginPlay()
 	GetWorldTimerManager().SetTimerForNextTick(this, &ThisClass::InitStartWeapon);
 }
 
+void UWeaponComponent::EndPlay(const EEndPlayReason::Type InEndPlayReason)
+{
+	Super::EndPlay(InEndPlayReason);
+	if (GetCurrentWeaponActor())
+	{
+		GetCurrentWeaponActor()->Destroy();
+	}
+}
+
 AGameAttackWeapon* UWeaponComponent::GetCurrentWeaponActor()
 {
 	return WeaponActor;

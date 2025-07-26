@@ -28,5 +28,7 @@ private:
 
 	void SetupWidget();
 
+	void LevelHandler();
+
 	void UpdateLevel(uint8 InLevel = 0);
 };

@@ -21,5 +21,5 @@ void UHealthWidgetComponent::BeginPlay()
 	Super::BeginPlay();
 	check(GetWidget());
 	IHealthWidgetInterface* WidgetInteraction = Cast<IHealthWidgetInterface>(GetWidget());
-	WidgetInteraction->SetBindType(EBindType::Actor, GetOwner());
+	WidgetInteraction->SetBindType(GetOwner());
 }

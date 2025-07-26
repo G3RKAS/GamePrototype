@@ -33,6 +33,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "0", UIMin = "0", Units = "s"))
 	float TimeToRespawn = 0.0f;
 
+	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "0", UIMin = "0", ClampMax = "1", UIMax = "1"))
+	float XpPercentLoss = 0.1f;
+
 	void ExecuteRevivePlayer();
 
 	void RevivePlayer();

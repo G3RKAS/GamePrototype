@@ -17,6 +17,8 @@ class GAMEPROTOTYPE_API AAnimalCharacter : public ABaseCharacter, public IPlayer
 public:
 	AAnimalCharacter();
 
+	virtual void OnCharacterDeath() override;
+
 	// IStatsInteraction
 	virtual float GetAttackDamage() override;
 	virtual float GetAttackSpeed() override;

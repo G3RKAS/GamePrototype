@@ -4,6 +4,7 @@
 #include "Characters/Components/AI/AttackAIComponent.h"
 #include <Interfaces/Characters/StatsInteraction.h>
 #include <Kismet/KismetMathLibrary.h>
+#include "Engine/DamageEvents.h"
 
 void UAttackAIComponent::StartWork(AAIController* InAIController)
 {
@@ -69,6 +70,10 @@ void UAttackAIComponent::AttackEnemy()
 		IStatsInteraction* StatsInteraction = Cast<IStatsInteraction>(GetControlledPawn());
 
 		UE_LOG(LogTemp, Warning, TEXT("Attack %s Damage %f"), *Enemy->GetName(), StatsInteraction->GetAttackDamage());
+
+		// TODO CHANGE TO TRACES
+		Enemy->TakeDamage(StatsInteraction->GetAttackDamage(), FDamageEvent(), nullptr, GetControlledPawn());
+
 		PauseAttackTimer();
 
 		FTimerHandle TimerDelay;

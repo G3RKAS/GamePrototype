@@ -3,6 +3,7 @@
 #include "Characters/Components/Player/ReviveComponent.h"
 #include "Characters/Components/HealthComponent.h"
 #include "Interfaces/Characters/LevelInteraction.h"
+#include <Interfaces/Characters/Player/WeaponInteraction.h>
 
 void UReviveComponent::BeginPlay()
 {
@@ -18,19 +19,19 @@ void UReviveComponent::BeginPlay()
 
 void UReviveComponent::ExecuteRevivePlayer()
 {
-	if (PlayerClass)
-	{
-		if (not(RevivePoints.IsEmpty()))
-		{
-			GetWorldTimerManager().SetTimer(TimerToRespawn, this, &ThisClass::RevivePlayer, TimeToRespawn, false);
-		}
-	}
+	check(PlayerClass);
+	check(!RevivePoints.IsEmpty());
+
+	UE_LOG(LogTemp, Warning, TEXT("EXECUTE RESPAWN"))
+
+	GetWorldTimerManager().SetTimer(TimerToRespawn, this, &ThisClass::RevivePlayer, TimeToRespawn, false);
+
 }
 
 void UReviveComponent::RevivePlayer()
 {
 	check(GetOwner());
-	IControllerInteraction* ControllerInteraction = GetOwner()->FindComponentByInterface<IControllerInteraction>();
+	IControllerInteraction* ControllerInteraction = Cast<IControllerInteraction>(GetOwner());
 	if (not(ControllerInteraction))
 	{
 		return;
@@ -47,12 +48,18 @@ void UReviveComponent::RevivePlayer()
 	ILevelInteraction* LevelInteraction_OldPlayer = GetOwner()->FindComponentByInterface<ILevelInteraction>();
 	ILevelInteraction* LevelInteraction_NewPlayer = NewPlayer->FindComponentByInterface<ILevelInteraction>();
 
+	IWeaponInteraction* WeaponInteraction_OldPlayer = GetOwner()->FindComponentByInterface<IWeaponInteraction>();
+	IWeaponInteraction* WeaponInteraction_NewPlayer = NewPlayer->FindComponentByInterface<IWeaponInteraction>();
+
 	ControllerInteraction->Possess(NewPlayer);
 
 	// Restore Level
-	LevelInteraction_NewPlayer->SetLevel(LevelInteraction_OldPlayer->GetLevel());
-	// TODO
+	uint32 TotalOldXP = LevelInteraction_OldPlayer->GetTotalXP();
+	LevelInteraction_NewPlayer->SetTotalXP(TotalOldXP - TotalOldXP * XpPercentLose);
 	// WeaponEquip
+	WeaponInteraction_NewPlayer->EquipWeapon(WeaponInteraction_OldPlayer->GetCurrentWeaponName());
 
-	GetOwner()->SetLifeSpan(0.1f);
+	UE_LOG(LogTemp, Warning, TEXT("RESPAWN"))
+
+	GetOwner()->Destroy();
 }

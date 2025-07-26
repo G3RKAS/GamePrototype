@@ -19,6 +19,8 @@
 
 #include "Interfaces/Characters/PlayerVisionInteraction.h"
 
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
+
 APlayerCharacter::APlayerCharacter() : Super()
 {
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm Component"));
@@ -50,7 +52,17 @@ APlayerCharacter::APlayerCharacter() : Super()
 
 	VisionComponent = CreateDefaultSubobject<UPlayerVisionComponent>(TEXT("Vision Component"));
 
+	StimuliSourceComponent = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("StimuliSource Component"));
+
 	Tags.Add(FName("Player"));
+}
+
+void APlayerCharacter::OnCharacterDeath()
+{
+	Super::OnCharacterDeath();
+	GetCharacterMovement()->DisableMovement();
+	check(StimuliSourceComponent);
+	StimuliSourceComponent->UnregisterFromPerceptionSystem();
 }
 
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -144,7 +156,6 @@ void APlayerCharacter::BeginPlay()
 	VisionComponent->OnVisionFind().AddUObject(this, &ThisClass::OnVisionFind);
 	VisionComponent->OnVisionLost().AddUObject(this, &ThisClass::OnVisionLost);
 	VisionComponent->StartWork(CameraComponent);
-	check(WeaponComponent);
 }
 
 void APlayerCharacter::OnVisionFind(APawn* InFoundPawn)

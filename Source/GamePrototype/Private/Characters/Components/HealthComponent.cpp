@@ -23,6 +23,11 @@ void UHealthComponent::SetMaxHealth(float InMaxHealth)
 	MaxHealth = InMaxHealth;
 }
 
+bool UHealthComponent::IsDead()
+{
+	return FMath::IsNearlyZero(CurrentHealth);
+}
+
 FOnDeathSignature& UHealthComponent::OnDeath()
 {
 	return OnDeathEvent;
@@ -45,7 +50,13 @@ void UHealthComponent::AddHealth(float InHealth)
 
 void UHealthComponent::SetCurrentHealth(float InCurrentHealth)
 {
+	if (CurrentHealth == InCurrentHealth)
+	{
+		return;
+	}
+
 	CurrentHealth = FMath::Clamp(InCurrentHealth, 0, GetMaxHealth());
+
 	OnHealthChangedEvent.Broadcast(CurrentHealth);
 	if (FMath::IsNearlyZero(CurrentHealth))
 	{
