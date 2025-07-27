@@ -25,7 +25,6 @@ void UReviveComponent::ExecuteRevivePlayer()
 	UE_LOG(LogTemp, Warning, TEXT("EXECUTE RESPAWN"))
 
 	GetWorldTimerManager().SetTimer(TimerToRespawn, this, &ThisClass::RevivePlayer, TimeToRespawn, false);
-
 }
 
 void UReviveComponent::RevivePlayer()
@@ -44,7 +43,13 @@ void UReviveComponent::RevivePlayer()
 
 	check(GetWorld());
 
-	APlayerCharacter* NewPlayer = GetWorld()->SpawnActor<APlayerCharacter>(PlayerClass, LocationToSpawn, FRotator());
+	FActorSpawnParameters NewPawnParameters;
+	NewPawnParameters.SpawnCollisionHandlingOverride =
+		ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+
+	APlayerCharacter* NewPlayer =
+		GetWorld()->SpawnActor<APlayerCharacter>(PlayerClass, LocationToSpawn, FRotator(), NewPawnParameters);
+
 	ILevelInteraction* LevelInteraction_OldPlayer = GetOwner()->FindComponentByInterface<ILevelInteraction>();
 	ILevelInteraction* LevelInteraction_NewPlayer = NewPlayer->FindComponentByInterface<ILevelInteraction>();
 

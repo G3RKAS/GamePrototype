@@ -10,8 +10,7 @@
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnVisionFindSignature, APawn*);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnVisionLostSignature, APawn*)
 
-UCLASS()
-class GAMEPROTOTYPE_API UPlayerVisionComponent : public UBaseActorComponent
+	UCLASS() class GAMEPROTOTYPE_API UPlayerVisionComponent : public UBaseActorComponent
 {
 	GENERATED_BODY()
 public:
@@ -21,6 +20,8 @@ public:
 	FOnVisionLostSignature& OnVisionLost();
 
 protected:
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
 	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "0", UIMin = "0"))
 	float VisionRate = 0.5;
 

@@ -19,6 +19,15 @@ FOnVisionLostSignature& UPlayerVisionComponent::OnVisionLost()
 	return OnVisionLostEvent;
 }
 
+void UPlayerVisionComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+	for (APawn* PawnLost : VisibleActors)
+	{
+		OnVisionLostEvent.Broadcast(PawnLost);
+	}
+}
+
 void UPlayerVisionComponent::VisionHandle()
 {
 	FVector VisionLocation = VisionLocationComponent->GetComponentLocation();
