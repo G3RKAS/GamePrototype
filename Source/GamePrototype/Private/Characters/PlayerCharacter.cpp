@@ -158,6 +158,14 @@ void APlayerCharacter::BeginPlay()
 	VisionComponent->StartWork(CameraComponent);
 }
 
+void APlayerCharacter::AttackEnemy(AActor* InEnemy)
+{
+	if (!WeaponComponent->GetCurrentWeaponName().IsNone())
+	{
+		Super::AttackEnemy(InEnemy);
+	}
+}
+
 void APlayerCharacter::OnVisionFind(APawn* InFoundPawn)
 {
 	IPlayerVisionInteraction* VisionInteraction = Cast<IPlayerVisionInteraction>(InFoundPawn);
@@ -212,26 +220,7 @@ void APlayerCharacter::CameraMove(const FInputActionValue& Value)
 
 void APlayerCharacter::Attack()
 {
-	if (!WeaponComponent->GetCurrentWeaponName().IsNone())
-	{
-		if (!bIsAttacking)
-		{
-			UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-
-			bIsAttacking = true;
-
-			FOnMontageEnded AttackEnded;
-			AttackEnded.BindUObject(this, &ThisClass::OnAttackEnded);
-
-			PlayAnimMontage(AttackAnim);
-			AnimInstance->Montage_SetEndDelegate(AttackEnded, AttackAnim);
-		}
-	}
-}
-
-void APlayerCharacter::OnAttackEnded(UAnimMontage* InAnimMontage, bool bInterrupted)
-{
-	bIsAttacking = false;
+	AttackEnemy(nullptr);
 }
 
 void APlayerCharacter::Shaking()

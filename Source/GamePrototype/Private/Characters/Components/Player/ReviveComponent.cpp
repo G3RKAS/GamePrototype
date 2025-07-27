@@ -55,7 +55,7 @@ void UReviveComponent::RevivePlayer()
 
 	// Restore Level
 	uint32 TotalOldXP = LevelInteraction_OldPlayer->GetTotalXP();
-	LevelInteraction_NewPlayer->SetTotalXP(TotalOldXP - TotalOldXP * XpPercentLose);
+	LevelInteraction_NewPlayer->SetTotalXP(TotalOldXP - TotalOldXP * XpPercentLoss);
 	// WeaponEquip
 	WeaponInteraction_NewPlayer->EquipWeapon(WeaponInteraction_OldPlayer->GetCurrentWeaponName());
 

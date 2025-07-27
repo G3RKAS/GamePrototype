@@ -10,7 +10,7 @@
 class UHealthWidgetComponent;
 
 UCLASS(Abstract)
-class GAMEPROTOTYPE_API AAnimalCharacter : public ABaseCharacter, public IPlayerVisionInteraction
+class GAMEPROTOTYPE_API AAnimalCharacter : public ABaseCharacter, public IPlayerVisionInteraction //TODO ATTACK INTERFACE
 {
 	GENERATED_BODY()
 
@@ -27,6 +27,8 @@ public:
 	// IPlayerVisionInteraction
 	virtual void CaughtInVision() override;
 	virtual void LostInVision() override;
+	//
+	virtual void AttackEnemy(AActor*) override;
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Attack Settings", meta = (ClampMin = "0", UIMin = "0"))

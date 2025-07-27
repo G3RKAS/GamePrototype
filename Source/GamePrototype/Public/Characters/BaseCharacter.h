@@ -35,12 +35,19 @@ public:
 	virtual void SetAttackSpeed(float) override;
 
 protected:
+	bool bIsAttacking;
+
 	virtual void BeginPlay() override;
 
 	virtual void OnCharacterDeath();
 	UFUNCTION()
 	virtual void OnTakeDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
 							  class AController* InstigatedBy, AActor* DamageCauser);
+
+	virtual void AttackEnemy(AActor*);
+
+	UFUNCTION()
+	virtual void OnAttackEnded(UAnimMontage* InAnimMontage, bool bInterrupted);
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	TObjectPtr<UXPComponent> XPComponent;
@@ -50,4 +57,7 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	TObjectPtr<UStatsLevelingComponent> StatsComponent;
+
+	UPROPERTY(EditAnywhere, Category = "Settings|Attack")
+	TObjectPtr<UAnimMontage> AttackAnim;
 };

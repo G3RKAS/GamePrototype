@@ -94,3 +94,27 @@ void ABaseCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const UDam
 	UE_LOG(LogTemp, Warning, TEXT("Damage %f to %s from "), Damage, *DamagedActor->GetName(), *DamageCauser->GetName());
 	UE_LOG(LogTemp, Warning, TEXT("Health %f"), HealthComponent->GetCurrentHealth());
 }
+
+void ABaseCharacter::AttackEnemy(AActor* InEnemy)
+{
+	if (!bIsAttacking)
+	{
+		check(GetMesh());
+		UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+		check(AnimInstance);
+
+		bIsAttacking = true;
+
+		FOnMontageEnded AttackEnded;
+		AttackEnded.BindUObject(this, &ThisClass::OnAttackEnded);
+
+		check(AttackAnim);
+		PlayAnimMontage(AttackAnim);
+		AnimInstance->Montage_SetEndDelegate(AttackEnded, AttackAnim);
+	}
+}
+
+void ABaseCharacter::OnAttackEnded(UAnimMontage* InAnimMontage, bool bInterrupted)
+{
+	bIsAttacking = false;
+}

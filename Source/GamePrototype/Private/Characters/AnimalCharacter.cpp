@@ -17,6 +17,7 @@ void AAnimalCharacter::OnCharacterDeath()
 	GetController()->Destroy();
 }
 
+// IStatsInteraction
 float AAnimalCharacter::GetAttackDamage()
 {
 	return AttackDamage;
@@ -37,6 +38,7 @@ void AAnimalCharacter::SetAttackSpeed(float InAttackSpeed)
 	AttackSpeed = InAttackSpeed;
 }
 
+// IPlayerVisionInteraction
 void AAnimalCharacter::CaughtInVision()
 {
 	HealthWidgetComponent->SetVisibility(true);
@@ -45,4 +47,10 @@ void AAnimalCharacter::CaughtInVision()
 void AAnimalCharacter::LostInVision()
 {
 	HealthWidgetComponent->SetVisibility(false);
+}
+
+//
+void AAnimalCharacter::AttackEnemy(AActor* InEnemy)
+{
+	Super::AttackEnemy(InEnemy);
 }
