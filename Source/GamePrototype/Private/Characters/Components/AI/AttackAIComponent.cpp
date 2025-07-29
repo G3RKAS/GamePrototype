@@ -1,6 +1,7 @@
 // (c) G3RKA. Game Prototype
 
 #include "Characters/Components/AI/AttackAIComponent.h"
+#include "Navigation/PathFollowingComponent.h"
 #include "Interfaces/Characters/StatsInteraction.h"
 #include "Interfaces/Characters/AnimInteraction.h"
 #include "Interfaces/AI/AIAttackInteraction.h"
@@ -10,7 +11,7 @@
 void UAttackAIComponent::StartWork(AAIController* InAIController)
 {
 	Super::StartWork(InAIController);
-	GetWorldTimerManager().SetTimer(AttackTimer, this, &ThisClass::GoToEnemy, TimeToUpdateEnenmyLocation, true);
+	GetWorldTimerManager().SetTimer(AttackTimer, this, &ThisClass::GoToEnemy, TimeToUpdateEnemyLocation, true);
 }
 
 void UAttackAIComponent::StopWork()
@@ -19,8 +20,13 @@ void UAttackAIComponent::StopWork()
 	GetWorldTimerManager().ClearTimer(AttackTimer);
 }
 
-void UAttackAIComponent::MoveFinished(bool)
+void UAttackAIComponent::MoveFinished(const FPathFollowingResult& Result)
 {
+	if (Result.Code == EPathFollowingResult::Aborted)
+	{
+		return;
+	}
+
 	if (not(GetWorldTimerManager().IsTimerActive(AttackTimer)))
 	{
 		return;
@@ -96,7 +102,7 @@ void UAttackAIComponent::AttackEnemy()
 		NewRotator.Roll = 0.0f;
 
 		FRotator NewRotation =
-			FMath::RInterpTo(GetControlledPawn()->GetActorRotation(), NewRotator, GetWorld()->GetDeltaSeconds(), 10.f);
+			FMath::RInterpTo(GetControlledPawn()->GetActorRotation(), NewRotator, GetWorld()->GetDeltaSeconds(), 15.f);
 
 		GetControlledPawn()->SetActorRotation(NewRotation);
 	}

@@ -36,5 +36,5 @@ void UAnimalWeaponComponent::BeginPlay()
 
 void UAnimalWeaponComponent::HandleAttack()
 {
-	//
+	UE_LOG(LogTemp, Warning, TEXT("Attack"));
 }

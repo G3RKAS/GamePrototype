@@ -14,7 +14,7 @@ class GAMEPROTOTYPE_API UAttackAIComponent : public UAIComponent
 public:
 	virtual void StartWork(AAIController*) override;
 	virtual void StopWork() override;
-	virtual void MoveFinished(bool) override;
+	virtual void MoveFinished(const FPathFollowingResult&) override;
 	void SetEnemy(AActor*);
 
 private:
@@ -25,7 +25,7 @@ private:
 	void UnPauseAttackTimer();
 
 	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "0", UIMin = "0", Units = "s"))
-	float TimeToUpdateEnenmyLocation = 0.1f;
+	float TimeToUpdateEnemyLocation = 0.1f;
 
 	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "0", UIMin = "0", Units = "cm"))
 	float AcceptableRadiusForMoving = 100.0f;

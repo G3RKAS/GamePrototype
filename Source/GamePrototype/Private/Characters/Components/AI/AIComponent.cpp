@@ -17,7 +17,7 @@ void UAIComponent::StopWork()
 	AIController = nullptr;
 }
 
-void UAIComponent::MoveFinished(bool)
+void UAIComponent::MoveFinished(const FPathFollowingResult&)
 {
 
 }

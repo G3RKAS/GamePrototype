@@ -3,8 +3,8 @@
 
 #include "Characters/Components/AI/PatrolAIComponent.h"
 #include "NavigationSystem.h"
+#include "Navigation/PathFollowingComponent.h"
 #include "AIController.h"
-
 
 void UPatrolAIComponent::StartWork(AAIController* InAIController)
 {
@@ -19,11 +19,11 @@ void UPatrolAIComponent::StopWork()
 	GetWorldTimerManager().ClearTimer(MovingTimer);
 }
 
-void UPatrolAIComponent::MoveFinished(bool bIsSuccess)
+void UPatrolAIComponent::MoveFinished(const FPathFollowingResult& Result)
 {
-	Super::MoveFinished(bIsSuccess);
+	Super::MoveFinished(Result);
 	
-	float WaitTime = bIsSuccess ? WaitTimeAfterSuccessMove : WaitTimeAfterUnSuccessMove;
+	float WaitTime = Result.IsSuccess() ? WaitTimeAfterSuccessMove : WaitTimeAfterUnSuccessMove;
 	AIController->StopMovement();
 	GetWorldTimerManager().SetTimer(MovingTimer, this, &ThisClass::MoveToPoint, WaitTime, false);
 }

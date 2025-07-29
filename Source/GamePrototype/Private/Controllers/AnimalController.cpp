@@ -42,9 +42,8 @@ void AAnimalController::UpdateTargetInfo(AActor* Actor, FAIStimulus Stimulus)
 
 void AAnimalController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result)
 {
-	bool bIsSuccess = Result.IsSuccess();
 	check(CurrentComponentWork);
-	CurrentComponentWork->MoveFinished(bIsSuccess);
+	CurrentComponentWork->MoveFinished(Result);
 }
 
 void AAnimalController::OnPossess(APawn* InPawn)

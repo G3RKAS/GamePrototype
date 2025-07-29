@@ -13,7 +13,7 @@ class GAMEPROTOTYPE_API UPatrolAIComponent : public UAIComponent
 public:
 	virtual void StartWork(AAIController*) override;
 	virtual void StopWork() override;
-	virtual void MoveFinished(bool) override;
+	virtual void MoveFinished(const FPathFollowingResult&) override;
 	
 private:
 	void MoveToPoint();
