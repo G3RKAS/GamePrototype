@@ -22,16 +22,16 @@ public:
 protected:
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
-	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "0", UIMin = "0"))
+	UPROPERTY(EditAnywhere, Category = "Settings|Player Vision", meta = (ClampMin = "0", UIMin = "0"))
 	float VisionRate = 0.5;
 
-	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "0", UIMin = "0"))
+	UPROPERTY(EditAnywhere, Category = "Settings|Player Vision", meta = (ClampMin = "0", UIMin = "0"))
 	float VisionRadius = 1200;
 
-	UPROPERTY(EditAnywhere, Category = "Settings")
+	UPROPERTY(EditAnywhere, Category = "Settings|Player Vision")
 	TEnumAsByte<ETraceTypeQuery> TraceTypeQuery;
 
-	UPROPERTY(EditAnywhere, Category = "Settings")
+	UPROPERTY(EditAnywhere, Category = "Settings|Player Vision")
 	TEnumAsByte<EDrawDebugTrace::Type> DrawDebugTrace;
 
 	TSet<TObjectPtr<APawn>> VisibleActors;

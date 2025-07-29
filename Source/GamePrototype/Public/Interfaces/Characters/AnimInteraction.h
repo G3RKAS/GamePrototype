@@ -19,4 +19,5 @@ class GAMEPROTOTYPE_API IAnimInteraction
 public:
 	virtual bool IsFalling() = 0;
 	virtual bool CanInteractWithWorld() = 0;
+	virtual float GetAnimAttackLength() = 0;
 };

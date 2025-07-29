@@ -1,7 +1,6 @@
 // (c) G3RKA. Game Prototype
 
 #include "Characters/Components/Player/PlayerVisionComponent.h"
-// #include <Interfaces/Characters/HealthWidgetInteraction.h>
 
 void UPlayerVisionComponent::StartWork(USceneComponent* InVisionLocationComponent)
 {

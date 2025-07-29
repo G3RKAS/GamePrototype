@@ -35,18 +35,18 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	UPROPERTY(EditAnywhere, Category = "Health Settings", meta = (ClampMin = "0", UIMin = "0"))
+	UPROPERTY(EditAnywhere, Category = "Settings|Health", meta = (ClampMin = "0", UIMin = "0"))
 	float MaxHealth = 100.f;
 
-	UPROPERTY(EditAnywhere, Category = "Health Settings", meta = (ClampMin = "0", UIMin = "0"))
+	UPROPERTY(EditAnywhere, Category = "Settings|Health", meta = (ClampMin = "0", UIMin = "0"))
 	float CurrentHealth = MaxHealth;
 
-	UPROPERTY(EditAnywhere, Category = "Health Settings", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, Category = "Settings|Health", meta = (AllowPrivateAccess = "true"))
 	bool bIsRegeneratingHealth = false;
-	UPROPERTY(EditAnywhere, Category = "Health Settings|Regenerating",
+	UPROPERTY(EditAnywhere, Category = "Settings|Health|Regenerating",
 			  meta = (ClampMin = "0", UIMin = "0", EditCondition = "bIsRegeneratingHealth", EditConditionHides))
 	float RegeneratingRate = 2.f;
-	UPROPERTY(EditAnywhere, Category = "Health Settings|Regenerating",
+	UPROPERTY(EditAnywhere, Category = "Settings|Health|Regenerating",
 			  meta = (ClampMin = "0", UIMin = "0", EditCondition = "bIsRegeneratingHealth", EditConditionHides))
 	float RegeneratingCount = 10.f;
 

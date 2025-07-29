@@ -31,7 +31,7 @@ protected:
 
 
 private:
-	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "1", UIMin = "1"))
+	UPROPERTY(EditAnywhere, Category = "Settings|Level", meta = (ClampMin = "1", UIMin = "1"))
 	uint8 Level = 1;
 
 	uint32 GetXPForLevel(uint8);

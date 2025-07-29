@@ -29,6 +29,11 @@ bool ABaseCharacter::CanInteractWithWorld()
 	return true;
 }
 
+float ABaseCharacter::GetAnimAttackLength()
+{
+	return AttackAnim->GetPlayLength();
+}
+
 // IStatsInteraction
 float ABaseCharacter::GetMaxHealth()
 {

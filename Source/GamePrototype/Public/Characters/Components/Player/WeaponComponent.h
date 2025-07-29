@@ -34,7 +34,7 @@ protected:
 	virtual void EndPlay(const EEndPlayReason::Type) override;
 
 private:
-	UPROPERTY(EditAnywhere, Category = "Settings")
+	UPROPERTY(EditAnywhere, Category = "Settings|Weapon")
 	FDataTableRowHandle StartWeapon;
 
 	UPROPERTY(EditAnywhere)

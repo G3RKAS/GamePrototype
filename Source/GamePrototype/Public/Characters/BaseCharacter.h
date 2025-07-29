@@ -25,6 +25,7 @@ public:
 	// IAnimInteraction
 	virtual bool IsFalling() override;
 	virtual bool CanInteractWithWorld() override;
+	virtual float GetAnimAttackLength() override;
 	// IStatsInteraction
 	virtual float GetMaxHealth() override;
 	virtual float GetAttackDamage() override;

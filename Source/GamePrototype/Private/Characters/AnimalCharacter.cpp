@@ -3,12 +3,15 @@
 
 #include "Characters/AnimalCharacter.h"
 #include "Characters/Components/HealthWidgetComponent.h"
+#include "Characters/Components/Animal/AnimalWeaponComponent.h"
 
 AAnimalCharacter::AAnimalCharacter() : Super()
 {
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 	HealthWidgetComponent = CreateDefaultSubobject<UHealthWidgetComponent>(TEXT("Health Widget"));
 	HealthWidgetComponent->SetupAttachment(GetMesh());
+
+	AnimalWeaponComponent = CreateDefaultSubobject<UAnimalWeaponComponent>(TEXT("Animal Weapon Widget"));
 }
 
 void AAnimalCharacter::OnCharacterDeath()
@@ -49,7 +52,7 @@ void AAnimalCharacter::LostInVision()
 	HealthWidgetComponent->SetVisibility(false);
 }
 
-//
+// IAIAttackInteraction
 void AAnimalCharacter::AttackEnemy(AActor* InEnemy)
 {
 	Super::AttackEnemy(InEnemy);

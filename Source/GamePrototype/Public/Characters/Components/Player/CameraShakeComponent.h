@@ -17,11 +17,11 @@ public:
 	void MakeCameraShake();
 
 private:
-	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "0", UIMin = "0", ClampMax = "1", UIMax = "1"))
+	UPROPERTY(EditAnywhere, Category = "Settings|CameraShake", meta = (ClampMin = "0", UIMin = "0", ClampMax = "1", UIMax = "1"))
 	float ShakeScale = 1.f;
-	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "0", UIMin = "0"))
+	UPROPERTY(EditAnywhere, Category = "Settings|CameraShake", meta = (ClampMin = "0", UIMin = "0"))
 	float TimeToStopShaking = 0.1f;
-	UPROPERTY(EditAnywhere, Category = "Settings")
+	UPROPERTY(EditAnywhere, Category = "Settings|CameraShake")
 	TSubclassOf<UCameraShakeBase> CameraShake;
 
 	FTimerHandle TimerToRemoveShake;

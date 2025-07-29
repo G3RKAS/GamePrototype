@@ -5,12 +5,16 @@
 #include "CoreMinimal.h"
 #include "Characters/BaseCharacter.h"
 #include "Interfaces/Characters/PlayerVisionInteraction.h"
+#include "Interfaces/AI/AIAttackInteraction.h"
 #include "AnimalCharacter.generated.h"
 
 class UHealthWidgetComponent;
+class UAnimalWeaponComponent;
 
 UCLASS(Abstract)
-class GAMEPROTOTYPE_API AAnimalCharacter : public ABaseCharacter, public IPlayerVisionInteraction //TODO ATTACK INTERFACE
+class GAMEPROTOTYPE_API AAnimalCharacter : public ABaseCharacter,
+										   public IPlayerVisionInteraction,
+										   public IAIAttackInteraction
 {
 	GENERATED_BODY()
 
@@ -27,16 +31,19 @@ public:
 	// IPlayerVisionInteraction
 	virtual void CaughtInVision() override;
 	virtual void LostInVision() override;
-	//
+	// IAIAttackInteraction
 	virtual void AttackEnemy(AActor*) override;
 
 private:
-	UPROPERTY(EditAnywhere, Category = "Attack Settings", meta = (ClampMin = "0", UIMin = "0"))
+	UPROPERTY(EditAnywhere, Category = "Settings|Attack", meta = (ClampMin = "0", UIMin = "0"))
 	float AttackDamage = 21.f;
 
-	UPROPERTY(EditAnywhere, Category = "Attack Settings", meta = (ClampMin = "0", UIMin = "0"))
+	UPROPERTY(EditAnywhere, Category = "Settings|Attack", meta = (ClampMin = "0", UIMin = "0"))
 	float AttackSpeed = 1.f;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	TObjectPtr<UHealthWidgetComponent> HealthWidgetComponent;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	TObjectPtr<UAnimalWeaponComponent> AnimalWeaponComponent;
 };

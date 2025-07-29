@@ -1,9 +1,10 @@
 // (c) G3RKA. Game Prototype
 
-
 #include "Characters/Components/AI/AttackAIComponent.h"
-#include <Interfaces/Characters/StatsInteraction.h>
-#include <Kismet/KismetMathLibrary.h>
+#include "Interfaces/Characters/StatsInteraction.h"
+#include "Interfaces/Characters/AnimInteraction.h"
+#include "Interfaces/AI/AIAttackInteraction.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "Engine/DamageEvents.h"
 
 void UAttackAIComponent::StartWork(AAIController* InAIController)
@@ -20,6 +21,19 @@ void UAttackAIComponent::StopWork()
 
 void UAttackAIComponent::MoveFinished(bool)
 {
+	if (not(GetWorldTimerManager().IsTimerActive(AttackTimer)))
+	{
+		return;
+	}
+
+	check(Enemy);
+	const float DistanceBetweenActors = Enemy->GetDistanceTo(GetControlledPawn());
+
+	if (DistanceBetweenActors > AcceptableRadiusForAttack)
+	{
+		return;
+	}
+
 	AttackEnemy();
 }
 
@@ -38,19 +52,6 @@ void UAttackAIComponent::GoToEnemy()
 
 void UAttackAIComponent::AttackEnemy()
 {
-	if (not(GetWorldTimerManager().IsTimerActive(AttackTimer)))
-	{
-		return;
-	}
-
-	check(Enemy);
-	const float DistanceBetweenActors = Enemy->GetDistanceTo(GetControlledPawn());
-
-	if (DistanceBetweenActors > AcceptableRadiusForAttack)
-	{
-		return;
-	}
-
 	check(GetControlledPawn());
 
 	const FVector ThisLocation = GetControlledPawn()->GetActorLocation();
@@ -68,16 +69,25 @@ void UAttackAIComponent::AttackEnemy()
 	{
 
 		IStatsInteraction* StatsInteraction = Cast<IStatsInteraction>(GetControlledPawn());
+		check(StatsInteraction);
 
-		UE_LOG(LogTemp, Warning, TEXT("Attack %s Damage %f"), *Enemy->GetName(), StatsInteraction->GetAttackDamage());
+		IAIAttackInteraction* AttackInteraction = Cast<IAIAttackInteraction>(GetControlledPawn());
+		check(AttackInteraction);
 
-		// TODO CHANGE TO TRACES
-		Enemy->TakeDamage(StatsInteraction->GetAttackDamage(), FDamageEvent(), nullptr, GetControlledPawn());
+		AttackInteraction->AttackEnemy(Enemy);
+
+		// Enemy->TakeDamage(StatsInteraction->GetAttackDamage(), FDamageEvent(), nullptr, GetControlledPawn());
+
+		IAnimInteraction* AnimInteraction = Cast<IAnimInteraction>(GetControlledPawn());
+		check(AttackInteraction);
+
+		float AdditionalTime = AnimInteraction ? AnimInteraction->GetAnimAttackLength() : 0.0f;
 
 		PauseAttackTimer();
 
 		FTimerHandle TimerDelay;
-		GetWorldTimerManager().SetTimer(TimerDelay, this, &ThisClass::UnPauseAttackTimer, AttackCoolDown, false);
+		GetWorldTimerManager().SetTimer(TimerDelay, this, &ThisClass::UnPauseAttackTimer,
+										AttackCoolDown + AdditionalTime, false);
 	}
 	else
 	{
@@ -86,12 +96,10 @@ void UAttackAIComponent::AttackEnemy()
 		NewRotator.Roll = 0.0f;
 
 		FRotator NewRotation =
-			FMath::RInterpTo(GetControlledPawn()->GetActorRotation(), NewRotator,
-												GetWorld()->GetDeltaSeconds(), 10.f);
+			FMath::RInterpTo(GetControlledPawn()->GetActorRotation(), NewRotator, GetWorld()->GetDeltaSeconds(), 10.f);
 
 		GetControlledPawn()->SetActorRotation(NewRotation);
 	}
-
 }
 
 void UAttackAIComponent::PauseAttackTimer()
