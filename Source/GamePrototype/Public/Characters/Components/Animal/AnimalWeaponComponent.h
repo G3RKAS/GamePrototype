@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Characters/Components/BaseActorComponent.h"
 #include "Interfaces/Characters/Player/WeaponInteraction.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "AnimalWeaponComponent.generated.h"
 
 UCLASS()
@@ -24,6 +25,21 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	UPROPERTY(EditAnywhere, Category = "Settings|Attack|Debug")
+	TEnumAsByte<ETraceTypeQuery> TraceTypeQuery;
+
+	UPROPERTY(EditAnywhere, Category = "Settings|Attack|Debug")
+	bool bIsShowTrace;
+
+	UPROPERTY(EditAnywhere, Category = "Settings|Attack")
+	float CapsuleRadius = 100;
+
+	UPROPERTY(EditAnywhere, Category = "Settings|Attack")
+	float CapsuleHalfHeight = 100;
+
+	UPROPERTY(EditAnywhere, Category = "Settings|Attack")
+	float AttackRange = 100;
+
 	void HandleAttack();
 
 	FOnWeaponChangedSignature OnWeaponChangedEvent;

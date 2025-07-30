@@ -6,7 +6,6 @@
 #include "Interfaces/Characters/AnimInteraction.h"
 #include "Interfaces/AI/AIAttackInteraction.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "Engine/DamageEvents.h"
 
 void UAttackAIComponent::StartWork(AAIController* InAIController)
 {

@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Characters/Components/BaseActorComponent.h"
-#include <Kismet/KismetSystemLibrary.h>
+#include "Kismet/KismetSystemLibrary.h"
 #include "PlayerVisionComponent.generated.h"
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnVisionFindSignature, APawn*);
