@@ -21,6 +21,8 @@
 
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
 
+#include "Characters/Components/HealthComponent.h"
+
 APlayerCharacter::APlayerCharacter() : Super()
 {
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm Component"));
@@ -158,11 +160,34 @@ void APlayerCharacter::BeginPlay()
 	VisionComponent->StartWork(CameraComponent);
 }
 
+void APlayerCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType,
+									AController* InstigatedBy, AActor* DamageCauser)
+{
+	Super::OnTakeDamage(DamagedActor, Damage, DamageType, InstigatedBy, DamageCauser);
+
+	if (HealthComponent->IsDead())
+	{
+		return;
+	}
+
+	CameraShakeComponent->MakeCameraShake();
+}
+
 void APlayerCharacter::AttackEnemy(AActor* InEnemy)
 {
 	if (!WeaponComponent->GetCurrentWeaponName().IsNone())
 	{
 		Super::AttackEnemy(InEnemy);
+	}
+}
+
+void APlayerCharacter::OnAttackEnded(UAnimMontage* InAnimMontage, bool bInterrupted)
+{
+	Super::OnAttackEnded(InAnimMontage, bInterrupted);
+
+	if (bInterrupted)
+	{
+		WeaponComponent->OnWeaponAttackEnd().Broadcast();
 	}
 }
 

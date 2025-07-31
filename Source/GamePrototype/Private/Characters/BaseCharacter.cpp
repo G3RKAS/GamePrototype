@@ -98,6 +98,8 @@ void ABaseCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const UDam
 	HealthComponent->AddHealth(-1 * Damage);
 	UE_LOG(LogTemp, Warning, TEXT("Damage %f to %s from "), Damage, *DamagedActor->GetName(), *DamageCauser->GetName());
 	UE_LOG(LogTemp, Warning, TEXT("Health %f"), HealthComponent->GetCurrentHealth());
+
+	PlayAnimMontage(OnHitAnim);
 }
 
 void ABaseCharacter::AttackEnemy(AActor* InEnemy)

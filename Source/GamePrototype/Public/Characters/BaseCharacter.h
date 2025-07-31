@@ -59,6 +59,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	TObjectPtr<UStatsLevelingComponent> StatsComponent;
 
-	UPROPERTY(EditAnywhere, Category = "Settings|Attack")
+	UPROPERTY(EditAnywhere, Category = "Settings|Anim")
 	TObjectPtr<UAnimMontage> AttackAnim;
+
+	UPROPERTY(EditAnywhere, Category = "Settings|Anim")
+	TObjectPtr<UAnimMontage> OnHitAnim;
 };

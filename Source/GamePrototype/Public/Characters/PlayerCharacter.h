@@ -34,7 +34,7 @@ public:
 	// IControllerInteraction
 	virtual void Possess(APawn*) override;
 	virtual void StartCameraShake(TSubclassOf<UCameraShakeBase>, float) override;
-	virtual void StopAllInstancesOfCameraShake(TSubclassOf<UCameraShakeBase>, bool) override; 
+	virtual void StopAllInstancesOfCameraShake(TSubclassOf<UCameraShakeBase>, bool) override;
 	// IStatsInteraction
 	virtual float GetAttackDamage() override;
 	virtual float GetAttackSpeed() override;
@@ -65,7 +65,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = Input)
 	TObjectPtr<UInputAction> AttackAction;
-	 
+
 	UPROPERTY(EditAnywhere, Category = "Components")
 	TObjectPtr<UCameraComponent> CameraComponent;
 
@@ -92,7 +92,12 @@ protected:
 
 	virtual void BeginPlay() override;
 
+	virtual void OnTakeDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
+							  class AController* InstigatedBy, AActor* DamageCauser) override;
+
 	virtual void AttackEnemy(AActor*) override;
+
+	virtual void OnAttackEnded(UAnimMontage* InAnimMontage, bool bInterrupted) override;
 
 private:
 	void OnVisionFind(APawn*);
