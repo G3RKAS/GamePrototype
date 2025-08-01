@@ -92,7 +92,7 @@ void UAttackAIComponent::AttackEnemy()
 
 		FTimerHandle TimerDelay;
 		GetWorldTimerManager().SetTimer(TimerDelay, this, &ThisClass::UnPauseAttackTimer,
-										AttackCoolDown + AdditionalTime, false);
+										AttackCoolDown * StatsInteraction->GetAttackSpeed() + AdditionalTime, false);
 	}
 	else
 	{

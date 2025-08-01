@@ -116,7 +116,7 @@ void ABaseCharacter::AttackEnemy(AActor* InEnemy)
 		AttackEnded.BindUObject(this, &ThisClass::OnAttackEnded);
 
 		check(AttackAnim);
-		PlayAnimMontage(AttackAnim);
+		PlayAnimMontage(AttackAnim, GetAttackSpeed());
 		AnimInstance->Montage_SetEndDelegate(AttackEnded, AttackAnim);
 	}
 }
