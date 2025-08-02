@@ -17,6 +17,9 @@ class GAMEPROTOTYPE_API UGameMessageBoxWidget : public UGameBaseUserWidget
 public:
 	void SetWeapon(IWeaponInteraction*);
 
+protected:
+	virtual void NativeConstruct() override;
+
 private:
 	UPROPERTY(meta = (BindWidget));
 	TObjectPtr<UPanelWidget> MessageBox;

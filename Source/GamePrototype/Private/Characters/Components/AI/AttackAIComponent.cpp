@@ -81,8 +81,6 @@ void UAttackAIComponent::AttackEnemy()
 
 		AttackInteraction->AttackEnemy(Enemy);
 
-		// Enemy->TakeDamage(StatsInteraction->GetAttackDamage(), FDamageEvent(), nullptr, GetControlledPawn());
-
 		IAnimInteraction* AnimInteraction = Cast<IAnimInteraction>(GetControlledPawn());
 		check(AttackInteraction);
 
@@ -92,7 +90,7 @@ void UAttackAIComponent::AttackEnemy()
 
 		FTimerHandle TimerDelay;
 		GetWorldTimerManager().SetTimer(TimerDelay, this, &ThisClass::UnPauseAttackTimer,
-										AttackCoolDown * StatsInteraction->GetAttackSpeed() + AdditionalTime, false);
+										AttackCoolDown + AdditionalTime / StatsInteraction->GetAttackSpeed(), false);
 	}
 	else
 	{

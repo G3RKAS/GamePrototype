@@ -3,7 +3,10 @@
 
 #include "Characters/AnimalCharacter.h"
 #include "Characters/Components/HealthWidgetComponent.h"
+#include "Characters/Components/HealthComponent.h"
+#include "Characters/Components/XPComponent.h"
 #include "Characters/Components/Animal/AnimalWeaponComponent.h"
+#include <Interfaces/Characters/LevelInteraction.h>
 
 AAnimalCharacter::AAnimalCharacter() : Super()
 {
@@ -18,6 +21,23 @@ void AAnimalCharacter::OnCharacterDeath()
 {
 	Super::OnCharacterDeath();
 	GetController()->Destroy();
+}
+
+void AAnimalCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType,
+									AController* InstigatedBy, AActor* DamageCauser)
+{
+	Super::OnTakeDamage(DamagedActor, Damage, DamageType, InstigatedBy, DamageCauser);
+
+	if (HealthComponent->IsDead())
+	{
+		ILevelInteraction* LevelInteraction = DamageCauser->FindComponentByInterface<ILevelInteraction>();
+		check(LevelInteraction);
+		UE_LOG(LogTemp, Warning, TEXT("Old XP %llu + %f"), LevelInteraction->GetTotalXP(),
+			   XpGain * pow(MultPerLevel, XPComponent->GetLevel() - 1));
+		LevelInteraction->SetTotalXP(LevelInteraction->GetTotalXP() +
+									 XpGain * pow(MultPerLevel, XPComponent->GetLevel() - 1));
+		UE_LOG(LogTemp, Warning, TEXT("New XP %llu"), LevelInteraction->GetTotalXP());
+	}
 }
 
 // IStatsInteraction

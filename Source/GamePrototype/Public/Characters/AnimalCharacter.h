@@ -22,6 +22,8 @@ public:
 	AAnimalCharacter();
 
 	virtual void OnCharacterDeath() override;
+	virtual void OnTakeDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
+							  class AController* InstigatedBy, AActor* DamageCauser) override;
 
 	// IStatsInteraction
 	virtual float GetAttackDamage() override;
@@ -35,6 +37,12 @@ public:
 	virtual void AttackEnemy(AActor*) override;
 
 private:
+	UPROPERTY(EditAnywhere, Category = "Settings|XPGaining", meta = (ClampMin = "0", UIMin = "0"))
+	float MultPerLevel = 1.1f;
+
+	UPROPERTY(EditAnywhere, Category = "Settings|XPGaining", meta = (ClampMin = "0", UIMin = "0"))
+	float XpGain = 200.f;
+
 	UPROPERTY(EditAnywhere, Category = "Settings|Attack", meta = (ClampMin = "0", UIMin = "0"))
 	float AttackDamage = 21.f;
 

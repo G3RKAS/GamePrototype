@@ -10,9 +10,14 @@ void UGameMessageBoxWidget::SetWeapon(IWeaponInteraction* InWeapon)
 {
 	check(InWeapon);
 	WeaponInteraction = InWeapon;
+	WeaponInteraction->OnWeaponChanged().AddUObject(this, &ThisClass::MakeMessage);
+}
+
+void UGameMessageBoxWidget::NativeConstruct()
+{
+	Super::NativeConstruct();
 	check(MessageBox);
 	MessageBox->ClearChildren();
-	WeaponInteraction->OnWeaponChanged().AddUObject(this, &ThisClass::MakeMessage);
 }
 
 void UGameMessageBoxWidget::MakeMessage()

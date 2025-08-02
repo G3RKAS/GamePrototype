@@ -75,6 +75,6 @@ void AGameAttackWeapon::ActorOverlapWeapon(UPrimitiveComponent* OverlappedCompon
 
 	OtherActor->TakeDamage(WeaponAttackDamage, FDamageEvent(), nullptr, GetOwner());
 
-	UE_LOG(LogTemp, Warning, TEXT("Actor %s takes %f with %f attack speed "), *OtherActor->GetName(),
-		   WeaponAttackDamage, WeaponAttackSpeed);
+	UE_LOG(LogTemp, Warning, TEXT("Actor %s takes %f with %f attack speed in comp %s"), *OtherActor->GetName(),
+		   WeaponAttackDamage, WeaponAttackSpeed, *OtherComp->GetName());
 }
