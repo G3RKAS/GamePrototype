@@ -6,13 +6,6 @@
 #include "UI/BaseObjects/Messages/GameMessageWidget.h"
 #include "Components/PanelWidget.h"
 
-void UGameMessageBoxWidget::SetWeapon(IWeaponInteraction* InWeapon)
-{
-	check(InWeapon);
-	WeaponInteraction = InWeapon;
-	WeaponInteraction->OnWeaponChanged().AddUObject(this, &ThisClass::MakeMessage);
-}
-
 void UGameMessageBoxWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
@@ -20,16 +13,10 @@ void UGameMessageBoxWidget::NativeConstruct()
 	MessageBox->ClearChildren();
 }
 
-void UGameMessageBoxWidget::MakeMessage()
+void UGameMessageBoxWidget::MakeMessage(FText InMessage)
 {
-	if (WeaponInteraction)
-	{
-		FName WeaponName = WeaponInteraction->GetCurrentWeaponName();
+	UGameMessageWidget* Message = CreateWidget<UGameMessageWidget>(this, MessageWidget);
+	check(Message) Message->SetText(InMessage);
 
-		UGameMessageWidget* Message = CreateWidget<UGameMessageWidget>(this, MessageWidget);
-		check(Message)
-		Message->SetPickUpWeapon(WeaponName);
-
-		MessageBox->AddChild(Message);
-	}
+	MessageBox->AddChild(Message);
 }

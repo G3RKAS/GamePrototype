@@ -15,7 +15,7 @@ class GAMEPROTOTYPE_API UGameMessageBoxWidget : public UGameBaseUserWidget
 	GENERATED_BODY()
 	
 public:
-	void SetWeapon(IWeaponInteraction*);
+	void MakeMessage(FText InMessage);
 
 protected:
 	virtual void NativeConstruct() override;
@@ -26,8 +26,4 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Settings")
 	TSubclassOf<UGameMessageWidget> MessageWidget;
-
-	IWeaponInteraction* WeaponInteraction;
-
-	void MakeMessage();
 };

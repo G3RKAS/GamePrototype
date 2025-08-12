@@ -13,7 +13,7 @@ class GAMEPROTOTYPE_API UGameMessageWidget : public UGameBaseUserWidget
 {
 	GENERATED_BODY()
 public:
-	void SetPickUpWeapon(FName);
+	void SetText(FText);
 
 protected:
 	virtual void NativeConstruct() override;

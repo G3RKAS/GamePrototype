@@ -9,6 +9,7 @@
 
 #include "UI/BaseObjects/GamePlayerHealthBar.h"
 
+#include <Core/Helpers/WeaponTableHelper.h>
 #include "UI/BaseObjects/WeaponInfoWidget.h"
 #include "Interfaces/Characters/Player/WeaponInteraction.h"
 #include "Interfaces/Characters/StatsInteraction.h"
@@ -72,7 +73,13 @@ void UGameHUDWidget::SetupPawnRelatedWidgets()
 
 		if (WeaponInteraction)
 		{
-			WeaponMessages->SetWeapon(WeaponInteraction);
+			WeaponInteraction->OnWeaponChanged().AddUObject(this, &ThisClass::HandleWeaponChange);
 		}
 	}
+}
+
+void UGameHUDWidget::HandleWeaponChange(FName InWeaponName)
+{
+	WeaponMessages->MakeMessage(
+		FText::Format(PickUpMessageConcat, PickUpMessage, FWeaponTableHelper::GetWeaponName(InWeaponName)));
 }

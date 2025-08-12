@@ -19,7 +19,7 @@ void UStatsLevelingComponent::BeginPlay()
 	}
 	if (WeaponInteraction)
 	{
-		WeaponInteraction->OnWeaponChanged().AddUObject(this, &ThisClass::SetupWeaponStats);
+		WeaponInteraction->OnWeaponChanged().AddUObject(this, &ThisClass::HandleWeaponChange);
 	}
 }
 
@@ -57,6 +57,11 @@ void UStatsLevelingComponent::SetupWeaponStats()
 		StatsInteraction->SetAttackDamage(GetLevelStat(BaseAttackDamage));
 		StatsInteraction->SetAttackSpeed(GetLevelStat(BaseAttackSpeed));
 	}
+}
+
+void UStatsLevelingComponent::HandleWeaponChange(FName InWeaponName)
+{
+	SetupWeaponStats();
 }
 
 void UStatsLevelingComponent::CalculateNewStats(uint8)

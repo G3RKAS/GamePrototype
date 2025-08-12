@@ -6,7 +6,7 @@
 #include "UObject/Interface.h"
 #include "WeaponInteraction.generated.h"
 
-DECLARE_MULTICAST_DELEGATE(FOnWeaponChangedSignature)
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnWeaponChangedSignature, FName)
 DECLARE_MULTICAST_DELEGATE(FOnAnimNotifySignature)
 
 class AGameBaseWeapon;

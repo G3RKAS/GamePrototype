@@ -42,4 +42,14 @@ private:
 
 private:
 	void SetupPawnRelatedWidgets();
+
+	// Messages
+	UPROPERTY(EditAnywhere, Category = "Settings|Messages|Weapon");
+	FText PickUpMessage;
+
+	UPROPERTY(EditAnywhere, Category = "Settings|Messages|Weapon");
+	FText PickUpMessageConcat;
+
+	// Message handlers
+	void HandleWeaponChange(FName);
 };

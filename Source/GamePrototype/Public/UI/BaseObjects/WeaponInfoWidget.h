@@ -30,5 +30,5 @@ private:
 	IStatsInteraction* StatsInteraction;
 
 	void InitChangeWeaponInformation();
-	void ChangeWeaponInformation();
+	void ChangeWeaponInformation(FName);
 };

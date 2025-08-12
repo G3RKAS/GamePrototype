@@ -21,7 +21,7 @@ void UWeaponComponent::EquipWeapon(FName InWeaponName)
 	}
 
 	CurrentWeapon = InWeaponName;
-	OnWeaponChangedEvent.Broadcast();
+	OnWeaponChangedEvent.Broadcast(CurrentWeapon);
 	UE_LOG(LogTemp, Warning, TEXT("Weapon equiped %s"), *InWeaponName.ToString());
 }
 

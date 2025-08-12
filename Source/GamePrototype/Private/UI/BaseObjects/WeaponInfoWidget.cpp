@@ -10,7 +10,7 @@ void UWeaponInfoWidget::SetWeapon(IWeaponInteraction* InWeapon)
 {
 	WeaponInteraction = InWeapon;
 	WeaponInteraction->OnWeaponChanged().AddUObject(this, &ThisClass::ChangeWeaponInformation);
-	InitChangeWeaponInformation();
+	GetWorldTimerManager().SetTimerForNextTick(this, &ThisClass::InitChangeWeaponInformation);
 }
 
 void UWeaponInfoWidget::SetStats(IStatsInteraction* InStats)
@@ -21,14 +21,14 @@ void UWeaponInfoWidget::SetStats(IStatsInteraction* InStats)
 
 void UWeaponInfoWidget::InitChangeWeaponInformation()
 {
-	GetWorldTimerManager().SetTimerForNextTick(this, &ThisClass::ChangeWeaponInformation);
+	ChangeWeaponInformation(WeaponInteraction->GetCurrentWeaponName());
 }
 
-void UWeaponInfoWidget::ChangeWeaponInformation()
+void UWeaponInfoWidget::ChangeWeaponInformation(FName InWeaponName)
 {
-	if (not(WeaponInteraction->GetCurrentWeaponName().IsNone()))
+	if (not(InWeaponName.IsNone()))
 	{
-		WeaponInfo->SetText(FWeaponTableHelper::GetWeaponName(WeaponInteraction->GetCurrentWeaponName()));
+		WeaponInfo->SetText(FWeaponTableHelper::GetWeaponName(InWeaponName));
 		if (StatsInteraction)
 		{
 			DamageInfo->SetText(FText::AsNumber(StatsInteraction->GetAttackDamage()));

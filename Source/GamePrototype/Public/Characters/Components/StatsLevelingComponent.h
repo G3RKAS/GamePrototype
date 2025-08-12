@@ -19,6 +19,8 @@ public:
 	void SetupWeaponStats();
 
 private:
+	void HandleWeaponChange(FName);
+
 	float GetLevelStat(float);
 	void SetupStats();
 	void CalculateNewStats(uint8);
