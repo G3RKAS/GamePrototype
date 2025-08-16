@@ -23,6 +23,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	bool bIsFalling;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	bool bIsBlocking;
+
 private:
 	UPROPERTY()
 	TObjectPtr<APawn> Pawn;

@@ -62,15 +62,9 @@ void UAttackAIComponent::AttackEnemy()
 	const FVector ThisLocation = GetControlledPawn()->GetActorLocation();
 	const FVector TargetLocation = Enemy->GetActorLocation();
 
-	FRotator LookingRotator =
-		FRotationMatrix::MakeFromX(Enemy->GetActorLocation() - GetControlledPawn()->GetActorLocation()).Rotator();
+	//UE_LOG(LogTemp, Warning, TEXT("Yaw = %f"), YawDiff);
 
-	float YawDiff =
-		FMath::Abs(FMath::FindDeltaAngleDegrees(GetControlledPawn()->GetActorRotation().Yaw, LookingRotator.Yaw));
-
-	UE_LOG(LogTemp, Warning, TEXT("Yaw = %f"), YawDiff);
-
-	if (YawDiff < AttackAngle)
+	if (GetYawDiffInLook() < AttackAngle)
 	{
 
 		IStatsInteraction* StatsInteraction = Cast<IStatsInteraction>(GetControlledPawn());
@@ -94,14 +88,79 @@ void UAttackAIComponent::AttackEnemy()
 	}
 	else
 	{
-		FRotator NewRotator = (TargetLocation - ThisLocation).Rotation();
-		NewRotator.Pitch = 0.0f;
-		NewRotator.Roll = 0.0f;
+		PauseAttackTimer();
+		CurrentAttackRotation = 0;
+		RotateToEnemy();
+	}
+}
 
-		FRotator NewRotation =
-			FMath::RInterpTo(GetControlledPawn()->GetActorRotation(), NewRotator, GetWorld()->GetDeltaSeconds(), 15.f);
+float UAttackAIComponent::GetYawDiffInLook()
+{
+	const FVector ThisLocation = GetControlledPawn()->GetActorLocation();
+	const FVector TargetLocation = Enemy->GetActorLocation();
 
-		GetControlledPawn()->SetActorRotation(NewRotation);
+	FRotator LookingRotator =
+		FRotationMatrix::MakeFromX(Enemy->GetActorLocation() - GetControlledPawn()->GetActorLocation()).Rotator();
+
+	return FMath::Abs(FMath::FindDeltaAngleDegrees(GetControlledPawn()->GetActorRotation().Yaw, LookingRotator.Yaw));
+}
+
+void UAttackAIComponent::RotateToEnemy()
+{
+	GetWorldTimerManager().SetTimer(RotationHandle, this, &ThisClass::UpdateRotation, TimeUpdateRotation, true);
+
+	/*
+	const FVector ThisLocation = GetControlledPawn()->GetActorLocation();
+	const FVector TargetLocation = Enemy->GetActorLocation();
+
+	FRotator NewRotator = (TargetLocation - ThisLocation).Rotation();
+	NewRotator.Pitch = 0.0f;
+	NewRotator.Roll = 0.0f;
+
+	FRotator NewRotation = FMath::RInterpTo(GetControlledPawn()->GetActorRotation(), NewRotator,
+													GetWorld()->GetDeltaSeconds(), AttackRotationSpeed);
+
+	GetControlledPawn()->SetActorRotation(NewRotation);
+
+	FTimerHandle TimerDelay;
+	GetWorldTimerManager().SetTimer(TimerDelay, this, &ThisClass::UnPauseAttackTimer, AttackCoolDown, false);
+	*/
+}
+
+void UAttackAIComponent::UpdateRotation()
+{
+	const FVector ThisLocation = GetControlledPawn()->GetActorLocation();
+	const FVector TargetLocation = Enemy->GetActorLocation();
+
+	const float OldRotationYaw = GetControlledPawn()->GetActorRotation().Yaw;
+
+	FRotator NewRotator = (TargetLocation - ThisLocation).Rotation();
+	NewRotator.Pitch = 0.0f;
+	NewRotator.Roll = 0.0f;
+
+	FRotator NewRotation = FMath::RInterpTo(GetControlledPawn()->GetActorRotation(), NewRotator,
+											GetWorld()->GetDeltaSeconds(), AttackRotationSpeed);
+
+	GetControlledPawn()->SetActorRotation(NewRotation);
+	CurrentAttackRotation += FMath::Abs(OldRotationYaw - NewRotation.Yaw);
+
+	UE_LOG(LogTemp, Warning, TEXT("CurrentRotation = %f"), CurrentAttackRotation);
+	if ((CurrentAttackRotation >= AttackRotationTreshhold))
+	{
+		GetWorldTimerManager().ClearTimer(RotationHandle);
+
+		FTimerHandle TimerDelay;
+		GetWorldTimerManager().SetTimer(TimerDelay, this, &ThisClass::UnPauseAttackTimer, AttackCoolDown, false);
+
+		return;
+	}
+	else if (GetYawDiffInLook() < AttackAngle)
+	{
+		GetWorldTimerManager().ClearTimer(RotationHandle);
+
+		UnPauseAttackTimer();
+
+		return;
 	}
 }
 

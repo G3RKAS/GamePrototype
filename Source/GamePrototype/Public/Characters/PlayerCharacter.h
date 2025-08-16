@@ -30,6 +30,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	// IAnimInteraction
+	virtual bool IsBlocking() override;
 	virtual bool CanInteractWithWorld() override;
 	// IControllerInteraction
 	virtual void Possess(APawn*) override;
@@ -66,6 +67,9 @@ protected:
 	UPROPERTY(EditAnywhere, Category = Input)
 	TObjectPtr<UInputAction> AttackAction;
 
+	UPROPERTY(EditAnywhere, Category = Input)
+	TObjectPtr<UInputAction> BlockAction;
+
 	UPROPERTY(EditAnywhere, Category = "Components")
 	TObjectPtr<UCameraComponent> CameraComponent;
 
@@ -100,11 +104,15 @@ protected:
 	virtual void OnAttackEnded(UAnimMontage* InAnimMontage, bool bInterrupted) override;
 
 private:
+	bool bIsBlocking;
+
 	void OnVisionFind(APawn*);
 	void OnVisionLost(APawn*);
 	void Look(const FInputActionValue& Value);
 	void Move(const FInputActionValue& Value);
 	void CameraMove(const FInputActionValue& Value);
 	void Attack();
+	void StartBlock();
+	void StopBlock();
 	void Shaking();
 };

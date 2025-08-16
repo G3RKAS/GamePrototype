@@ -74,32 +74,37 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 	UEnhancedInputComponent* Input = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 	check(Input);
-	if (CameraAction)
-	{
-		Input->BindAction(CameraAction, ETriggerEvent::Triggered, this, &ThisClass::Look);
-	}
-	if (MovementAction)
-	{
-		Input->BindAction(MovementAction, ETriggerEvent::Triggered, this, &ThisClass::Move);
-	}
-	if (JumpAction)
-	{
-		Input->BindAction(JumpAction, ETriggerEvent::Started, this, &ThisClass::Jump);
-		Input->BindAction(JumpAction, ETriggerEvent::Completed, this, &ThisClass::StopJumping);
-	}
-	if (CameraMoveAction)
-	{
-		Input->BindAction(CameraMoveAction, ETriggerEvent::Triggered, this, &ThisClass::CameraMove);
-	}
-	if (AttackAction)
-	{
-		Input->BindAction(AttackAction, ETriggerEvent::Completed, this, &ThisClass::Attack);
-	}
+	check(CameraAction)
+	Input->BindAction(CameraAction, ETriggerEvent::Triggered, this, &ThisClass::Look);
+
+	check(MovementAction)
+	Input->BindAction(MovementAction, ETriggerEvent::Triggered, this, &ThisClass::Move);
+	
+	check(JumpAction)
+	Input->BindAction(JumpAction, ETriggerEvent::Started, this, &ThisClass::Jump);
+	Input->BindAction(JumpAction, ETriggerEvent::Completed, this, &ThisClass::StopJumping);
+	
+	check(CameraMoveAction)
+	Input->BindAction(CameraMoveAction, ETriggerEvent::Triggered, this, &ThisClass::CameraMove);
+	
+	check(AttackAction)
+	Input->BindAction(AttackAction, ETriggerEvent::Completed, this, &ThisClass::Attack);
+	
+	check(BlockAction)
+	Input->BindAction(BlockAction, ETriggerEvent::Started, this, &ThisClass::StartBlock);
+	Input->BindAction(BlockAction, ETriggerEvent::Completed, this, &ThisClass::StopBlock);
+	
 }
 
+// IAnimInteraction
 bool APlayerCharacter::CanInteractWithWorld()
 {
-	return not(IsFalling() || bIsAttacking);
+	return not(IsFalling() || bIsAttacking || IsBlocking());
+}
+
+bool APlayerCharacter::IsBlocking()
+{
+	return bIsBlocking;
 }
 
 // IControllerInteraction
@@ -163,6 +168,11 @@ void APlayerCharacter::BeginPlay()
 void APlayerCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType,
 									AController* InstigatedBy, AActor* DamageCauser)
 {
+	if (IsBlocking())
+	{
+		return;
+	}
+
 	Super::OnTakeDamage(DamagedActor, Damage, DamageType, InstigatedBy, DamageCauser);
 
 	if (HealthComponent->IsDead())
@@ -213,30 +223,27 @@ void APlayerCharacter::Look(const FInputActionValue& Value)
 {
 	FVector2D LookAxisVector = Value.Get<FVector2D>();
 
-	if (Controller)
-	{
-		AddControllerYawInput(LookAxisVector.X);
-		AddControllerPitchInput(LookAxisVector.Y);
-	}
+	check(Controller);
+	
+	AddControllerYawInput(LookAxisVector.X);
+	AddControllerPitchInput(LookAxisVector.Y);
+	
 }
 
 void APlayerCharacter::Move(const FInputActionValue& Value)
 {
 	FVector2D MovementVector = Value.Get<FVector2D>();
 
-	if (Controller)
-	{
-		FRotator Rotation(0, GetControlRotation().Yaw, 0);
+	check(Controller);
+	FRotator Rotation(0, GetControlRotation().Yaw, 0);
 
-		AddMovementInput(UKismetMathLibrary::GetForwardVector(Rotation), MovementVector.Y);
-		AddMovementInput(UKismetMathLibrary::GetRightVector(Rotation), MovementVector.X);
-	}
+	AddMovementInput(UKismetMathLibrary::GetForwardVector(Rotation), MovementVector.Y);
+	AddMovementInput(UKismetMathLibrary::GetRightVector(Rotation), MovementVector.X);
 }
 
 void APlayerCharacter::CameraMove(const FInputActionValue& Value)
 {
 	float MovementVector1D = Value.Get<float>();
-	UE_LOG(LogTemp, Warning, TEXT("Hello World"));
 	check(SpringArmComponent);
 	SpringArmComponent->TargetArmLength =
 		FMath::Clamp(SpringArmComponent->TargetArmLength + MovementVector1D * ArmLengthMultiplier, MinTargetArmLength,
@@ -246,6 +253,22 @@ void APlayerCharacter::CameraMove(const FInputActionValue& Value)
 void APlayerCharacter::Attack()
 {
 	AttackEnemy(nullptr);
+}
+
+void APlayerCharacter::StartBlock()
+{
+	if (!CanInteractWithWorld())
+	{
+		return;
+	}
+	UE_LOG(LogTemp, Warning, TEXT("Start Block"))
+	bIsBlocking = true;
+}
+
+void APlayerCharacter::StopBlock()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Stop Block"))
+	bIsBlocking = false;
 }
 
 void APlayerCharacter::Shaking()

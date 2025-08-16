@@ -21,26 +21,44 @@ private:
 	void GoToEnemy();
 	void AttackEnemy();
 
+	float GetYawDiffInLook();
+
+	void RotateToEnemy();
+	void UpdateRotation();
+
 	void PauseAttackTimer();
 	void UnPauseAttackTimer();
 
-	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "0", UIMin = "0", Units = "s"))
+	UPROPERTY(EditAnywhere, Category = "Settings|Moving", meta = (ClampMin = "0", UIMin = "0", Units = "s"))
 	float TimeToUpdateEnemyLocation = 0.1f;
 
-	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "0", UIMin = "0", Units = "cm"))
+	UPROPERTY(EditAnywhere, Category = "Settings|Moving", meta = (ClampMin = "0", UIMin = "0", Units = "cm"))
 	float AcceptableRadiusForMoving = 100.0f;
 
-	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "0", UIMin = "0", Units = "cm"))
+	UPROPERTY(EditAnywhere, Category = "Settings|Moving", meta = (ClampMin = "0", UIMin = "0", Units = "cm"))
 	float AcceptableRadiusForAttack = 100.0f;
 
-	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "0", UIMin = "0", Units = "s"))
+	UPROPERTY(EditAnywhere, Category = "Settings|Enemy", meta = (ClampMin = "0", UIMin = "0", Units = "s"))
 	float AttackCoolDown = 0.5f;
 
-	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "0", UIMin = "0"))
+	UPROPERTY(EditAnywhere, Category = "Settings|Enemy", meta = (ClampMin = "0", UIMin = "0"))
 	float AttackAngle = 15.0f;
+
+	UPROPERTY(EditAnywhere, Category = "Settings|Enemy", meta = (ClampMin = "0", UIMin = "0"))
+	float AttackRotationSpeed = 55.0f;
+
+	UPROPERTY(EditAnywhere, Category = "Settings|Rotation", meta = (ClampMin = "0", UIMin = "0"))
+	float AttackRotationTreshhold = 180.0f;
+
+	UPROPERTY(EditAnywhere, Category = "Settings|Rotation", meta = (ClampMin = "0", UIMin = "0"))
+	float TimeUpdateRotation = 0.1f;
 
 	UPROPERTY()
 	TObjectPtr<AActor> Enemy;
 
+	float CurrentAttackRotation;
+
 	FTimerHandle AttackTimer;
+
+	FTimerHandle RotationHandle;
 };

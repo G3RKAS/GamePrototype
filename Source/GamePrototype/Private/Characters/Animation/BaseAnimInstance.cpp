@@ -20,6 +20,7 @@ void UBaseAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		if (AnimInterface)
 		{
 			bIsFalling = AnimInterface->IsFalling();
+			bIsBlocking = AnimInterface->IsBlocking();
 		}
 	}
 }

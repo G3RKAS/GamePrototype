@@ -24,9 +24,14 @@ bool ABaseCharacter::IsFalling()
 	return GetCharacterMovement()->IsFalling();
 }
 
+bool ABaseCharacter::IsBlocking()
+{
+	return false;
+}
+
 bool ABaseCharacter::CanInteractWithWorld()
 {
-	return true;
+	return not(IsFalling() || bIsAttacking);
 }
 
 float ABaseCharacter::GetAnimAttackLength()
@@ -102,7 +107,7 @@ void ABaseCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const UDam
 
 void ABaseCharacter::AttackEnemy(AActor* InEnemy)
 {
-	if (!bIsAttacking)
+	if (CanInteractWithWorld())
 	{
 		check(GetMesh());
 		UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
