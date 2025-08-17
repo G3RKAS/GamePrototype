@@ -70,6 +70,9 @@ protected:
 	UPROPERTY(EditAnywhere, Category = Input)
 	TObjectPtr<UInputAction> BlockAction;
 
+	UPROPERTY(EditAnywhere, Category = "Settings|Block", meta = (ClampMin = "0", UIMin = "0", ClampMax = "180", UIMax = "180"))
+	float AttackBlockingAngle = 90;
+
 	UPROPERTY(EditAnywhere, Category = "Components")
 	TObjectPtr<UCameraComponent> CameraComponent;
 
@@ -106,13 +109,27 @@ protected:
 private:
 	bool bIsBlocking;
 
+	// Vision Component
 	void OnVisionFind(APawn*);
 	void OnVisionLost(APawn*);
+
+	// Movement
 	void Look(const FInputActionValue& Value);
 	void Move(const FInputActionValue& Value);
+
+	// Camera length movement
 	void CameraMove(const FInputActionValue& Value);
+
+	// Attack button
 	void Attack();
+
+	// Block button
 	void StartBlock();
 	void StopBlock();
+
+	// Camera Shake Component
 	void Shaking();
+
+	// service func
+	bool CanBlockDamage(FVector);
 };

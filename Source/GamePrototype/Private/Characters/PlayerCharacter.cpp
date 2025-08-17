@@ -54,7 +54,8 @@ APlayerCharacter::APlayerCharacter() : Super()
 
 	VisionComponent = CreateDefaultSubobject<UPlayerVisionComponent>(TEXT("Vision Component"));
 
-	StimuliSourceComponent = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("StimuliSource Component"));
+	StimuliSourceComponent =
+		CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("StimuliSource Component"));
 
 	Tags.Add(FName("Player"));
 }
@@ -74,26 +75,19 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 	UEnhancedInputComponent* Input = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 	check(Input);
-	check(CameraAction)
-	Input->BindAction(CameraAction, ETriggerEvent::Triggered, this, &ThisClass::Look);
+	check(CameraAction) Input->BindAction(CameraAction, ETriggerEvent::Triggered, this, &ThisClass::Look);
 
-	check(MovementAction)
-	Input->BindAction(MovementAction, ETriggerEvent::Triggered, this, &ThisClass::Move);
-	
-	check(JumpAction)
-	Input->BindAction(JumpAction, ETriggerEvent::Started, this, &ThisClass::Jump);
+	check(MovementAction) Input->BindAction(MovementAction, ETriggerEvent::Triggered, this, &ThisClass::Move);
+
+	check(JumpAction) Input->BindAction(JumpAction, ETriggerEvent::Started, this, &ThisClass::Jump);
 	Input->BindAction(JumpAction, ETriggerEvent::Completed, this, &ThisClass::StopJumping);
-	
-	check(CameraMoveAction)
-	Input->BindAction(CameraMoveAction, ETriggerEvent::Triggered, this, &ThisClass::CameraMove);
-	
-	check(AttackAction)
-	Input->BindAction(AttackAction, ETriggerEvent::Completed, this, &ThisClass::Attack);
-	
-	check(BlockAction)
-	Input->BindAction(BlockAction, ETriggerEvent::Started, this, &ThisClass::StartBlock);
+
+	check(CameraMoveAction) Input->BindAction(CameraMoveAction, ETriggerEvent::Triggered, this, &ThisClass::CameraMove);
+
+	check(AttackAction) Input->BindAction(AttackAction, ETriggerEvent::Completed, this, &ThisClass::Attack);
+
+	check(BlockAction) Input->BindAction(BlockAction, ETriggerEvent::Started, this, &ThisClass::StartBlock);
 	Input->BindAction(BlockAction, ETriggerEvent::Completed, this, &ThisClass::StopBlock);
-	
 }
 
 // IAnimInteraction
@@ -168,7 +162,7 @@ void APlayerCharacter::BeginPlay()
 void APlayerCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType,
 									AController* InstigatedBy, AActor* DamageCauser)
 {
-	if (IsBlocking())
+	if (CanBlockDamage(DamageCauser->GetActorLocation()))
 	{
 		return;
 	}
@@ -224,10 +218,9 @@ void APlayerCharacter::Look(const FInputActionValue& Value)
 	FVector2D LookAxisVector = Value.Get<FVector2D>();
 
 	check(Controller);
-	
+
 	AddControllerYawInput(LookAxisVector.X);
 	AddControllerPitchInput(LookAxisVector.Y);
-	
 }
 
 void APlayerCharacter::Move(const FInputActionValue& Value)
@@ -261,17 +254,35 @@ void APlayerCharacter::StartBlock()
 	{
 		return;
 	}
-	UE_LOG(LogTemp, Warning, TEXT("Start Block"))
+	if (WeaponComponent->GetCurrentWeaponName().IsNone())
+	{
+		return;
+	}
 	bIsBlocking = true;
 }
 
 void APlayerCharacter::StopBlock()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Stop Block"))
 	bIsBlocking = false;
 }
 
 void APlayerCharacter::Shaking()
 {
 	CameraShakeComponent->MakeCameraShake();
+}
+
+bool APlayerCharacter::CanBlockDamage(FVector InDamagePlace)
+{
+	if (!IsBlocking())
+	{
+		return false;
+	}
+
+	FRotator DamageLookingRotator = (InDamagePlace - GetActorLocation()).Rotation();
+
+	float AngleBEnemies = FMath::Abs(FMath::FindDeltaAngleDegrees(GetActorRotation().Yaw, DamageLookingRotator.Yaw));
+
+	UE_LOG(LogTemp, Warning, TEXT("Angle %f"), AngleBEnemies)
+
+	return AngleBEnemies <= AttackBlockingAngle;
 }
