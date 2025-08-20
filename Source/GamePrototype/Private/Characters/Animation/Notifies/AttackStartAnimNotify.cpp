@@ -6,7 +6,9 @@
 
 UAttackStartAnimNotify::UAttackStartAnimNotify()
 {
+#if WITH_EDITOR
 	bShouldFireInEditor = false;
+#endif
 }
 
 void UAttackStartAnimNotify::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation,
