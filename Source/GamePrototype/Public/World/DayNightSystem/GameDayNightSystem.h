@@ -6,7 +6,9 @@
 #include "World/GameWorldObject.h"
 #include "GameDayNightSystem.generated.h"
 
+class AVolumetricCloud;
 class ADirectionalLight;
+class UVolumetricCloudComponent;
 
 UCLASS()
 class GAMEPROTOTYPE_API AGameDayNightSystem final : public AGameWorldObject
@@ -20,6 +22,12 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	UPROPERTY(EditInstanceOnly, Category = "Settings|Objects|Clouds");
+	TObjectPtr<AVolumetricCloud> Clouds;
+
+	UPROPERTY()
+	TObjectPtr<UMaterialInstanceDynamic> CloudMaterial;
+
 	UPROPERTY(EditInstanceOnly, Category = "Settings|Objects|Sun");
 	TObjectPtr<ADirectionalLight> SunLight;
 
@@ -53,6 +61,14 @@ private:
 	UPROPERTY(EditInstanceOnly, Category = "Settings|Daytime");
 	float MaxIntensity = 30.0f;
 
+	UPROPERTY(EditInstanceOnly, Category = "Settings|Daytime",
+			  meta = (UIMin = -2, ClampMin = -2, UIMax = 2, ClampMax = 2));
+	float MinCloudCoverage = -0.2f;
+
+	UPROPERTY(EditInstanceOnly, Category = "Settings|Daytime",
+			  meta = (UIMin = -2, ClampMin = -2, UIMax = 2, ClampMax = 2));
+	float MaxCloudCoverage = 0.2f;
+
 	UPROPERTY()
 	float CurrentTime = 0.0f;
 
@@ -69,10 +85,20 @@ private:
 	void UpdateLight();
 	void CheckNewDay(uint32);
 	void ChangeLightIntensity();
-	
+
+#if WITH_EDITOR
+	void ChangeCloudCoverageBasedOnIntensityInEditor(float);
+#endif
+
+	void ChangeCloudCoverageBasedOnIntensity(float);
+
+	float GetCloudCoverageBasedOnIntensity(float);
+
 	float GetCurrentHour();
 	uint32 GetCurrentDay();
 
 	void TimeAdding();
 	float GetTimeRate();
+
+	UVolumetricCloudComponent* GetCloudComponent();
 };

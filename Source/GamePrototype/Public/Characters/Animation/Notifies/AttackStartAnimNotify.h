@@ -10,6 +10,7 @@ UCLASS()
 class GAMEPROTOTYPE_API UAttackStartAnimNotify : public UAnimNotify
 {
 	GENERATED_BODY()
+
 public:
 	UAttackStartAnimNotify();
 

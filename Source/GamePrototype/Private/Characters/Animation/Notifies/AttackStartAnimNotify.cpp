@@ -4,12 +4,14 @@
 #include "Characters/Animation/Notifies/AttackStartAnimNotify.h"
 #include "Interfaces/Characters/Player/WeaponInteraction.h"
 
-UAttackStartAnimNotify::UAttackStartAnimNotify()
+
+UAttackStartAnimNotify::UAttackStartAnimNotify() : Super()
 {
 #if WITH_EDITOR
 	bShouldFireInEditor = false;
 #endif
 }
+
 
 void UAttackStartAnimNotify::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation,
 									const FAnimNotifyEventReference& EventReference)
