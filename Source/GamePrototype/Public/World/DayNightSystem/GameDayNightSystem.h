@@ -25,9 +25,6 @@ private:
 	UPROPERTY(EditInstanceOnly, Category = "Settings|Objects|Clouds");
 	TObjectPtr<AVolumetricCloud> Clouds;
 
-	UPROPERTY()
-	TObjectPtr<UMaterialInstanceDynamic> CloudMaterial;
-
 	UPROPERTY(EditInstanceOnly, Category = "Settings|Objects|Sun");
 	TObjectPtr<ADirectionalLight> SunLight;
 
