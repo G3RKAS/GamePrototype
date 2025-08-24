@@ -86,10 +86,6 @@ private:
 	void CheckNewDay(uint32);
 	void ChangeLightIntensity();
 
-#if WITH_EDITOR
-	void ChangeCloudCoverageBasedOnIntensityInEditor(float);
-#endif
-
 	void ChangeCloudCoverageBasedOnIntensity(float);
 
 	float GetCloudCoverageBasedOnIntensity(float);

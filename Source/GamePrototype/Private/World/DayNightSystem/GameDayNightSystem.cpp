@@ -20,16 +20,7 @@ void AGameDayNightSystem::BeginPlay()
 	Super::BeginPlay();
 	GetWorldTimerManager().SetTimer(TimeHandle, this, &ThisClass::TimeAdding, GetTimeRate(), true);
 
-	check(Clouds);
-	UVolumetricCloudComponent* CloudComponent = GetCloudComponent();
-	check(CloudComponent);
-
-	UMaterialInstanceDynamic* NewMaterial =
-		UMaterialInstanceDynamic::Create(CloudComponent->GetMaterial(), CloudComponent);
-
-	CloudComponent->SetMaterial(NewMaterial);
-	CloudMaterial = NewMaterial;
-
+	check(SunLight);
 	ChangeCloudCoverageBasedOnIntensity(SunLight->GetLightComponent()->Intensity);
 }
 
@@ -56,17 +47,7 @@ void AGameDayNightSystem::CheckNewDay(uint32 InNewDay)
 		if (SunLight)
 		{
 			float SunIntensity = SunLight->GetLightComponent()->Intensity;
-			if (GetWorld()->IsGameWorld())
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Not Editor"));
-				ChangeCloudCoverageBasedOnIntensity(SunIntensity);
-			}
-			else
-			{
-			#if WITH_EDITOR
-				ChangeCloudCoverageBasedOnIntensityInEditor(SunIntensity);
-			#endif
-			}
+			ChangeCloudCoverageBasedOnIntensity(SunIntensity);
 		}
 	}
 }
@@ -79,26 +60,23 @@ void AGameDayNightSystem::ChangeLightIntensity()
 	}
 }
 
-#if WITH_EDITOR
-void AGameDayNightSystem::ChangeCloudCoverageBasedOnIntensityInEditor(float InIntensity)
-{
-	UMaterialInstanceConstant* MatInst = Cast<UMaterialInstanceConstant>(GetCloudComponent()->GetMaterial());
-
-	if (MatInst)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Coverage %f"), GetCloudCoverageBasedOnIntensity(InIntensity));
-		MatInst->SetScalarParameterValueEditorOnly(TEXT("Cloud_GlobalCoverage"),
-												   GetCloudCoverageBasedOnIntensity(InIntensity));
-	}
-}
-#endif
-
 void AGameDayNightSystem::ChangeCloudCoverageBasedOnIntensity(float InIntensity)
 {
 	if (Clouds)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Coverage %f"), GetCloudCoverageBasedOnIntensity(InIntensity));
-		CloudMaterial->SetScalarParameterValue(TEXT("Cloud_GlobalCoverage"), GetCloudCoverageBasedOnIntensity(InIntensity));
+		UMaterialInterface* MaterialInterface = GetCloudComponent()->GetMaterial();
+		if (MaterialInterface)
+		{
+			UMaterialInstanceDynamic* DynamicMaterial = Cast<UMaterialInstanceDynamic>(MaterialInterface);
+			if (!DynamicMaterial)
+			{
+				UMaterialInstanceDynamic* NewDynamicMaterial = UMaterialInstanceDynamic::Create(MaterialInterface, this);
+				GetCloudComponent()->SetMaterial(NewDynamicMaterial);
+				DynamicMaterial = NewDynamicMaterial;
+			}
+			DynamicMaterial->SetScalarParameterValue(TEXT("Cloud_GlobalCoverage"),
+													 GetCloudCoverageBasedOnIntensity(InIntensity));
+		}
 	}
 }
 
