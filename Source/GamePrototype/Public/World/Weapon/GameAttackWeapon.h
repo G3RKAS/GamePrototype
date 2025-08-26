@@ -28,6 +28,9 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	UPROPERTY(EditAnywhere, Category = "Settings|Sounds")
+	TObjectPtr<USoundBase> OnHitSound;
+
 	UPROPERTY()
 	TSet<TObjectPtr<AActor>> HittedActors;
 

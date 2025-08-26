@@ -14,6 +14,7 @@
 
 #include "World/Weapon/GameAttackWeapon.h"
 #include "Characters/Components/Player/WeaponComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 #include "Characters/Components/Player/PlayerVisionComponent.h"
 
@@ -164,6 +165,7 @@ void APlayerCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const UD
 {
 	if (CanBlockDamage(DamageCauser->GetActorLocation()))
 	{
+		UGameplayStatics::PlaySoundAtLocation(this, WeaponBlock, GetActorLocation());
 		return;
 	}
 

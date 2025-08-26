@@ -91,6 +91,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<USceneComponent> WeaponEquipSceneComponent;
 
+	UPROPERTY(EditAnywhere, Category = "Settings|Sounds")
+	TObjectPtr<USoundBase> WeaponBlock;
+
 	UPROPERTY(EditAnywhere, Category = "Components")
 	TObjectPtr<UPlayerVisionComponent> VisionComponent;
 

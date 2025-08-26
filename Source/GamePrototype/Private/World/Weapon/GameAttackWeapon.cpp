@@ -3,6 +3,7 @@
 #include "World/Weapon/GameAttackWeapon.h"
 #include "Core/Helpers/WeaponTableHelper.h"
 #include "Engine/DamageEvents.h"
+#include "Kismet/GameplayStatics.h"
 
 AGameAttackWeapon::AGameAttackWeapon() : Super()
 {
@@ -38,16 +39,12 @@ void AGameAttackWeapon::ChangeWeaponBasedOnName(FName InWeaponRowName)
 void AGameAttackWeapon::StartAttack()
 {
 	SetActorEnableCollision(true);
-	UE_LOG(LogTemp, Warning, TEXT("Collision Enabled: %s"),
-		   GetRootComponent()->IsCollisionEnabled() ? TEXT("Yes") : TEXT("No"));
 }
 
 void AGameAttackWeapon::EndAttack()
 {
 	SetActorEnableCollision(false);
 	HittedActors.Empty();
-	UE_LOG(LogTemp, Warning, TEXT("Collision Enabled: %s"),
-		   GetRootComponent()->IsCollisionEnabled() ? TEXT("Yes") : TEXT("No"));
 }
 
 void AGameAttackWeapon::BeginPlay()
@@ -72,7 +69,7 @@ void AGameAttackWeapon::ActorOverlapWeapon(UPrimitiveComponent* OverlappedCompon
 		return;
 	}
 	HittedActors.Add(OtherActor);
-
+	UGameplayStatics::PlaySoundAtLocation(this, OnHitSound, GetActorLocation());
 	OtherActor->TakeDamage(WeaponAttackDamage, FDamageEvent(), nullptr, GetOwner());
 
 	UE_LOG(LogTemp, Warning, TEXT("Actor %s takes %f with %f attack speed in comp %s"), *OtherActor->GetName(),

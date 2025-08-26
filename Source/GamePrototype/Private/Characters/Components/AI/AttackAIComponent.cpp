@@ -17,6 +17,7 @@ void UAttackAIComponent::StopWork()
 {
 	Super::StopWork();
 	GetWorldTimerManager().ClearTimer(AttackTimer);
+	GetWorldTimerManager().ClearTimer(RotationHandle);
 }
 
 void UAttackAIComponent::MoveFinished(const FPathFollowingResult& Result)
