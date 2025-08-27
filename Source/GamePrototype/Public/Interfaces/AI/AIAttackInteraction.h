@@ -18,4 +18,5 @@ class GAMEPROTOTYPE_API IAIAttackInteraction
 
 public:
 	virtual void AttackEnemy(AActor*) = 0;
+	virtual void ToggleSounds() = 0;
 };

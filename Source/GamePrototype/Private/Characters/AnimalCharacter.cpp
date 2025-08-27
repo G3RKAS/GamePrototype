@@ -6,7 +6,8 @@
 #include "Characters/Components/HealthComponent.h"
 #include "Characters/Components/XPComponent.h"
 #include "Characters/Components/Animal/AnimalWeaponComponent.h"
-#include <Interfaces/Characters/LevelInteraction.h>
+#include "Components/AudioComponent.h"
+#include "Interfaces/Characters/LevelInteraction.h"
 
 AAnimalCharacter::AAnimalCharacter() : Super()
 {
@@ -15,6 +16,9 @@ AAnimalCharacter::AAnimalCharacter() : Super()
 	HealthWidgetComponent->SetupAttachment(GetMesh());
 
 	AnimalWeaponComponent = CreateDefaultSubobject<UAnimalWeaponComponent>(TEXT("Animal Weapon Widget"));
+
+	AudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("Audio Component"));
+	AudioComponent->SetupAttachment(GetRootComponent());
 }
 
 void AAnimalCharacter::OnCharacterDeath()
@@ -76,4 +80,17 @@ void AAnimalCharacter::LostInVision()
 void AAnimalCharacter::AttackEnemy(AActor* InEnemy)
 {
 	Super::AttackEnemy(InEnemy);
+}
+
+void AAnimalCharacter::ToggleSounds()
+{
+	check(AudioComponent);
+	if (AudioComponent->IsPlaying())
+	{
+		AudioComponent->Stop();
+	}
+	else
+	{
+		AudioComponent->Play();
+	}
 }

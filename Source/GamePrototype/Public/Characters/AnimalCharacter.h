@@ -35,6 +35,7 @@ public:
 	virtual void LostInVision() override;
 	// IAIAttackInteraction
 	virtual void AttackEnemy(AActor*) override;
+	virtual void ToggleSounds() override;
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Settings|XPGaining", meta = (ClampMin = "0", UIMin = "0"))
@@ -54,4 +55,7 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	TObjectPtr<UAnimalWeaponComponent> AnimalWeaponComponent;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	TObjectPtr<UAudioComponent> AudioComponent;
 };

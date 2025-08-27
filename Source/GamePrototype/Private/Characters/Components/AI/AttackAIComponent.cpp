@@ -10,14 +10,26 @@
 void UAttackAIComponent::StartWork(AAIController* InAIController)
 {
 	Super::StartWork(InAIController);
+
+	IAIAttackInteraction* AttackInteraction = Cast<IAIAttackInteraction>(GetControlledPawn());
+	check(AttackInteraction);
+
+	AttackInteraction->ToggleSounds();
+
 	GetWorldTimerManager().SetTimer(AttackTimer, this, &ThisClass::GoToEnemy, TimeToUpdateEnemyLocation, true);
 }
 
 void UAttackAIComponent::StopWork()
 {
+	IAIAttackInteraction* AttackInteraction = Cast<IAIAttackInteraction>(GetControlledPawn());
+	check(AttackInteraction);
+
+	AttackInteraction->ToggleSounds();
+
 	Super::StopWork();
 	GetWorldTimerManager().ClearTimer(AttackTimer);
 	GetWorldTimerManager().ClearTimer(RotationHandle);
+
 }
 
 void UAttackAIComponent::MoveFinished(const FPathFollowingResult& Result)
