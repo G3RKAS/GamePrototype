@@ -48,7 +48,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Settings|Rotation", meta = (ClampMin = "0", UIMin = "0", Units = "s"))
 	float RotationCoolDown = 0.3f;
 
-	UPROPERTY(EditAnywhere, Category = "Settings|Enemy", meta = (ClampMin = "0", UIMin = "0"))
+	UPROPERTY(EditAnywhere, Category = "Settings|Rotation", meta = (ClampMin = "0", UIMin = "0"))
 	float AttackRotationSpeed = 55.0f;
 
 	UPROPERTY(EditAnywhere, Category = "Settings|Rotation", meta = (ClampMin = "0", UIMin = "0"))

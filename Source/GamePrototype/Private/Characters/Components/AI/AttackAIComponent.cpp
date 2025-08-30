@@ -123,6 +123,13 @@ void UAttackAIComponent::RotateToEnemy()
 void UAttackAIComponent::UpdateRotation()
 {
 	check(Enemy);
+	const float DistanceBetweenActors = Enemy->GetDistanceTo(GetControlledPawn());
+	if (DistanceBetweenActors > AcceptableRadiusForAttack)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Enemy is far away"));
+		StartAttackingSequnece();
+		return;
+	}
 
 	const FVector ThisLocation = GetControlledPawn()->GetActorLocation();
 	const FVector TargetLocation = Enemy->GetActorLocation();
@@ -137,27 +144,17 @@ void UAttackAIComponent::UpdateRotation()
 											GetWorld()->GetDeltaSeconds(), AttackRotationSpeed);
 
 	GetControlledPawn()->SetActorRotation(NewRotation);
-	CurrentAttackRotation += FMath::Abs(OldRotationYaw - NewRotation.Yaw);
+	CurrentAttackRotation += FMath::Abs(FMath::FindDeltaAngleDegrees(OldRotationYaw, NewRotation.Yaw));
 
 	UE_LOG(LogTemp, Warning, TEXT("CurrentRotation = %f"), CurrentAttackRotation);
 	if ((CurrentAttackRotation >= AttackRotationTreshhold))
 	{
-		const float DistanceBetweenActors = Enemy->GetDistanceTo(GetControlledPawn());
-		if (DistanceBetweenActors > AcceptableRadiusForAttack)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Enemy is far away"));
-			StartAttackingSequnece();
-			return;
-		}
-		else
-		{
-			GetWorldTimerManager().ClearTimer(RotationHandle);
+		GetWorldTimerManager().ClearTimer(RotationHandle);
 
-			FTimerHandle TimerDelay;
-			GetWorldTimerManager().SetTimer(TimerDelay, this, &ThisClass::UnPauseAttackTimer, RotationCoolDown, false);
+		FTimerHandle TimerDelay;
+		GetWorldTimerManager().SetTimer(TimerDelay, this, &ThisClass::UnPauseAttackTimer, RotationCoolDown, false);
 
-			return;
-		}
+		return;
 	}
 	else if (GetYawDiffInLook() < AttackAngle)
 	{
