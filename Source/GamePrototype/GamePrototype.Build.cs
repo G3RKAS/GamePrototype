@@ -10,7 +10,7 @@ public class GamePrototype : ModuleRules
 	
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" });
 
-        PrivateDependencyModuleNames.AddRange(new string[] { "NavigationSystem", "AIModule", "DeveloperSettings"});
+        PrivateDependencyModuleNames.AddRange(new string[] { "NavigationSystem", "AIModule", "DeveloperSettings", "PhysicsCore"});
 
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
