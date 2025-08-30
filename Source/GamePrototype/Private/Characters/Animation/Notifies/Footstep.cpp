@@ -1,6 +1,7 @@
 // (c) G3RKA. Game Prototype
 
 #include "Characters/Animation/Notifies/Footstep.h"
+#include "Kismet/GamePlayStatics.h"
 
 void UFootstep::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation,
 					   const FAnimNotifyEventReference& EventReference)
@@ -12,6 +13,14 @@ void UFootstep::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Anim
 	if (DoLineTrace(MeshComp, SocketName, OutHit))
 	{
 		UPhysicalMaterial* PhysMaterial = OutHit.PhysMaterial.Get();
+		if (MaterialSounds.Contains(PhysMaterial))
+		{
+			UGameplayStatics::PlaySoundAtLocation(MeshComp, MaterialSounds[PhysMaterial], OutHit.Location);
+		}
+		else
+		{
+			UGameplayStatics::PlaySoundAtLocation(MeshComp, DefaultSound, OutHit.Location);
+		}
 	}
 }
 
