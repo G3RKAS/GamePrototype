@@ -3,6 +3,8 @@
 #include "Characters/Components/Player/WeaponComponent.h"
 #include "World/Weapon/GameAttackWeapon.h"
 
+#include "Interfaces/Characters/AnimInteraction.h"
+
 void UWeaponComponent::EquipWeapon(FName InWeaponName)
 {
 	if (CurrentWeapon == InWeaponName)
@@ -28,6 +30,69 @@ void UWeaponComponent::EquipWeapon(FName InWeaponName)
 FName UWeaponComponent::GetCurrentWeaponName()
 {
 	return CurrentWeapon;
+}
+
+bool UWeaponComponent::IsBlocking()
+{
+	return bIsBlocking;
+}
+
+FOnWeaponChangedSignature& UWeaponComponent::OnWeaponChanged()
+{
+	return OnWeaponChangedEvent;
+}
+
+FOnAnimNotifySignature& UWeaponComponent::OnWeaponAttackStart()
+{
+	return OnWeaponAttackStartEvent;
+}
+
+FOnAnimNotifySignature& UWeaponComponent::OnWeaponAttackEnd()
+{
+	return OnWeaponAttackEndEvent;
+}
+
+void UWeaponComponent::StartBlock()
+{
+	IAnimInteraction* AnimInteraction = Cast<IAnimInteraction>(GetOwner());
+	
+	check(AnimInteraction)
+	if (!AnimInteraction->CanInteractWithWorld())
+	{
+		return;
+	}
+	if (GetCurrentWeaponName().IsNone())
+	{
+		return;
+	}
+	bIsBlocking = true;
+}
+
+void UWeaponComponent::StopBlock()
+{
+	bIsBlocking = false;
+}
+
+bool UWeaponComponent::CanBlockDamage(FVector InDamagePlace)
+{
+	if (!IsBlocking())
+	{
+		return false;
+	}
+
+	FRotator DamageLookingRotator = (InDamagePlace - GetOwner()->GetActorLocation()).Rotation();
+
+	float AngleBEnemies =
+		FMath::Abs(FMath::FindDeltaAngleDegrees(GetOwner()->GetActorRotation().Yaw, DamageLookingRotator.Yaw));
+
+	UE_LOG(LogTemp, Warning, TEXT("Angle %f"), AngleBEnemies)
+
+	return AngleBEnemies <= AttackBlockingAngle;
+}
+
+void UWeaponComponent::SetEquipSceneComponent(USceneComponent* InEquipSceneComponent)
+{
+	EquipSceneComponent = InEquipSceneComponent;
 }
 
 bool UWeaponComponent::HasWeapon(FName InWeaponName)
@@ -67,26 +132,6 @@ void UWeaponComponent::SetAttackSpeed(float InAttackSpeed)
 	{
 		GetCurrentWeaponActor()->SetAttackSpeed(InAttackSpeed);
 	}
-}
-
-FOnWeaponChangedSignature& UWeaponComponent::OnWeaponChanged()
-{
-	return OnWeaponChangedEvent;
-}
-
-FOnAnimNotifySignature& UWeaponComponent::OnWeaponAttackStart()
-{
-	return OnWeaponAttackStartEvent;
-}
-
-FOnAnimNotifySignature& UWeaponComponent::OnWeaponAttackEnd()
-{
-	return OnWeaponAttackEndEvent;
-}
-
-void UWeaponComponent::SetEquipSceneComponent(USceneComponent* InEquipSceneComponent)
-{
-	EquipSceneComponent = InEquipSceneComponent;
 }
 
 void UWeaponComponent::BeginPlay()

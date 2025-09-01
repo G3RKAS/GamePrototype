@@ -30,7 +30,6 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	// IAnimInteraction
-	virtual bool IsBlocking() override;
 	virtual bool CanInteractWithWorld() override;
 	// IControllerInteraction
 	virtual void Possess(APawn*) override;
@@ -126,13 +125,6 @@ private:
 	// Attack button
 	void Attack();
 
-	// Block button
-	void StartBlock();
-	void StopBlock();
-
 	// Camera Shake Component
 	void Shaking();
-
-	// service func
-	bool CanBlockDamage(FVector);
 };

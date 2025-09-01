@@ -7,7 +7,11 @@ void UBaseAnimInstance::NativeInitializeAnimation()
 {
 	Super::NativeInitializeAnimation();
 	Pawn = TryGetPawnOwner();
-	AnimInterface = Cast<IAnimInteraction>(Pawn);
+	if (Pawn)
+	{
+		AnimInterface = Cast<IAnimInteraction>(Pawn);
+		WeaponInterface = Pawn->FindComponentByInterface<IWeaponInteraction>();
+	}
 }
 
 void UBaseAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
@@ -20,7 +24,10 @@ void UBaseAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		if (AnimInterface)
 		{
 			bIsFalling = AnimInterface->IsFalling();
-			bIsBlocking = AnimInterface->IsBlocking();
+		}
+		if (WeaponInterface)
+		{
+			bIsBlocking = WeaponInterface->IsBlocking();
 		}
 	}
 }

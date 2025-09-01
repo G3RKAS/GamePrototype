@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
 #include "Interfaces/Characters/AnimInteraction.h"
+#include "Interfaces/Characters/Player/WeaponInteraction.h"
 #include "BaseAnimInstance.generated.h"
 
 UCLASS(Abstract)
@@ -31,4 +32,5 @@ private:
 	TObjectPtr<APawn> Pawn;
 
 	IAnimInteraction* AnimInterface;
+	IWeaponInteraction* WeaponInterface;
 };

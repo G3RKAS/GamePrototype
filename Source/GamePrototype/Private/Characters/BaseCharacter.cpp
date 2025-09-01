@@ -24,11 +24,6 @@ bool ABaseCharacter::IsFalling()
 	return GetCharacterMovement()->IsFalling();
 }
 
-bool ABaseCharacter::IsBlocking()
-{
-	return false;
-}
-
 bool ABaseCharacter::CanInteractWithWorld()
 {
 	return not(IsFalling() || bIsAttacking);

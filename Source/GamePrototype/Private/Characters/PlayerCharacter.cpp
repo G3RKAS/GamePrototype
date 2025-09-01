@@ -76,30 +76,33 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 	UEnhancedInputComponent* Input = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 	check(Input);
-	check(CameraAction) Input->BindAction(CameraAction, ETriggerEvent::Triggered, this, &ThisClass::Look);
+	check(CameraAction);
+	Input->BindAction(CameraAction, ETriggerEvent::Triggered, this, &ThisClass::Look);
 
-	check(MovementAction) Input->BindAction(MovementAction, ETriggerEvent::Triggered, this, &ThisClass::Move);
+	check(MovementAction);
+	Input->BindAction(MovementAction, ETriggerEvent::Triggered, this, &ThisClass::Move);
 
-	check(JumpAction) Input->BindAction(JumpAction, ETriggerEvent::Started, this, &ThisClass::Jump);
+	check(JumpAction);
+	Input->BindAction(JumpAction, ETriggerEvent::Started, this, &ThisClass::Jump);
 	Input->BindAction(JumpAction, ETriggerEvent::Completed, this, &ThisClass::StopJumping);
 
-	check(CameraMoveAction) Input->BindAction(CameraMoveAction, ETriggerEvent::Triggered, this, &ThisClass::CameraMove);
+	check(CameraMoveAction);
+	Input->BindAction(CameraMoveAction, ETriggerEvent::Triggered, this, &ThisClass::CameraMove);
 
-	check(AttackAction) Input->BindAction(AttackAction, ETriggerEvent::Completed, this, &ThisClass::Attack);
+	check(AttackAction);
+	Input->BindAction(AttackAction, ETriggerEvent::Completed, this, &ThisClass::Attack);
 
-	check(BlockAction) Input->BindAction(BlockAction, ETriggerEvent::Started, this, &ThisClass::StartBlock);
-	Input->BindAction(BlockAction, ETriggerEvent::Completed, this, &ThisClass::StopBlock);
+	check(BlockAction);
+	Input->BindAction<UWeaponComponent>(BlockAction, ETriggerEvent::Started, WeaponComponent,
+										&UWeaponComponent::StartBlock);
+	Input->BindAction<UWeaponComponent>(BlockAction, ETriggerEvent::Completed, WeaponComponent,
+										&UWeaponComponent::StopBlock);
 }
 
 // IAnimInteraction
 bool APlayerCharacter::CanInteractWithWorld()
 {
-	return not(IsFalling() || bIsAttacking || IsBlocking());
-}
-
-bool APlayerCharacter::IsBlocking()
-{
-	return bIsBlocking;
+	return not(IsFalling() || bIsAttacking || WeaponComponent->IsBlocking());
 }
 
 // IControllerInteraction
@@ -163,7 +166,7 @@ void APlayerCharacter::BeginPlay()
 void APlayerCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType,
 									AController* InstigatedBy, AActor* DamageCauser)
 {
-	if (CanBlockDamage(DamageCauser->GetActorLocation()))
+	if (WeaponComponent->CanBlockDamage(DamageCauser->GetActorLocation()))
 	{
 		UGameplayStatics::PlaySoundAtLocation(this, WeaponBlock, GetActorLocation());
 		return;
@@ -250,41 +253,7 @@ void APlayerCharacter::Attack()
 	AttackEnemy(nullptr);
 }
 
-void APlayerCharacter::StartBlock()
-{
-	if (!CanInteractWithWorld())
-	{
-		return;
-	}
-	if (WeaponComponent->GetCurrentWeaponName().IsNone())
-	{
-		return;
-	}
-	bIsBlocking = true;
-}
-
-void APlayerCharacter::StopBlock()
-{
-	bIsBlocking = false;
-}
-
 void APlayerCharacter::Shaking()
 {
 	CameraShakeComponent->MakeCameraShake();
-}
-
-bool APlayerCharacter::CanBlockDamage(FVector InDamagePlace)
-{
-	if (!IsBlocking())
-	{
-		return false;
-	}
-
-	FRotator DamageLookingRotator = (InDamagePlace - GetActorLocation()).Rotation();
-
-	float AngleBEnemies = FMath::Abs(FMath::FindDeltaAngleDegrees(GetActorRotation().Yaw, DamageLookingRotator.Yaw));
-
-	UE_LOG(LogTemp, Warning, TEXT("Angle %f"), AngleBEnemies)
-
-	return AngleBEnemies <= AttackBlockingAngle;
 }

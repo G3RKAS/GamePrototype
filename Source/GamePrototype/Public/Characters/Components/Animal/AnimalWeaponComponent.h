@@ -17,6 +17,7 @@ public:
 	// IWeaponInteraction
 	virtual void EquipWeapon(FName) override;
 	virtual FName GetCurrentWeaponName() override;
+	virtual bool IsBlocking() override;
 	virtual FOnWeaponChangedSignature& OnWeaponChanged() override;
 	virtual FOnAnimNotifySignature& OnWeaponAttackStart() override;
 	virtual FOnAnimNotifySignature& OnWeaponAttackEnd() override;

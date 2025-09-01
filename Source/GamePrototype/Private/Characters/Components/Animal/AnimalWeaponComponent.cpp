@@ -15,6 +15,11 @@ FName UAnimalWeaponComponent::GetCurrentWeaponName()
 	return FName(GetOwner()->GetName() + "_Weapon");
 }
 
+bool UAnimalWeaponComponent::IsBlocking()
+{
+	return false;
+}
+
 FOnWeaponChangedSignature& UAnimalWeaponComponent::OnWeaponChanged()
 {
 	return OnWeaponChangedEvent;

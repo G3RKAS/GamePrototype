@@ -23,6 +23,7 @@ class GAMEPROTOTYPE_API IWeaponInteraction
 public:
 	virtual void EquipWeapon(FName) = 0;
 	virtual FName GetCurrentWeaponName() = 0;
+	virtual bool IsBlocking() = 0;
 	virtual FOnWeaponChangedSignature& OnWeaponChanged() = 0;
 	virtual FOnAnimNotifySignature& OnWeaponAttackStart() = 0;
 	virtual FOnAnimNotifySignature& OnWeaponAttackEnd() = 0;

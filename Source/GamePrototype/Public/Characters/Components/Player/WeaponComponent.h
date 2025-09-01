@@ -17,9 +17,14 @@ public:
 	// IWeaponInteraction
 	virtual void EquipWeapon(FName) override;
 	virtual FName GetCurrentWeaponName() override;
+	virtual bool IsBlocking() override;
 	virtual FOnWeaponChangedSignature& OnWeaponChanged() override;
 	virtual FOnAnimNotifySignature& OnWeaponAttackStart() override;
 	virtual FOnAnimNotifySignature& OnWeaponAttackEnd() override;
+
+	void StartBlock();
+	void StopBlock();
+	bool CanBlockDamage(FVector);
 
 	void SetEquipSceneComponent(USceneComponent*);
 	bool HasWeapon(FName);
@@ -34,8 +39,14 @@ protected:
 	virtual void EndPlay(const EEndPlayReason::Type) override;
 
 private:
+	bool bIsBlocking = false;
+
 	UPROPERTY(EditAnywhere, Category = "Settings|Weapon")
 	FDataTableRowHandle StartWeapon;
+
+	UPROPERTY(EditAnywhere, Category = "Settings|Weapon",
+			  meta = (ClampMin = "0", UIMin = "0", ClampMax = "180", UIMax = "180"))
+	float AttackBlockingAngle = 90;
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AGameAttackWeapon> WeaponClass;
