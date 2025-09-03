@@ -19,5 +19,4 @@ Main things of this project that will be added over time:
    - [X] Exit
 
 TODO:
-- Sounds 
 - Game level
