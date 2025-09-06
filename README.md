@@ -17,6 +17,3 @@ Main things of this project that will be added over time:
    - [X] Continue
    - [X] Exit to Main menu
    - [X] Exit
-
-TODO:
-- Game level
