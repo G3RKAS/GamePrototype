@@ -66,13 +66,6 @@ void UGameHUDWidget::SetupPawnRelatedWidgets()
 			WeaponInfo->SetStats(StatsInteraction);
 		}
 
-		ILevelInteraction* LevelInteraction = GetOwningPlayerPawn()->FindComponentByInterface<ILevelInteraction>();
-
-		if (LevelInteraction)
-		{
-			WeaponInfo->SetLevel(LevelInteraction);
-		}
-
 		WeaponInfo->SetVisibility(ESlateVisibility::Hidden);
 	}
 	if (WeaponMessages)

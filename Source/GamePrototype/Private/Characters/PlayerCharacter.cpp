@@ -146,12 +146,14 @@ void APlayerCharacter::SetAttackDamage(float InAttackDamage)
 {
 	check(WeaponComponent);
 	WeaponComponent->SetAttackDamage(InAttackDamage);
+	OnStatsChanged().Broadcast();
 }
 
 void APlayerCharacter::SetAttackSpeed(float InAttackSpeed)
 {
 	check(WeaponComponent);
 	WeaponComponent->SetAttackSpeed(InAttackSpeed);
+	OnStatsChanged().Broadcast();
 }
 
 void APlayerCharacter::BeginPlay()

@@ -26,10 +26,10 @@ void UAttackAIComponent::StopWork()
 
 	AttackInteraction->ToggleSounds();
 
-	Super::StopWork();
 	GetWorldTimerManager().ClearTimer(AttackTimer);
 	GetWorldTimerManager().ClearTimer(RotationHandle);
 
+	Super::StopWork();
 }
 
 void UAttackAIComponent::MoveFinished(const FPathFollowingResult& Result)
@@ -71,22 +71,23 @@ void UAttackAIComponent::GoToEnemy()
 void UAttackAIComponent::AttackEnemy()
 {
 	check(GetControlledPawn());
+	APawn* ControlledPawn = GetControlledPawn();
 
-	const FVector ThisLocation = GetControlledPawn()->GetActorLocation();
+	const FVector ThisLocation = ControlledPawn->GetActorLocation();
 	const FVector TargetLocation = Enemy->GetActorLocation();
 
 	if (GetYawDiffInLook() < AttackAngle)
 	{
 
-		IStatsInteraction* StatsInteraction = Cast<IStatsInteraction>(GetControlledPawn());
+		IStatsInteraction* StatsInteraction = Cast<IStatsInteraction>(ControlledPawn);
 		check(StatsInteraction);
 
-		IAIAttackInteraction* AttackInteraction = Cast<IAIAttackInteraction>(GetControlledPawn());
+		IAIAttackInteraction* AttackInteraction = Cast<IAIAttackInteraction>(ControlledPawn);
 		check(AttackInteraction);
 
 		AttackInteraction->AttackEnemy(Enemy);
 
-		IAnimInteraction* AnimInteraction = Cast<IAnimInteraction>(GetControlledPawn());
+		IAnimInteraction* AnimInteraction = Cast<IAnimInteraction>(ControlledPawn);
 		check(AttackInteraction);
 
 		float AdditionalTime = AnimInteraction ? AnimInteraction->GetAnimAttackLength() : 0.0f;
@@ -107,12 +108,15 @@ void UAttackAIComponent::AttackEnemy()
 
 float UAttackAIComponent::GetYawDiffInLook()
 {
-	const FVector ThisLocation = GetControlledPawn()->GetActorLocation();
+	check(GetControlledPawn());
+	APawn* ControlledPawn = GetControlledPawn();
+
+	const FVector ThisLocation = ControlledPawn->GetActorLocation();
 	const FVector TargetLocation = Enemy->GetActorLocation();
 
-	FRotator LookingRotator = (Enemy->GetActorLocation() - GetControlledPawn()->GetActorLocation()).Rotation();
+	FRotator LookingRotator = (Enemy->GetActorLocation() - ControlledPawn->GetActorLocation()).Rotation();
 
-	return FMath::Abs(FMath::FindDeltaAngleDegrees(GetControlledPawn()->GetActorRotation().Yaw, LookingRotator.Yaw));
+	return FMath::Abs(FMath::FindDeltaAngleDegrees(ControlledPawn->GetActorRotation().Yaw, LookingRotator.Yaw));
 }
 
 void UAttackAIComponent::RotateToEnemy()
@@ -122,8 +126,15 @@ void UAttackAIComponent::RotateToEnemy()
 
 void UAttackAIComponent::UpdateRotation()
 {
+	APawn* ControlledPawn = GetControlledPawn();
+
+	if (!ControlledPawn)
+	{
+		return;
+	}
+
 	check(Enemy);
-	const float DistanceBetweenActors = Enemy->GetDistanceTo(GetControlledPawn());
+	const float DistanceBetweenActors = Enemy->GetDistanceTo(ControlledPawn);
 	if (DistanceBetweenActors > AcceptableRadiusForAttack)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Enemy is far away"));
@@ -131,19 +142,19 @@ void UAttackAIComponent::UpdateRotation()
 		return;
 	}
 
-	const FVector ThisLocation = GetControlledPawn()->GetActorLocation();
+	const FVector ThisLocation = ControlledPawn->GetActorLocation();
 	const FVector TargetLocation = Enemy->GetActorLocation();
 
-	const float OldRotationYaw = GetControlledPawn()->GetActorRotation().Yaw;
+	const float OldRotationYaw = ControlledPawn->GetActorRotation().Yaw;
 
 	FRotator NewRotator = (TargetLocation - ThisLocation).Rotation();
 	NewRotator.Pitch = 0.0f;
 	NewRotator.Roll = 0.0f;
 
-	FRotator NewRotation = FMath::RInterpTo(GetControlledPawn()->GetActorRotation(), NewRotator,
+	FRotator NewRotation = FMath::RInterpTo(ControlledPawn->GetActorRotation(), NewRotator,
 											GetWorld()->GetDeltaSeconds(), AttackRotationSpeed);
 
-	GetControlledPawn()->SetActorRotation(NewRotation);
+	ControlledPawn->SetActorRotation(NewRotation);
 	CurrentAttackRotation += FMath::Abs(FMath::FindDeltaAngleDegrees(OldRotationYaw, NewRotation.Yaw));
 
 	UE_LOG(LogTemp, Warning, TEXT("CurrentRotation = %f"), CurrentAttackRotation);

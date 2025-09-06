@@ -27,6 +27,7 @@ public:
 	virtual bool CanInteractWithWorld() override;
 	virtual float GetAnimAttackLength() override;
 	// IStatsInteraction
+	virtual FOnStatsChangedSingature& OnStatsChanged() override;
 	virtual float GetMaxHealth() override;
 	virtual float GetAttackDamage() override;
 	virtual float GetAttackSpeed() override;
@@ -70,4 +71,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Settings|Anim")
 	TObjectPtr<UAnimMontage> OnHitAnim;
+
+private:
+	FOnStatsChangedSingature OnStatsChangedEvent;
 };

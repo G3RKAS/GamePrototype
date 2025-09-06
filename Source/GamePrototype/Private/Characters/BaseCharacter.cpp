@@ -35,6 +35,11 @@ float ABaseCharacter::GetAnimAttackLength()
 }
 
 // IStatsInteraction
+FOnStatsChangedSingature& ABaseCharacter::OnStatsChanged()
+{
+	return OnStatsChangedEvent;
+}
+
 float ABaseCharacter::GetMaxHealth()
 {
 	return HealthComponent->GetMaxHealth();
@@ -53,11 +58,13 @@ float ABaseCharacter::GetAttackSpeed()
 void ABaseCharacter::SetCurrentHealth(float InCurrentHealth)
 {
 	HealthComponent->SetCurrentHealth(InCurrentHealth);
+	OnStatsChanged().Broadcast();
 }
 
 void ABaseCharacter::SetMaxHealth(float InMaxHealth)
 {
 	HealthComponent->SetMaxHealth(InMaxHealth);
+	OnStatsChanged().Broadcast();
 }
 
 void ABaseCharacter::SetAttackDamage(float)

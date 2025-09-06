@@ -7,28 +7,17 @@
 #include "Interfaces/Characters/StatsInteraction.h"
 #include "Components/TextBlock.h"
 
-void UWeaponInfoWidget::SetLevel(ILevelInteraction* InLevel)
-{
-	LevelInteraction = InLevel;
-	LevelInteraction->OnXPUp().AddUObject(this, &ThisClass::LevelHandler);
-	GetWorldTimerManager().SetTimerForNextTick(this, &ThisClass::InitChangeWeaponInformation);
-}
-
 void UWeaponInfoWidget::SetWeapon(IWeaponInteraction* InWeapon)
 {
 	WeaponInteraction = InWeapon;
 	WeaponInteraction->OnWeaponChanged().AddUObject(this, &ThisClass::ChangeWeaponInformation);
-	GetWorldTimerManager().SetTimerForNextTick(this, &ThisClass::InitChangeWeaponInformation);
+	InitChangeWeaponInformation();
 }
 
 void UWeaponInfoWidget::SetStats(IStatsInteraction* InStats)
 {
 	StatsInteraction = InStats;
-	InitChangeWeaponInformation();
-}
-
-void UWeaponInfoWidget::LevelHandler()
-{
+	StatsInteraction->OnStatsChanged().AddUObject(this, &ThisClass::InitChangeWeaponInformation);
 	InitChangeWeaponInformation();
 }
 

@@ -6,6 +6,8 @@
 #include "UObject/Interface.h"
 #include "StatsInteraction.generated.h"
 
+DECLARE_MULTICAST_DELEGATE(FOnStatsChangedSingature);
+
 UINTERFACE(MinimalAPI)
 class UStatsInteraction : public UInterface
 {
@@ -17,6 +19,7 @@ class GAMEPROTOTYPE_API IStatsInteraction
 	GENERATED_BODY()
 
 public:
+	virtual FOnStatsChangedSingature& OnStatsChanged() = 0;
 	virtual float GetMaxHealth() = 0;
 	virtual float GetAttackDamage() = 0;
 	virtual float GetAttackSpeed() = 0;

@@ -137,7 +137,7 @@ void UWeaponComponent::SetAttackSpeed(float InAttackSpeed)
 void UWeaponComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	GetWorldTimerManager().SetTimerForNextTick(this, &ThisClass::InitStartWeapon);
+	InitStartWeapon();
 }
 
 void UWeaponComponent::EndPlay(const EEndPlayReason::Type InEndPlayReason)
