@@ -4,6 +4,7 @@
 #include "Characters/Components/HealthComponent.h"
 #include "Interfaces/Characters/LevelInteraction.h"
 #include <Interfaces/Characters/Player/WeaponInteraction.h>
+#include <Kismet/GameplayStatics.h>
 
 void UReviveComponent::BeginPlay()
 {
@@ -20,7 +21,6 @@ void UReviveComponent::BeginPlay()
 void UReviveComponent::ExecuteRevivePlayer()
 {
 	check(PlayerClass);
-	check(!RevivePoints.IsEmpty());
 
 	UE_LOG(LogTemp, Warning, TEXT("EXECUTE RESPAWN"))
 
@@ -36,10 +36,11 @@ void UReviveComponent::RevivePlayer()
 		return;
 	}
 
-	TArray<TSoftObjectPtr<ATargetPoint>> TempArray = RevivePoints.Array();
+	TArray<AActor*> TempArray;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ReviveActorClass, TempArray);
 
 	int Index = FMath::RandHelper(TempArray.Num());
-	FVector LocationToSpawn = TempArray[Index].Get()->GetActorLocation();
+	FVector LocationToSpawn = TempArray[Index]->GetActorLocation();
 
 	check(GetWorld());
 

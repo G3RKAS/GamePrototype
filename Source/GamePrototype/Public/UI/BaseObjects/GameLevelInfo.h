@@ -17,7 +17,13 @@ class GAMEPROTOTYPE_API UGameLevelInfo : public UGameBaseUserWidget
 public:
 	void SetBindType(AActor* InActorBind);
 
+protected:
+	virtual void NativePreConstruct() override;
+
 private:
+	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "0", UIMin = "0", ClampMax = "128", UIMax = "128"))
+	uint32 FontSize;
+
 	UPROPERTY(meta=(BindWidget))
 	TObjectPtr<UTextBlock> LevelNumber;
 

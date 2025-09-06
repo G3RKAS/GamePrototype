@@ -11,9 +11,22 @@ void UGameLevelInfo::SetBindType(AActor* InActorBind)
 	SetupWidget();
 }
 
+void UGameLevelInfo::NativePreConstruct()
+{
+	Super::NativePreConstruct();
+
+	if (FontSize > 0)
+	{
+		FSlateFontInfo FontInfo = LevelNumber->Font;
+		FontInfo.Size = FontSize;
+		LevelNumber->SetFont(FontInfo);
+	}
+
+}
+
 void UGameLevelInfo::SetupWidget()
 {
-	LevelInteraction = GetOwningPlayerPawn()->FindComponentByInterface<ILevelInteraction>();
+	LevelInteraction = BindActor->FindComponentByInterface<ILevelInteraction>();
 	if (LevelInteraction)
 	{
 		LevelInteraction->OnLevelUp().AddUObject(this, &ThisClass::UpdateLevel);

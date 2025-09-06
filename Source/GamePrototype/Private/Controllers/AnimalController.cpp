@@ -49,7 +49,9 @@ void AAnimalController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollo
 void AAnimalController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
+	PatrolComponent->SetOriginPoint(InPawn->GetActorLocation());
 	CurrentComponentWork = PatrolComponent;
+
 
 	CurrentComponentWork->StartWork(this);
 }

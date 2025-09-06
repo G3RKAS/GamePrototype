@@ -11,6 +11,8 @@ class GAMEPROTOTYPE_API UPatrolAIComponent : public UAIComponent
 {
 	GENERATED_BODY()
 public:
+	void SetOriginPoint(FVector);
+
 	virtual void StartWork(AAIController*) override;
 	virtual void StopWork() override;
 	virtual void MoveFinished(const FPathFollowingResult&) override;
@@ -19,6 +21,8 @@ private:
 	void MoveToPoint();
 	FVector GetRandomPointToMove(FVector&);
 	FTimerHandle MovingTimer;
+
+	FVector OriginPoint;
 
 	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "10", UIMin = "10", Units = "cm"))
 	float NavRadius = 2000.f;

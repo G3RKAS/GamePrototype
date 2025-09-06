@@ -4,18 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "UI/GameBaseUserWidget.h"
-#include "Interfaces/Characters/HealthWidgetInterface.h"
 #include "GamePlayerHealthBar.generated.h"
 
 class UProgressBar;
 class IHealthInteraction;
 
 UCLASS(Abstract)
-class GAMEPROTOTYPE_API UGamePlayerHealthBar : public UGameBaseUserWidget, public IHealthWidgetInterface
+class GAMEPROTOTYPE_API UGamePlayerHealthBar : public UGameBaseUserWidget
 {
 	GENERATED_BODY()
 public:
-	virtual void SetBindType(AActor* InActorBind) override;
+	virtual void SetBindType(AActor* InActorBind);
 
 private:
 	UPROPERTY(meta =(BindWidget))

@@ -21,7 +21,7 @@ protected:
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Settings")
-	TSet<TSoftObjectPtr<ATargetPoint>> RevivePoints;
+	TSubclassOf<AActor> ReviveActorClass;
 
 	UPROPERTY(EditAnywhere, Category = "Settings")
 	TSubclassOf<APlayerCharacter> PlayerClass;

@@ -21,7 +21,6 @@ public:
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	TObjectPtr<UAIPerceptionComponent> AIPerceptionComponent;
-
 	virtual void OnMoveCompleted(FAIRequestID, const FPathFollowingResult&) override;
 	virtual void OnPossess(APawn*) override;
 

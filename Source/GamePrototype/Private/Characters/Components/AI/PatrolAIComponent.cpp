@@ -6,6 +6,11 @@
 #include "Navigation/PathFollowingComponent.h"
 #include "AIController.h"
 
+void UPatrolAIComponent::SetOriginPoint(FVector InOriginPoint)
+{
+	OriginPoint = InOriginPoint;
+}
+
 void UPatrolAIComponent::StartWork(AAIController* InAIController)
 {
 	Super::StartWork(InAIController);
@@ -31,8 +36,7 @@ void UPatrolAIComponent::MoveFinished(const FPathFollowingResult& Result)
 void UPatrolAIComponent::MoveToPoint()
 {
 	check(GetControlledPawn());
-	FVector SourcePoint = GetControlledPawn()->GetActorLocation();
-	FVector NextPoint = GetRandomPointToMove(SourcePoint);
+	FVector NextPoint = GetRandomPointToMove(OriginPoint);
 	DrawDebugSphere(GetWorld(), NextPoint, 100.f, 10, FColor::Red, false, 5);
 	MoveToLocation(NextPoint);
 }
