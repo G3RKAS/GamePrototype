@@ -85,6 +85,14 @@ void ABaseCharacter::OnCharacterDeath()
 	GetMesh()->SetSimulatePhysics(true);
 	GetMesh()->SetCollisionProfileName(TEXT("Ragdoll"));
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	FTimerHandle Handle;
+	GetWorldTimerManager().SetTimer(Handle, this, &ThisClass::DestroyHandle, TimeToDestroyAfterDeath);
+}
+
+void ABaseCharacter::DestroyHandle()
+{
+	Destroy();
 }
 
 void ABaseCharacter::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType,

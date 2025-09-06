@@ -45,6 +45,11 @@ float UHealthComponent::GetHealthPercent()
 
 void UHealthComponent::AddHealth(float InHealth)
 {
+	if (IsDead())
+	{
+		return;
+	}
+	
 	SetCurrentHealth(CurrentHealth + InHealth);
 }
 

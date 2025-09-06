@@ -41,6 +41,9 @@ protected:
 	virtual void BeginPlay() override;
 
 	virtual void OnCharacterDeath();
+
+	void DestroyHandle();
+
 	UFUNCTION()
 	virtual void OnTakeDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
 							  class AController* InstigatedBy, AActor* DamageCauser);
@@ -49,6 +52,9 @@ protected:
 
 	UFUNCTION()
 	virtual void OnAttackEnded(UAnimMontage* InAnimMontage, bool bInterrupted);
+
+	UPROPERTY(EditAnywhere, Category = "Settings", meta = (ClampMin = "0", UIMin = "0", Units = "s"))
+	float TimeToDestroyAfterDeath = 10.0f;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	TObjectPtr<UXPComponent> XPComponent;
