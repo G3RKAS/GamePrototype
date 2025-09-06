@@ -12,6 +12,7 @@
 #include <Core/Helpers/WeaponTableHelper.h>
 #include "UI/BaseObjects/WeaponInfoWidget.h"
 #include "Interfaces/Characters/Player/WeaponInteraction.h"
+#include "Interfaces/Characters/LevelInteraction.h"
 #include "Interfaces/Characters/StatsInteraction.h"
 
 #include "UI/BaseObjects/Messages/GameMessageBoxWidget.h"
@@ -63,6 +64,13 @@ void UGameHUDWidget::SetupPawnRelatedWidgets()
 		if (StatsInteraction)
 		{
 			WeaponInfo->SetStats(StatsInteraction);
+		}
+
+		ILevelInteraction* LevelInteraction = GetOwningPlayerPawn()->FindComponentByInterface<ILevelInteraction>();
+
+		if (LevelInteraction)
+		{
+			WeaponInfo->SetLevel(LevelInteraction);
 		}
 
 		WeaponInfo->SetVisibility(ESlateVisibility::Hidden);

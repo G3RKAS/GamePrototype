@@ -17,7 +17,7 @@ void UGameLevelInfo::NativePreConstruct()
 
 	if (FontSize > 0)
 	{
-		FSlateFontInfo FontInfo = LevelNumber->Font;
+		FSlateFontInfo FontInfo = LevelNumber->GetFont();
 		FontInfo.Size = FontSize;
 		LevelNumber->SetFont(FontInfo);
 	}
