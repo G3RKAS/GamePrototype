@@ -173,13 +173,11 @@ void UWeaponComponent::CreateWeaponActor()
 	if (WeaponActor)
 	{
 		WeaponActor->FinishSpawning(FTransform::Identity);
-		UE_LOG(LogTemp, Warning, TEXT("Created"))
 
 		AttachToComponent();
 
 		OnWeaponAttackStartEvent.AddUObject(WeaponActor, &AGameAttackWeapon::StartAttack);
 		OnWeaponAttackEndEvent.AddUObject(WeaponActor, &AGameAttackWeapon::EndAttack);
-		UE_LOG(LogTemp, Warning, TEXT("Binded"))
 	}
 }
 
@@ -188,7 +186,6 @@ void UWeaponComponent::AttachToComponent()
 	if (WeaponActor)
 	{
 		const FAttachmentTransformRules AttachmentRules = FAttachmentTransformRules::SnapToTargetNotIncludingScale;
-		UE_LOG(LogTemp, Warning, TEXT("Attached"))
 		WeaponActor->AttachToComponent(EquipSceneComponent, AttachmentRules);
 	}
 }

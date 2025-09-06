@@ -52,6 +52,8 @@ void UGameHUDWidget::SetupPawnRelatedWidgets()
 	}
 	if (WeaponInfo)
 	{
+		WeaponInfo->SetVisibility(ESlateVisibility::Hidden);
+
 		IWeaponInteraction* WeaponInteraction = GetOwningPlayerPawn()->FindComponentByInterface<IWeaponInteraction>();
 
 		if (WeaponInteraction)
@@ -65,8 +67,6 @@ void UGameHUDWidget::SetupPawnRelatedWidgets()
 		{
 			WeaponInfo->SetStats(StatsInteraction);
 		}
-
-		WeaponInfo->SetVisibility(ESlateVisibility::Hidden);
 	}
 	if (WeaponMessages)
 	{
