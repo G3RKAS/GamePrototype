@@ -5,7 +5,6 @@
 void UHealthComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	SetCurrentHealth(CurrentHealth);
 }
 
 float UHealthComponent::GetCurrentHealth()

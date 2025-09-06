@@ -22,5 +22,7 @@ class GAMEPROTOTYPE_API IHealthInteraction
 public:
 	virtual FOnDeathSignature& OnDeath() = 0;
 	virtual FOnHealthChangedSignature& OnHealthChanged() = 0;
+	virtual void SetCurrentHealth(float) = 0;
 	virtual float GetHealthPercent() = 0;
+	virtual float GetMaxHealth() = 0;
 };

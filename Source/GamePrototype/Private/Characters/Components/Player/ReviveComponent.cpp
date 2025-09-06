@@ -57,11 +57,15 @@ void UReviveComponent::RevivePlayer()
 	IWeaponInteraction* WeaponInteraction_OldPlayer = GetOwner()->FindComponentByInterface<IWeaponInteraction>();
 	IWeaponInteraction* WeaponInteraction_NewPlayer = NewPlayer->FindComponentByInterface<IWeaponInteraction>();
 
+	IHealthInteraction* HealthInteraction_NewPlayer = NewPlayer->FindComponentByInterface<IHealthInteraction>();
+
 	ControllerInteraction->Possess(NewPlayer);
 
 	// Restore Level
 	uint32 TotalOldXP = LevelInteraction_OldPlayer->GetTotalXP();
 	LevelInteraction_NewPlayer->SetTotalXP(TotalOldXP - TotalOldXP * XpPercentLoss);
+	// Set Current Health to max
+	HealthInteraction_NewPlayer->SetCurrentHealth(HealthInteraction_NewPlayer->GetMaxHealth());
 	// WeaponEquip
 	WeaponInteraction_NewPlayer->EquipWeapon(WeaponInteraction_OldPlayer->GetCurrentWeaponName());
 

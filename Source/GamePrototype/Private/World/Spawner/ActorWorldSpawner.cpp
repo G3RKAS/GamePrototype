@@ -6,6 +6,7 @@
 #include "Components/BoxComponent.h"
 #include <Interfaces/Characters/LevelInteraction.h>
 #include "Kismet/KismetMathLibrary.h"
+#include <Interfaces/Characters/HealthInteraction.h>
 
 AActorWorldSpawner::AActorWorldSpawner()
 {
@@ -51,6 +52,12 @@ void AActorWorldSpawner::SpawnActorToWorld()
 		if (LevelInteraction)
 		{
 			LevelInteraction->SetLevel(FMath::RandRange(ActorMinimunLevel, ActorMaximumLevel));
+
+			IHealthInteraction* HealthInteraction = SpawnedActor->FindComponentByInterface<IHealthInteraction>();
+			if (HealthInteraction)
+			{
+				HealthInteraction->SetCurrentHealth(HealthInteraction->GetMaxHealth());
+			}
 		}
 		SpawnedActors.Add(SpawnedActor);
 	}

@@ -15,21 +15,17 @@ class GAMEPROTOTYPE_API UHealthComponent : public UBaseActorComponent, public IH
 public:
 	float GetCurrentHealth();
 
-	void SetCurrentHealth(float);
-
 	void AddHealth(float);
-
-	float GetMaxHealth();
 
 	void SetMaxHealth(float);
 
 	bool IsDead();
 
 	virtual FOnDeathSignature& OnDeath() override;
-
 	virtual FOnHealthChangedSignature& OnHealthChanged() override;
-
+	virtual void SetCurrentHealth(float) override;
 	virtual float GetHealthPercent() override;
+	virtual float GetMaxHealth() override;
 
 protected:
 	virtual void BeginPlay() override;
