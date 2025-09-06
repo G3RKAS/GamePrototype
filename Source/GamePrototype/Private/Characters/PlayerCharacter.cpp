@@ -102,7 +102,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 // IAnimInteraction
 bool APlayerCharacter::CanInteractWithWorld()
 {
-	return not(IsFalling() || bIsAttacking || WeaponComponent->IsBlocking());
+	return not(IsFalling() || bIsAttacking || WeaponComponent->IsBlocking() || HealthComponent->IsDead());
 }
 
 // IControllerInteraction
